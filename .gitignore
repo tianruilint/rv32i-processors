@@ -1,0 +1,30 @@
+# Project-local Python environment and caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Simulator and synthesis products
+obj_dir/
+sim_build/
+*.o
+*.d
+*.a
+*.so
+*.log
+dump.vcd
+dump.fst
+results.xml
+
+# Managed generated-output directories
+build/*
+!build/.gitkeep
+reports/*
+!reports/.gitkeep
+waves/*
+!waves/.gitkeep
+
+# Editor and OS metadata
+*~
+.DS_Store
+Thumbs.db
