@@ -14,9 +14,20 @@ COCOTB_CONFIG := $(VENV_BIN)/cocotb-config
 RTL_SOURCE := $(RTL_DIR)/full_adder.sv
 ALU_RTL_SOURCE := $(RTL_DIR)/alu.sv
 REGISTER_FILE_RTL_SOURCE := $(RTL_DIR)/register_file.sv
+PC_RTL_SOURCE := $(RTL_DIR)/pc.sv
+IMMEDIATE_GENERATOR_RTL_SOURCE := $(RTL_DIR)/immediate_generator.sv
+DECODER_RTL_SOURCE := $(RTL_DIR)/decoder.sv
+CORE_RTL_SOURCES := \
+	$(RTL_DIR)/rv32i_core.sv \
+	$(PC_RTL_SOURCE) \
+	$(DECODER_RTL_SOURCE) \
+	$(REGISTER_FILE_RTL_SOURCE) \
+	$(IMMEDIATE_GENERATOR_RTL_SOURCE) \
+	$(ALU_RTL_SOURCE)
+CORE_TEST_MODULES := test_core,test_lw_sw,test_beq
 COCOTB_MAKEFILES := $(shell $(COCOTB_CONFIG) --makefiles 2>/dev/null)
 
-.PHONY: env lint test waves clean check-venv prepare-generated-dirs test-alu waves-alu test-register-file
+.PHONY: env lint test waves clean check-venv prepare-generated-dirs lint-alu lint-core test-alu waves-alu test-register-file test-pc test-immediate-generator test-decoder test-core waves-core
 
 env:
 	@printf '%s\n' '=== RV32I project verification environment ==='
@@ -45,6 +56,9 @@ lint:
 
 lint-alu:
 	verilator --lint-only --Wall -Wno-fatal --top-module alu '$(ALU_RTL_SOURCE)'
+
+lint-core:
+	verilator --lint-only --Wall -Wno-fatal --top-module rv32i_core $(CORE_RTL_SOURCES)
 
 check-venv:
 	@test -x '$(PYTHON)' || { echo 'Missing .venv; create it and install requirements.txt.' >&2; exit 1; }
@@ -96,6 +110,63 @@ test-register-file: check-venv prepare-generated-dirs
 		COCOTB_RESULTS_FILE='$(REPORTS_DIR)/register_file.xml' \
 		'$(REPORTS_DIR)/register_file.xml'
 
+test-pc: check-venv prepare-generated-dirs
+	@rm -f '$(REPORTS_DIR)/pc.xml'
+	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
+	COMPILE_ARGS='--Wall -Wno-fatal' \
+	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
+		SIM=verilator \
+		TOPLEVEL_LANG=verilog \
+		VERILOG_SOURCES='$(PC_RTL_SOURCE)' \
+		COCOTB_TOPLEVEL=pc \
+		COCOTB_TEST_MODULES=test_pc \
+		SIM_BUILD='$(BUILD_DIR)/verilator-pc' \
+		COCOTB_RESULTS_FILE='$(REPORTS_DIR)/pc.xml' \
+		'$(REPORTS_DIR)/pc.xml'
+
+test-immediate-generator: check-venv prepare-generated-dirs
+	@rm -f '$(REPORTS_DIR)/immediate_generator.xml'
+	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
+	COMPILE_ARGS='--Wall -Wno-fatal' \
+	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
+		SIM=verilator \
+		TOPLEVEL_LANG=verilog \
+		VERILOG_SOURCES='$(IMMEDIATE_GENERATOR_RTL_SOURCE)' \
+		COCOTB_TOPLEVEL=immediate_generator \
+		COCOTB_TEST_MODULES=test_immediate_generator \
+		SIM_BUILD='$(BUILD_DIR)/verilator-immediate-generator' \
+		COCOTB_RESULTS_FILE='$(REPORTS_DIR)/immediate_generator.xml' \
+		'$(REPORTS_DIR)/immediate_generator.xml'
+
+test-decoder: check-venv prepare-generated-dirs
+	@rm -f '$(REPORTS_DIR)/decoder.xml'
+	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
+	COMPILE_ARGS='--Wall -Wno-fatal' \
+	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
+		SIM=verilator \
+		TOPLEVEL_LANG=verilog \
+		VERILOG_SOURCES='$(DECODER_RTL_SOURCE)' \
+		COCOTB_TOPLEVEL=decoder \
+		COCOTB_TEST_MODULES=test_decoder \
+		SIM_BUILD='$(BUILD_DIR)/verilator-decoder' \
+		COCOTB_RESULTS_FILE='$(REPORTS_DIR)/decoder.xml' \
+		'$(REPORTS_DIR)/decoder.xml'
+
+test-core: check-venv prepare-generated-dirs
+	@rm -f '$(REPORTS_DIR)/core.xml'
+	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
+	COMPILE_ARGS='--Wall -Wno-fatal' \
+	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
+		SIM=verilator \
+		TOPLEVEL_LANG=verilog \
+		VERILOG_SOURCES='$(CORE_RTL_SOURCES)' \
+		COCOTB_TOPLEVEL=rv32i_core \
+		COCOTB_TEST_MODULES='$(CORE_TEST_MODULES)' \
+		SIM_BUILD='$(BUILD_DIR)/verilator-core' \
+		COCOTB_RESULTS_FILE='$(REPORTS_DIR)/core.xml' \
+		'$(REPORTS_DIR)/core.xml'
+
+
 waves: check-venv prepare-generated-dirs
 	@rm -f '$(REPORTS_DIR)/full_adder-waves.xml' dump.fst
 	@set +e; \
@@ -143,6 +214,32 @@ waves-alu: check-venv prepare-generated-dirs
 	if [ -f dump.fst ]; then \
 		mv -f dump.fst '$(WAVES_DIR)/alu.fst'; \
 		printf 'FST waveform: %s\n' '$(WAVES_DIR)/alu.fst'; \
+	else \
+		echo 'Expected FST waveform dump.fst was not generated.' >&2; \
+		if [ $$status -eq 0 ]; then status=1; fi; \
+	fi; \
+	exit $$status
+
+waves-core: check-venv prepare-generated-dirs
+	@rm -f '$(REPORTS_DIR)/core-waves.xml' dump.fst
+	@set +e; \
+	PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
+	COMPILE_ARGS='--Wall -Wno-fatal --trace-fst' \
+	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
+		SIM=verilator \
+		TOPLEVEL_LANG=verilog \
+		VERILOG_SOURCES='$(CORE_RTL_SOURCES)' \
+		COCOTB_TOPLEVEL=rv32i_core \
+		COCOTB_TEST_MODULES='$(CORE_TEST_MODULES)' \
+		SIM_BUILD='$(BUILD_DIR)/verilator-core-waves' \
+		COCOTB_RESULTS_FILE='$(REPORTS_DIR)/core-waves.xml' \
+		WAVES=1 \
+		SIM_ARGS='--trace' \
+		'$(REPORTS_DIR)/core-waves.xml'; \
+	status=$$?; \
+	if [ -f dump.fst ]; then \
+		mv -f dump.fst '$(WAVES_DIR)/core.fst'; \
+		printf 'FST waveform: %s\n' '$(WAVES_DIR)/core.fst'; \
 	else \
 		echo 'Expected FST waveform dump.fst was not generated.' >&2; \
 		if [ $$status -eq 0 ]; then status=1; fi; \

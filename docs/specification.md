@@ -18,7 +18,43 @@ and retain useful failure reports and waveforms outside version control.
 
 ## Current checkpoint
 
-This repository is only the Day 0/Day 1 bootstrap. No CPU core, decoder,
-register file, instruction memory, data memory, or RISC-V instruction has been
-implemented. The only RTL source is an intentionally incomplete full-adder
-smoke test that the student must finish manually.
+The component work is complete through DAY06:
+
+- DAY01: a one-bit full adder with automated verification;
+- DAY02: a 32-bit ALU with automated verification;
+- DAY03: a 32 x 32-bit register file with two combinational read ports, one
+  synchronous enabled write port, and architectural `x0` behavior;
+- DAY04: a 32-bit program counter with synchronous active-high reset, sequential
+  `+4`, target loading, reset priority, and natural wraparound;
+- DAY05: an immediate generator for I-, S-, and B-type encodings, including
+  sign extension and B-immediate alignment;
+- DAY06: a decoder for R-type ADD/SUB/AND/OR/SLT, I-type
+  ADDI/ANDI/ORI/SLTI, LW, SW, and BEQ, with safe defaults for unsupported
+  encodings.
+
+These are independently verified building blocks. U- and J-type immediate
+generation, instruction memory, data memory, and an integrated CPU core have
+not yet been implemented. The repository therefore does not yet execute or
+claim end-to-end support for any RISC-V instruction.
+
+## Current control encodings
+
+The immediate generator and decoder use the following internal format codes:
+
+- I-type: `2'b00`
+- S-type: `2'b01`
+- B-type: `2'b10`
+
+These encodings are internal design choices. Their correctness depends on
+consistent use across the decoder, immediate generator, and integration tests.
+
+The decoder currently recognizes:
+
+- R-type: ADD, SUB, AND, OR, SLT
+- I-type arithmetic: ADDI, ANDI, ORI, SLTI
+- Memory: LW, SW
+- Branch: BEQ
+
+Unsupported opcodes or invalid `funct3`/`funct7` combinations produce inactive
+control defaults. This is a component-level contract, not yet an architectural
+illegal-instruction mechanism.
