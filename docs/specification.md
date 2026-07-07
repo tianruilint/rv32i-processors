@@ -1,60 +1,131 @@
-# Intended Project Specification
+# P1 v0.1 Implemented Processor Specification
 
 ## Scope
 
-The long-term goal is an educational, single-cycle processor implementing the
-RV32I base integer instruction set in SystemVerilog. Automated RTL verification
-will compare observable behavior against independently calculated expectations
-and retain useful failure reports and waveforms outside version control.
+The design is a 32-bit, single-cycle, RV32I-subset core with an instruction
+input and a separate external data-memory interface. The synthesized top is
+`rv32i_core`; it instantiates `pc`, `decoder`, `register_file`,
+`immediate_generator`, and `alu`.
 
-## Engineering goals
+Instruction and data memories are supplied by cocotb/Python. No RTL instruction
+ROM, data RAM, SRAM macro, bus fabric, cache, or pipeline is part of v0.1.
+Automated tests check register values, memory values, PC, and selected control
+signals. They do not establish complete ISA compliance.
 
-- Keep the processor structure readable enough for instruction and review.
-- Define architectural behavior before implementing each processor block.
-- Add small, deterministic tests before integrating larger datapath features.
-- Use Verilator and cocotb for repeatable automated verification.
-- Use linting, waveforms, synthesis checks, and a bug diary as learning tools.
-- Keep generated artifacts out of Git so a fresh clone is reproducible.
+## Core interface
 
-## Current checkpoint
+Directions are relative to `rv32i_core`. Data/address ports are unsigned
+`logic` vectors; signed operations are selected explicitly inside the ALU.
 
-The component work is complete through DAY06:
+| Port | Direction | Width | Meaning |
+| --- | --- | ---: | --- |
+| `clk` | input | 1 | State commits on the rising edge |
+| `reset` | input | 1 | Active-high synchronous PC reset; also gates write enables |
+| `instr` | input | 32 | External instruction word for `current_pc` |
+| `data_read_data` | input | 32 | External load data, stable before the commit edge |
+| `current_pc` | output | 32 | Current instruction byte address |
+| `data_addr` | output | 32 | ALU result; effective byte address for LW/SW |
+| `data_write_data` | output | 32 | Current rs2 value, used by SW |
+| `data_write_en` | output | 1 | Qualified SW write enable, forced low during reset |
 
-- DAY01: a one-bit full adder with automated verification;
-- DAY02: a 32-bit ALU with automated verification;
-- DAY03: a 32 x 32-bit register file with two combinational read ports, one
-  synchronous enabled write port, and architectural `x0` behavior;
-- DAY04: a 32-bit program counter with synchronous active-high reset, sequential
-  `+4`, target loading, reset priority, and natural wraparound;
-- DAY05: an immediate generator for I-, S-, and B-type encodings, including
-  sign extension and B-immediate alignment;
-- DAY06: a decoder for R-type ADD/SUB/AND/OR/SLT, I-type
-  ADDI/ANDI/ORI/SLTI, LW, SW, and BEQ, with safe defaults for unsupported
-  encodings.
+There is no read-enable, valid/ready, byte-enable, stall, exception, or halt port.
+The program test identifies LW from `instr` to decide when to supply read data.
+For non-memory instructions, `data_addr` and `data_write_data` may still change;
+they do not indicate a memory operation without the relevant instruction or
+write enable.
 
-These are independently verified building blocks. U- and J-type immediate
-generation, instruction memory, data memory, and an integrated CPU core have
-not yet been implemented. The repository therefore does not yet execute or
-claim end-to-end support for any RISC-V instruction.
+## Architectural state and timing
 
-## Current control encodings
+- `x0` through `x31` are 32-bit architectural registers.
+- The register file has two combinational read ports and one synchronous write
+  port. Writes require `reg_write` and `rd_addr != 0`.
+- Architectural reads of `x0` return zero; writes to `x0` are ignored. This does
+  not require internal array element `registers[0]` itself to be initialized.
+- The register file has no reset or initialization. Software/tests must write
+  x1-x31 before relying on their values. PC reset does not clear these registers.
+- On a rising edge with `reset=1`, PC becomes zero. Core register writes and
+  memory writes are blocked while reset is high.
+- Otherwise, one instruction commits per rising edge, assuming the environment
+  has supplied stable instruction and load data. There is no latency handshake.
+- Default next PC is `current_pc + 4`. A taken BEQ selects
+  `current_pc + sign_extended_B_immediate`, not `PC+4+immediate`.
+- Reset has priority over branch selection. Arithmetic and address results wrap
+  modulo 2^32; no arithmetic-overflow exception is generated.
+- The tests' 10 ns clock is a simulation stimulus setting, not a measured
+  achievable clock period.
 
-The immediate generator and decoder use the following internal format codes:
+## Supported instruction semantics
 
-- I-type: `2'b00`
-- S-type: `2'b01`
-- B-type: `2'b10`
+`Iimm`, `Simm`, and `Bimm` below are sign-extended 32-bit immediates.
 
-These encodings are internal design choices. Their correctness depends on
-consistent use across the decoder, immediate generator, and integration tests.
+| Instruction | Implemented architectural action |
+| --- | --- |
+| ADD | `rd = rs1 + rs2` |
+| ADDI | `rd = rs1 + Iimm` |
+| SUB | `rd = rs1 - rs2` |
+| AND / ANDI | Bitwise AND of rs1 with rs2 / Iimm |
+| OR / ORI | Bitwise OR of rs1 with rs2 / Iimm |
+| SLT / SLTI | Signed comparison of rs1 with rs2 / Iimm; rd is 0 or 1 |
+| LW | `rd = external_word[rs1 + Iimm]` |
+| SW | `external_word[rs1 + Simm] = rs2` |
+| BEQ | If rs1 equals rs2, next PC is current PC + Bimm; otherwise PC + 4 |
 
-The decoder currently recognizes:
+These grouped rows describe 12 instruction types. All register-writing
+operations obey x0 behavior. BEQ has no register or memory write side effects.
+Supported non-branch instructions advance PC by four. ANDI and ORI also use
+sign extension, not zero extension.
 
-- R-type: ADD, SUB, AND, OR, SLT
-- I-type arithmetic: ADDI, ANDI, ORI, SLTI
-- Memory: LW, SW
-- Branch: BEQ
+## Memory and alignment contract
 
-Unsupported opcodes or invalid `funct3`/`funct7` combinations produce inactive
-control defaults. This is a component-level contract, not yet an architectural
-illegal-instruction mechanism.
+The external instruction model maps byte addresses to 32-bit machine words.
+Each iteration reads the DUT PC and supplies `imem[pc]`; the testbench does not
+drive PC. An absent dictionary entry fails the Python test, not an architectural
+fetch exception. Program-completion PC values are testbench sentinels; there is
+no CPU halt instruction or halt mechanism.
+
+The data model maps byte addresses to whole 32-bit words. For SW, the testbench
+captures settled address/data/enable and applies the write at the associated
+rising edge. For LW, it supplies the selected word before the rising edge so
+the core can capture it in the register file. An uninitialized dictionary read
+is not defined to return zero; the current program initializes its load address
+with SW first.
+
+v0.1 verification assumes 4-byte-aligned instructions, branch destinations,
+and LW/SW addresses. RTL does not detect or trap misalignment or access faults.
+B-immediate reconstruction fixes bit 0 to zero but does not enforce bit 1.
+No byte-addressable storage layout or endianness test exists yet; v0.4 must
+define that contract before adding subword accesses.
+
+## Internal controls
+
+The immediate generator and decoder use I=`00`, S=`01`, B=`10`.
+These are project-local encodings, not ISA instruction encodings. The generator
+provides an output on every combinational path; an unsupported `imm_type`
+returns zero. U/J formats are not implemented.
+
+The core currently uses ALU ADD=`0000`, SUB=`0001`, AND=`0010`, OR=`0011`,
+SLT=`1000`. The ALU component additionally implements XOR=`0100`, SLL=`0101`,
+SRL=`0110`, SRA=`0111`, and SLTU=`1001`; their presence in the ALU is not CPU
+instruction support. See [control_table.md](control_table.md) for all v0.1
+controls and encoding qualification rules.
+
+Unsupported opcodes or invalid combinations for the supported instruction
+classes keep register write, memory write, and branch controls inactive. Other
+defaults are ALU ADD, rs2 operand B, ALU-result writeback, and I-type immediate.
+With reset low, PC still advances by four. This safe-default behavior is not
+an architectural illegal-instruction trap, and complete invalid-encoding
+coverage has not been established.
+
+For ordinary I-type arithmetic, instruction bits [31:25] belong to the
+immediate; they are not constrained as a register-register `funct7`.
+
+## Unsupported features and deferred work
+
+- CPU-level XOR/XORI, shifts, SLTU/SLTIU (v0.2).
+- BNE/BLT/BGE/BLTU/BGEU (v0.3).
+- LB/LBU/LH/LHU/SB/SH and byte-write masks (v0.4).
+- LUI/AUIPC/JAL/JALR and U/J immediates (v0.5).
+- FENCE, ECALL, EBREAK, CSR/privileged/trap/interrupt machinery.
+- Variable-latency memories, buses, caches, MMU, and pipeline hazards.
+- Assembly-to-image automation, whole-core ISA reference interpreter, formal
+  equivalence, technology-mapped PPA, and STA.

@@ -1,13 +1,11 @@
 # RV32I Single-Cycle Processor
 
-This repository is a work-in-progress educational project for building an
-RV32I single-cycle processor and verifying its RTL with automated tests.
+An owner-written educational 32-bit single-cycle CPU with automated
+SystemVerilog/Verilator/cocotb verification.
 
-The current checkpoint has completed DAY10 and integrates the program counter,
-decoder, register file, immediate generator, ALU, load/store interface,
-writeback selection, and BEQ branch path in `rtl/rv32i_core.sv`.
+## Implemented scope
 
-The instruction-level core currently supports this 12-instruction subset:
+The integrated core supports these **12 instruction types**:
 
 - ADD, ADDI, SUB
 - AND, ANDI, OR, ORI
@@ -15,48 +13,79 @@ The instruction-level core currently supports this 12-instruction subset:
 - LW, SW
 - BEQ
 
-This is not yet the formal P1 v0.1 release. The instruction is currently driven
-through the core's external `instr` input, and cocotb supplies the external data
-memory behavior. PC-indexed instruction-memory execution, program-level tests,
-release documentation, and the initial synthesis pass remain future work.
+`rtl/rv32i_core.sv` connects the PC, decoder, register file, immediate generator,
+ALU, load/store interface, writeback selection, and BEQ path. Instruction and
+data memories are **external Python models**, not synthesized RAM modules.
+The program tests fetch instruction words using the DUT's `current_pc`.
 
-## Environment
+The ALU also implements XOR, shifts, and unsigned comparison at component level.
+Their CPU instruction decoding is not implemented in v0.1.
+Read the [specification](docs/specification.md),
+[datapath diagram](docs/datapath.md), and
+[control table](docs/control_table.md) for the precise boundary.
 
-The project targets WSL2 Ubuntu, SystemVerilog, Verilator 5.036 or newer,
-cocotb 2.0.1, pytest, GTKWave, Yosys, and the
-`riscv64-unknown-elf` GCC/binutils toolchain. Python verification packages are
-installed in the project-local `.venv`.
+## Quick start
 
-From the project root:
+For a fresh Python environment only:
 
 ```sh
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -r requirements.txt
-make env
-make lint
-make test
 ```
 
-Current component verification targets are:
+Do not recreate an existing working environment. Normal checks are:
 
 ```sh
-make lint
-make test
-make lint-alu
+make env
+make lint-core
+make regression SEED=20260915
+```
+
+`make regression` runs all seven test groups, reports case counts and failed
+targets, and returns a nonzero status on a detected failure. It must run from
+the repository root. `make test` alone still tests **only the full adder**.
+
+## Targeted tests and waveforms
+
+```sh
 make test-alu
 make test-register-file
 make test-pc
 make test-immediate-generator
 make test-decoder
-make lint-core
 make test-core
 make waves-core
 ```
 
-`make test-core` runs the current integrated instruction-level regression.
-The latest observed DAY10 run completed four cocotb test cases with four passes
-and no failures. Those test cases collectively cover the 12 instruction types
-listed above; four test cases must not be interpreted as 12 separate tests.
+`test-core` and `waves-core` select
+`test_core,test_lw_sw,test_beq,test_program`. Wave generation is explicit, not
+automatic on failure. `waves-core` writes `waves/core.fst`; inspect it with
+GTKWave. Run waveform targets serially: they use the shared `dump.fst` name.
+
+## Repository map
+
+| Path | Purpose |
+| --- | --- |
+| `rtl/` | Owner-written components and integrated core |
+| `tb/` | cocotb component, instruction, and program tests |
+| `scripts/run_regression.py` | Test scheduling, XML statistics, logs, seed forwarding |
+| `docs/` | Implemented specification, architecture, verification, and debug evidence |
+| `build/`, `reports/`, `waves/` | Reproducible generated artifacts, ignored by Git |
+
+- Only the 12 listed instruction types are supported; no jump, upper-immediate,
+  subword memory, remaining branch, CSR, trap, interrupt, or privileged support.
+- Memory has no ready/valid protocol or variable latency; tests supply reads
+  before the committing clock edge and model writes at the edge.
+- Tests use aligned instructions and word accesses. Alignment/access faults
+  are not implemented; byte ordering is not verified by a word-only model.
+- No whole-core ISA reference interpreter or formal verification is claimed.
+- Programs are literal machine words in Python; assembler-to-image automation
+  is deferred.
+
+## References and attribution
+
+Instruction semantics follow the
+[RISC-V unprivileged ISA specification](https://docs.riscv.org/reference/isa/v20240411/unpriv/rv32.html).
 
 Generated simulator output, reports, caches, and waveforms are ignored by Git.

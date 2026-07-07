@@ -24,10 +24,17 @@ CORE_RTL_SOURCES := \
 	$(REGISTER_FILE_RTL_SOURCE) \
 	$(IMMEDIATE_GENERATOR_RTL_SOURCE) \
 	$(ALU_RTL_SOURCE)
-CORE_TEST_MODULES := test_core,test_lw_sw,test_beq
+CORE_TEST_MODULES := test_core,test_lw_sw,test_beq,test_program
 COCOTB_MAKEFILES := $(shell $(COCOTB_CONFIG) --makefiles 2>/dev/null)
+SEED ?= 20260915
 
-.PHONY: env lint test waves clean check-venv prepare-generated-dirs lint-alu lint-core test-alu waves-alu test-register-file test-pc test-immediate-generator test-decoder test-core waves-core
+.PHONY: env lint test waves clean check-venv prepare-generated-dirs lint-alu lint-core test-alu waves-alu test-register-file test-pc test-immediate-generator test-decoder test-core waves-core regression
+
+# Keep the original per-module targets; this entry runs and summarizes all of them.
+# Targets refresh XML under reports/; the runner overwrites per-target logs
+# under reports/regression/. No per-run manifest is generated.
+regression: check-venv
+	@'$(PYTHON)' '$(PROJECT_ROOT)/scripts/run_regression.py' --seed '$(SEED)'
 
 env:
 	@printf '%s\n' '=== RV32I project verification environment ==='
