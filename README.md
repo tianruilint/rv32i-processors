@@ -5,21 +5,25 @@ SystemVerilog/Verilator/cocotb verification.
 
 ## Implemented scope
 
-The integrated core supports these **12 instruction types**:
+The integrated core supports these **27 instruction types**:
 
 - ADD, ADDI, SUB
-- AND, ANDI, OR, ORI
-- SLT, SLTI
+- AND, ANDI, OR, ORI, XOR, XORI
+- SLT, SLTI, SLTU, SLTIU
+- SLL, SLLI, SRL, SRLI, SRA, SRAI
 - LW, SW
-- BEQ
+- BEQ, BNE, BLT, BGE, BLTU, BGEU
 
 `rtl/rv32i_core.sv` connects the PC, decoder, register file, immediate generator,
-ALU, load/store interface, writeback selection, and BEQ path. Instruction and
+ALU, load/store interface, writeback selection, and branch comparison path. Instruction and
 data memories are **external Python models**, not synthesized RAM modules.
 The program tests fetch instruction words using the DUT's `current_pc`.
 
-The ALU also implements XOR, shifts, and unsigned comparison at component level.
-Their CPU instruction decoding is not implemented in v0.1.
+The v0.2 decoder selects XOR/XORI, unsigned comparisons, and register or
+immediate shifts. The v0.3 decoder adds `branch_type` selection for BNE, BLT,
+BGE, BLTU, and BGEU. Immediate shifts qualify the upper immediate bits
+according to the RV32I encoding; ordinary I-type arithmetic continues to treat
+those bits as immediate data.
 Read the [specification](docs/specification.md),
 [datapath diagram](docs/datapath.md), and
 [control table](docs/control_table.md) for the precise boundary.
@@ -39,7 +43,7 @@ Do not recreate an existing working environment. Normal checks are:
 ```sh
 make env
 make lint-core
-make regression SEED=20260915
+make regression SEED=20260919
 ```
 
 `make regression` runs all seven test groups, reports case counts and failed
@@ -73,8 +77,8 @@ GTKWave. Run waveform targets serially: they use the shared `dump.fst` name.
 | `docs/` | Implemented specification, architecture, verification, and debug evidence |
 | `build/`, `reports/`, `waves/` | Reproducible generated artifacts, ignored by Git |
 
-- Only the 12 listed instruction types are supported; no jump, upper-immediate,
-  subword memory, remaining branch, CSR, trap, interrupt, or privileged support.
+- Only the 27 listed instruction types are supported; no jump, upper-immediate,
+  subword memory, CSR, trap, interrupt, or privileged support.
 - Memory has no ready/valid protocol or variable latency; tests supply reads
   before the committing clock edge and model writes at the edge.
 - Tests use aligned instructions and word accesses. Alignment/access faults

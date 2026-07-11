@@ -33,6 +33,10 @@ logic [31:0] alu_result;
 logic        take_target;
 logic [31:0] target_pc;
 logic        branch_taken;
+logic [2:0]  branch_type_dec;
+logic        eq;
+logic        lt_signed;
+logic        lt_unsigned;
 
 assign opcode = instr[6:0];
 assign funct3 = instr[14:12];
@@ -46,7 +50,23 @@ assign wb_data = (result_src) ? data_read_data : alu_result;
 assign data_addr = alu_result;
 assign data_write_data = rs2_data;
 assign data_write_en = (reset) ? 1'b0 : mem_write;
-assign branch_taken = branch && (rs1_data == rs2_data);
+assign eq = (rs1_data == rs2_data);
+assign lt_signed = ($signed(rs1_data) < $signed(rs2_data));
+assign lt_unsigned = (rs1_data < rs2_data);
+always_comb begin
+    branch_taken = 1'b0;
+    if (branch) begin
+        case (branch_type_dec)
+            3'b001: branch_taken =  eq;
+            3'b010: branch_taken = ~eq;
+            3'b011: branch_taken =  lt_signed;
+            3'b100: branch_taken = ~lt_signed;
+            3'b101: branch_taken =  lt_unsigned;
+            3'b110: branch_taken = ~lt_unsigned;
+            default: branch_taken = 1'b0;
+        endcase
+    end
+end
 assign take_target = branch_taken;
 assign target_pc = current_pc + imm;
 
@@ -68,7 +88,8 @@ decoder u_decoder (
     .result_src (result_src),
     .branch     (branch),
     .imm_type   (imm_type),
-    .alu_op     (alu_op)
+    .alu_op     (alu_op),
+    .branch_type(branch_type_dec)
 );
 
 register_file u_register_file (

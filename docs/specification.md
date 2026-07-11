@@ -1,4 +1,4 @@
-# P1 v0.1 Implemented Processor Specification
+# P1 v0.3 Implemented Processor Specification
 
 ## Scope
 
@@ -8,7 +8,7 @@ input and a separate external data-memory interface. The synthesized top is
 `immediate_generator`, and `alu`.
 
 Instruction and data memories are supplied by cocotb/Python. No RTL instruction
-ROM, data RAM, SRAM macro, bus fabric, cache, or pipeline is part of v0.1.
+ROM, data RAM, SRAM macro, bus fabric, cache, or pipeline is part of v0.3.
 Automated tests check register values, memory values, PC, and selected control
 signals. They do not establish complete ISA compliance.
 
@@ -47,7 +47,7 @@ write enable.
   memory writes are blocked while reset is high.
 - Otherwise, one instruction commits per rising edge, assuming the environment
   has supplied stable instruction and load data. There is no latency handshake.
-- Default next PC is `current_pc + 4`. A taken BEQ selects
+- Default next PC is `current_pc + 4`. A taken branch selects
   `current_pc + sign_extended_B_immediate`, not `PC+4+immediate`.
 - Reset has priority over branch selection. Arithmetic and address results wrap
   modulo 2^32; no arithmetic-overflow exception is generated.
@@ -65,15 +65,31 @@ write enable.
 | SUB | `rd = rs1 - rs2` |
 | AND / ANDI | Bitwise AND of rs1 with rs2 / Iimm |
 | OR / ORI | Bitwise OR of rs1 with rs2 / Iimm |
+| XOR / XORI | Bitwise XOR of rs1 with rs2 / Iimm |
 | SLT / SLTI | Signed comparison of rs1 with rs2 / Iimm; rd is 0 or 1 |
+| SLTU / SLTIU | Unsigned comparison of rs1 with rs2 / sign-extended Iimm; rd is 0 or 1 |
+| SLL / SLLI | Logical left shift by `rs2[4:0]` / `shamt` |
+| SRL / SRLI | Logical right shift by `rs2[4:0]` / `shamt` |
+| SRA / SRAI | Arithmetic right shift by `rs2[4:0]` / `shamt` |
 | LW | `rd = external_word[rs1 + Iimm]` |
 | SW | `external_word[rs1 + Simm] = rs2` |
 | BEQ | If rs1 equals rs2, next PC is current PC + Bimm; otherwise PC + 4 |
+| BNE | If rs1 does not equal rs2, next PC is current PC + Bimm; otherwise PC + 4 |
+| BLT | If signed rs1 is less than signed rs2, next PC is current PC + Bimm; otherwise PC + 4 |
+| BGE | If signed rs1 is greater than or equal to signed rs2, next PC is current PC + Bimm; otherwise PC + 4 |
+| BLTU | If unsigned rs1 is less than unsigned rs2, next PC is current PC + Bimm; otherwise PC + 4 |
+| BGEU | If unsigned rs1 is greater than or equal to unsigned rs2, next PC is current PC + Bimm; otherwise PC + 4 |
 
-These grouped rows describe 12 instruction types. All register-writing
+These grouped rows describe 27 instruction types. All register-writing
 operations obey x0 behavior. BEQ has no register or memory write side effects.
 Supported non-branch instructions advance PC by four. ANDI and ORI also use
 sign extension, not zero extension.
+
+For RV32 register shifts, only the low five bits of the shift source are used.
+Immediate shifts use the five-bit `shamt = instr[24:20]`. SLLI is legal only
+when `instr[31:25] = 0000000`; SRLI is legal only with `0000000`; and SRAI is
+legal only with `0100000`. Other shift-immediate upper-field values retain the
+decoder's safe inactive defaults.
 
 ## Memory and alignment contract
 
@@ -90,11 +106,21 @@ the core can capture it in the register file. An uninitialized dictionary read
 is not defined to return zero; the current program initializes its load address
 with SW first.
 
-v0.1 verification assumes 4-byte-aligned instructions, branch destinations,
+v0.3 verification assumes 4-byte-aligned instructions, branch destinations,
 and LW/SW addresses. RTL does not detect or trap misalignment or access faults.
 B-immediate reconstruction fixes bit 0 to zero but does not enforce bit 1.
 No byte-addressable storage layout or endianness test exists yet; v0.4 must
 define that contract before adding subword accesses.
+
+## Branch controls
+
+The decoder outputs `branch_type` with project-local codes:
+`NONE=000`, `BEQ=001`, `BNE=010`, `BLT=011`, `BGE=100`, `BLTU=101`, and
+`BGEU=110`. The core computes equality, signed less-than, and unsigned
+less-than explicitly, then selects or inverts the relevant result. `branch`
+must be active before any branch type can take the target. All supported
+branches leave register-file and external data-memory write enables inactive.
+The core does not use an ALU zero flag as the branch decision.
 
 ## Internal controls
 
@@ -103,11 +129,10 @@ These are project-local encodings, not ISA instruction encodings. The generator
 provides an output on every combinational path; an unsupported `imm_type`
 returns zero. U/J formats are not implemented.
 
-The core currently uses ALU ADD=`0000`, SUB=`0001`, AND=`0010`, OR=`0011`,
-SLT=`1000`. The ALU component additionally implements XOR=`0100`, SLL=`0101`,
-SRL=`0110`, SRA=`0111`, and SLTU=`1001`; their presence in the ALU is not CPU
-instruction support. See [control_table.md](control_table.md) for all v0.1
-controls and encoding qualification rules.
+The core uses ALU ADD=`0000`, SUB=`0001`, AND=`0010`, OR=`0011`, XOR=`0100`,
+SLL=`0101`, SRL=`0110`, SRA=`0111`, SLT=`1000`, and SLTU=`1001`. See
+[control_table.md](control_table.md) for all v0.3 controls and encoding
+qualification rules.
 
 Unsupported opcodes or invalid combinations for the supported instruction
 classes keep register write, memory write, and branch controls inactive. Other
@@ -117,12 +142,11 @@ an architectural illegal-instruction trap, and complete invalid-encoding
 coverage has not been established.
 
 For ordinary I-type arithmetic, instruction bits [31:25] belong to the
-immediate; they are not constrained as a register-register `funct7`.
+immediate; they are not constrained as a register-register `funct7`. The
+shift-immediate forms are the deliberate exception described above.
 
 ## Unsupported features and deferred work
 
-- CPU-level XOR/XORI, shifts, SLTU/SLTIU (v0.2).
-- BNE/BLT/BGE/BLTU/BGEU (v0.3).
 - LB/LBU/LH/LHU/SB/SH and byte-write masks (v0.4).
 - LUI/AUIPC/JAL/JALR and U/J immediates (v0.5).
 - FENCE, ECALL, EBREAK, CSR/privileged/trap/interrupt machinery.

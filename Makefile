@@ -26,7 +26,7 @@ CORE_RTL_SOURCES := \
 	$(ALU_RTL_SOURCE)
 CORE_TEST_MODULES := test_core,test_lw_sw,test_beq,test_program
 COCOTB_MAKEFILES := $(shell $(COCOTB_CONFIG) --makefiles 2>/dev/null)
-SEED ?= 20260915
+SEED ?= 20260916
 
 .PHONY: env lint test waves clean check-venv prepare-generated-dirs lint-alu lint-core test-alu waves-alu test-register-file test-pc test-immediate-generator test-decoder test-core waves-core regression
 

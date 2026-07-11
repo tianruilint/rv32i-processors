@@ -1,4 +1,4 @@
-# v0.1 Verification Plan and Evidence
+# v0.3 Verification Plan and Evidence
 
 ## Layers and responsibilities
 
@@ -23,13 +23,19 @@ functional/line/branch coverage measurement in this checkpoint.
 | test_reset_blocks_register_write | Existing x13 value survives an attempted write while reset forces PC=0 |
 | test_lw_sw | Store 42 at byte address 72 and load 42 into x3 |
 | test_beq | Taken +8, not taken, negative -12 branch; a taken BEQ's write enables are checked inactive |
+| test_bne | Equal operands not taken and unequal operands taken; both branch write enables inactive |
+| test_blt_bge | Signed -1 versus 1: BLT taken and BGE not-taken; both branch write enables inactive |
+| test_bltu_bgeu | Unsigned 0xffffffff versus 1: BLTU not-taken and BGEU taken; both branch write enables inactive |
 | test_program | Fetch at PC 0/4/8; final x3=12, PC=12 |
 | test_program2 | Current initial-0 program exits loop, stores/loads 0 at byte address 64, ends at PC=32 |
+| test_xor_sltu_instrs | XOR/XORI and SLTU/SLTIU results, including unsigned ordering and sign-extended immediate behavior |
+| test_shift_instrs | SLL/SLLI, SRL/SRLI, SRA/SRAI; shift amount 31, register source 32, final PC=52, and `data_write_en=0` |
 
-This exercises the 12 supported instruction types, but does not prove all their
+This exercises the 27 supported instruction types, but does not prove all their
 input combinations or all side effects under every condition. In particular,
 not every unsupported encoding, reset/memory interaction, or alignment case is
-tested. Current tests inspect internal register storage for some assertions;
+tested. The relational branch reverse directions and equality boundaries are
+not tested. Current tests inspect internal register storage for some assertions;
 that hierarchy is a test dependency, not a stable external hardware interface.
 
 ## Memory-model ordering

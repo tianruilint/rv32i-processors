@@ -1,4 +1,4 @@
-# DAY13 / v0.1 Synthesis Record
+# Single-cycle Synthesis Record
 
 Top: `rv32i_core`. The six source files below are the hand-written core and its
 five child modules; the full-adder exercise and Python memory models are not
