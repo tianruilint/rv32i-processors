@@ -11,6 +11,13 @@ async def test_immediate_formats(dut):
         (1, 0xFE000800, 0xFFFFFFF0),
         (2, 0x00000800, 0x00000010),
         (2, 0xFE000E80, 0xFFFFFFFC),
+        (3, 0x12345000, 0x12345000),
+        (3, 0xFFF00000, 0xFFF00000),
+        (4, 0x008000EF, 0x00000008),
+        (4, 0x001000EF, 0x00000800),
+        (4, 0x000010EF, 0x00001000),
+        (4, 0xFFDFF06F, 0xFFFFFFFC),
+        (7, 0xFFFFFFFF, 0x00000000),
     ]
 
     for imm_type, instr, expected in vectors:

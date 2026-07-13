@@ -6,11 +6,13 @@ module decoder (
     output logic       reg_write,
     output logic       alu_src,
     output logic       mem_write,
-    output logic       result_src,
+    output logic [1:0] result_src,
     output logic       branch,
-    output logic [1:0] imm_type,
+    output logic [2:0] imm_type,
     output logic [3:0] alu_op,
-    output logic [2:0] branch_type
+    output logic [2:0] branch_type,
+    output logic       alu_a_pc,
+    output logic [1:0] jump_type
 );
 
 localparam logic [6:0] R_TYPE = 7'b0110011;
@@ -30,9 +32,11 @@ localparam logic [3:0] ALU_SLL = 4'b0101;
 localparam logic [3:0] ALU_SRL = 4'b0110;
 localparam logic [3:0] ALU_SRA = 4'b0111;
 
-localparam logic [1:0] IMM_I = 2'b00;
-localparam logic [1:0] IMM_S = 2'b01;
-localparam logic [1:0] IMM_B = 2'b10;
+localparam logic [2:0] IMM_I = 3'b000;
+localparam logic [2:0] IMM_S = 3'b001;
+localparam logic [2:0] IMM_B = 3'b010;
+localparam logic [2:0] IMM_U = 3'b011;
+localparam logic [2:0] IMM_J = 3'b100;
 
 localparam logic [2:0] NONE = 3'b000;
 localparam logic [2:0] BEQ  = 3'b001;
@@ -42,15 +46,22 @@ localparam logic [2:0] BGE  = 3'b100;
 localparam logic [2:0] BLTU = 3'b101;
 localparam logic [2:0] BGEU = 3'b110;
 
+localparam logic [6:0] LUI  = 7'b0110111;
+localparam logic [6:0] AUIPC= 7'b0010111;
+localparam logic [6:0] JAL = 7'b1101111;
+localparam logic [6:0] JALR = 7'b1100111;
+
 always_comb begin
     reg_write   = 1'b0;
     alu_src     = 1'b0;
     mem_write   = 1'b0;
-    result_src  = 1'b0;
+    result_src  = 2'b00;
     branch      = 1'b0;
     imm_type    = IMM_I;
     alu_op      = ALU_ADD;
     branch_type = NONE;
+    alu_a_pc    = 1'b0;
+    jump_type   = 2'b00;
 
     case (opcode)
         R_TYPE: begin
@@ -166,16 +177,56 @@ always_comb begin
         end
 
         LW: begin
+            if (funct3 == 3'b000) begin
+                reg_write  = 1'b1;
+                alu_src    = 1'b1;
+                result_src = 2'b01;
+                imm_type   = IMM_I;
+                alu_op     = ALU_ADD;
+            end
+            if (funct3 == 3'b001) begin
+                reg_write  = 1'b1;
+                alu_src    = 1'b1;
+                result_src = 2'b01;
+                imm_type   = IMM_I;
+                alu_op     = ALU_ADD;
+            end
             if (funct3 == 3'b010) begin
                 reg_write  = 1'b1;
                 alu_src    = 1'b1;
-                result_src = 1'b1;
+                result_src = 2'b01;
+                imm_type   = IMM_I;
+                alu_op     = ALU_ADD;
+            end
+            if (funct3 == 3'b100) begin
+                reg_write  = 1'b1;
+                alu_src    = 1'b1;
+                result_src = 2'b01;
+                imm_type   = IMM_I;
+                alu_op     = ALU_ADD;
+            end
+            if (funct3 == 3'b101) begin
+                reg_write  = 1'b1;
+                alu_src    = 1'b1;
+                result_src = 2'b01;
                 imm_type   = IMM_I;
                 alu_op     = ALU_ADD;
             end
         end
 
         SW: begin
+            if (funct3 == 3'b000) begin
+                alu_src   = 1'b1;
+                mem_write = 1'b1;
+                imm_type  = IMM_S;
+                alu_op    = ALU_ADD;
+            end
+            if (funct3 == 3'b001) begin
+                alu_src   = 1'b1;
+                mem_write = 1'b1;
+                imm_type  = IMM_S;
+                alu_op    = ALU_ADD;
+            end
             if (funct3 == 3'b010) begin
                 alu_src   = 1'b1;
                 mem_write = 1'b1;
@@ -223,6 +274,44 @@ always_comb begin
             end
         end
 
+        LUI: begin
+            reg_write = 1'b1;
+            alu_a_pc = 1'b0;
+            alu_src = 1'b0;
+            result_src = 2'b10;
+            imm_type = IMM_U;
+            alu_op = ALU_ADD;
+            jump_type = 2'b00;
+        end
+        AUIPC: begin
+            reg_write = 1'b1;
+            alu_a_pc = 1'b1;
+            alu_src = 1'b1;
+            result_src = 2'b00;
+            imm_type = IMM_U;
+            alu_op = ALU_ADD;
+            jump_type = 2'b00;
+        end
+        JAL: begin
+            reg_write = 1'b1;
+            alu_a_pc = 1'b0;
+            alu_src = 1'b0;
+            result_src = 2'b11;
+            imm_type = IMM_J;
+            alu_op = ALU_ADD;
+            jump_type = 2'b01;
+        end
+        JALR: begin
+            if (funct3 == 3'b000) begin
+                reg_write = 1'b1;
+                alu_a_pc = 1'b0;
+                alu_src = 1'b1;
+                result_src = 2'b11;
+                imm_type = IMM_I;
+                alu_op = ALU_ADD;
+                jump_type = 2'b10;
+            end
+        end
         default: begin
         end
     endcase

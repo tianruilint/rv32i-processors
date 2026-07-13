@@ -419,3 +419,113 @@ async def test_shift_instrs(dut):
     assert actual_pc == 52
     assert actual_x13 == 0x80000000
     assert actual_data_write_en == 0
+
+
+
+
+@cocotb.test()
+async def test_upper_immediate_instrs(dut):
+    clock = Clock(dut.clk, 10, unit="ns")
+    cocotb.start_soon(clock.start())
+
+    dut.reset.value = 1
+    dut.instr.value = 0
+    dut.data_read_data.value = 0
+
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+
+    dut.reset.value = 0
+    dut.instr.value = 0xABCDE0B7
+
+    await Timer(1, unit="ns")
+    actual_data_write_en = int(dut.data_write_en.value)
+    actual_data_write_strb = int(dut.data_write_strb.value)
+    assert actual_data_write_en == 0
+    assert actual_data_write_strb == 0
+
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+
+    actual_pc = int(dut.current_pc.value)
+    actual_x1 = int(dut.u_register_file.registers[1].value)
+    assert actual_pc == 4
+    assert actual_x1 == 0xABCDE000
+
+    dut.instr.value = 0x12345117
+
+    await Timer(1, unit="ns")
+    actual_data_write_en = int(dut.data_write_en.value)
+    actual_data_write_strb = int(dut.data_write_strb.value)
+    assert actual_data_write_en == 0
+    assert actual_data_write_strb == 0
+
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+
+    actual_pc = int(dut.current_pc.value)
+    actual_x2 = int(dut.u_register_file.registers[2].value)
+    assert actual_pc == 8
+    assert actual_x2 == 0x12345004
+
+
+@cocotb.test()
+async def test_jal_jalr_control_flow(dut):
+    clock = Clock(dut.clk, 10, unit="ns")
+    cocotb.start_soon(clock.start())
+
+    imem = {
+        0:  0x00000293,
+        4:  0x00000313,
+        8:  0x008000EF,
+        12: 0x06300293,
+        16: 0x02500113,
+        20: 0x004101E7,
+        24: 0x04200313,
+        40: 0x12345237,
+    }
+
+    visited = []
+
+    dut.reset.value = 1
+    dut.instr.value = 0
+    dut.data_read_data.value = 0
+
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+
+    dut.reset.value = 0
+
+    for _ in range(16):
+        actual_pc = int(dut.current_pc.value)
+
+        if actual_pc == 44:
+            break
+
+        visited.append(actual_pc)
+
+        dut.instr.value = imem[actual_pc]
+
+        await Timer(1, unit="ns")
+        actual_data_write_en = int(dut.data_write_en.value)
+        assert actual_data_write_en == 0
+
+        await RisingEdge(dut.clk)
+        await Timer(1, unit="ns")
+
+    actual_pc = int(dut.current_pc.value)
+    actual_x1 = int(dut.u_register_file.registers[1].value)
+    actual_x2 = int(dut.u_register_file.registers[2].value)
+    actual_x3 = int(dut.u_register_file.registers[3].value)
+    actual_x4 = int(dut.u_register_file.registers[4].value)
+    actual_x5 = int(dut.u_register_file.registers[5].value)
+    actual_x6 = int(dut.u_register_file.registers[6].value)
+
+    assert visited == [0, 4, 8, 16, 20, 40]
+    assert actual_pc == 44
+    assert actual_x1 == 12
+    assert actual_x2 == 37
+    assert actual_x3 == 24
+    assert actual_x4 == 0x12345000
+    assert actual_x5 == 0
+    assert actual_x6 == 0

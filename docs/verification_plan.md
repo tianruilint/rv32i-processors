@@ -1,4 +1,4 @@
-# v0.3 Verification Plan and Evidence
+# v0.5 Verification Plan and Evidence
 
 ## Layers and responsibilities
 
@@ -22,6 +22,8 @@ functional/line/branch coverage measurement in this checkpoint.
 | test_arithmetic_chain | ADD/ADDI/SUB/AND/ANDI/OR/ORI/SLT/SLTI results, PC progression, x0 protection |
 | test_reset_blocks_register_write | Existing x13 value survives an attempted write while reset forces PC=0 |
 | test_lw_sw | Store 42 at byte address 72 and load 42 into x3 |
+| test_subword_load_store | LB/LBU/LH/LHU/SB/SH behavior, sign/zero extension, lane-aligned stores, and byte preservation |
+| test_subword_lane_boundaries | All four byte lanes, both aligned halfword lanes, and load-side lane selection |
 | test_beq | Taken +8, not taken, negative -12 branch; a taken BEQ's write enables are checked inactive |
 | test_bne | Equal operands not taken and unequal operands taken; both branch write enables inactive |
 | test_blt_bge | Signed -1 versus 1: BLT taken and BGE not-taken; both branch write enables inactive |
@@ -30,24 +32,35 @@ functional/line/branch coverage measurement in this checkpoint.
 | test_program2 | Current initial-0 program exits loop, stores/loads 0 at byte address 64, ends at PC=32 |
 | test_xor_sltu_instrs | XOR/XORI and SLTU/SLTIU results, including unsigned ordering and sign-extended immediate behavior |
 | test_shift_instrs | SLL/SLLI, SRL/SRLI, SRA/SRAI; shift amount 31, register source 32, final PC=52, and `data_write_en=0` |
+| test_upper_immediate_instrs | LUI at PC 0 and AUIPC at PC 4; expected x1/x2 values and no memory-write side effect |
+| test_jal_jalr_control_flow | PC path `0,4,8,16,20,40`, JAL/JALR links, odd-target bit-0 clearing, skipped destinations unchanged, and no memory write |
 
-This exercises the 27 supported instruction types, but does not prove all their
+This exercises the 37 supported instruction types, but does not prove all their
 input combinations or all side effects under every condition. In particular,
-not every unsupported encoding, reset/memory interaction, or alignment case is
-tested. The relational branch reverse directions and equality boundaries are
-not tested. Current tests inspect internal register storage for some assertions;
-that hierarchy is a test dependency, not a stable external hardware interface.
+not every unsupported encoding, reset/memory interaction, or misaligned
+halfword/word access is tested. The relational branch reverse directions and
+equality boundaries are not tested. The integrated jump test uses one positive
+JAL offset and one forward JALR target. A negative J immediate is checked at
+the component level, but a negative taken JAL, target bit 1 behavior, and an
+instruction-address-misalignment exception are not integrated/verified.
+Current tests inspect internal register
+storage for some assertions; that hierarchy is a test dependency, not a stable
+external hardware interface.
 
 ## Memory-model ordering
 
 The test supplies `instr`, lets combinational signals settle, converts DUT
-addresses with `int(...)`, and supplies load data before the rising edge.
-It captures SW address/data/enable for the committing edge and updates the
-Python dictionary for that transaction. After the edge, it allows signal
-updates to settle before inspecting architectural state.
+addresses with `int(...)`, and supplies aligned little-endian load data before
+the rising edge. It captures store address/data/enable/strobe for the
+committing edge and updates only the selected bytes in the Python dictionary.
+After the edge, it allows signal updates to settle before inspecting
+architectural state. `read_word` assembles an aligned 32-bit word and
+`apply_write` preserves bytes whose strobe bits are zero.
 
-No real SRAM, memory latency, or ready/valid handshake is modeled. Literal
-machine words are embedded in Python; no assembler/program-image build is run.
+No real SRAM, memory latency, ready/valid handshake, cross-word assembly/split,
+or alignment exception is modeled. Literal machine words are embedded in
+Python; no assembler/program-image build is run. LB/LBU/SB may use any byte
+address; LH/LHU/SH require bit 0 clear; LW/SW require bits [1:0] clear.
 
 ## Runner behavior and limitations
 
