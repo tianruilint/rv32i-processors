@@ -180,6 +180,42 @@ async def test_blt_bge(dut):
     await Timer(1, unit="ns")
     assert int(dut.current_pc.value) == 20;
 
+    dut.instr.value = 0x00114463;
+    await Timer(1, unit="ns")
+    assert int(dut.rf_we.value) == 0;
+    assert int(dut.data_write_en.value) == 0;
+
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+    assert int(dut.current_pc.value) == 24;
+
+    dut.instr.value = 0x00115463;
+    await Timer(1, unit="ns")
+    assert int(dut.rf_we.value) == 0;
+    assert int(dut.data_write_en.value) == 0;
+
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+    assert int(dut.current_pc.value) == 32;
+
+    dut.instr.value = 0x0010C463;
+    await Timer(1, unit="ns")
+    assert int(dut.rf_we.value) == 0;
+    assert int(dut.data_write_en.value) == 0;
+
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+    assert int(dut.current_pc.value) == 36;
+
+    dut.instr.value = 0x0010D463;
+    await Timer(1, unit="ns")
+    assert int(dut.rf_we.value) == 0;
+    assert int(dut.data_write_en.value) == 0;
+
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+    assert int(dut.current_pc.value) == 44;
+
 
 @cocotb.test()
 async def test_bltu_bgeu(dut):
@@ -223,3 +259,39 @@ async def test_bltu_bgeu(dut):
     await RisingEdge(dut.clk)
     await Timer(1, unit="ns")
     assert int(dut.current_pc.value) == 20;
+
+    dut.instr.value = 0x00116463;
+    await Timer(1, unit="ns")
+    assert int(dut.rf_we.value) == 0;
+    assert int(dut.data_write_en.value) == 0;
+
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+    assert int(dut.current_pc.value) == 28;
+
+    dut.instr.value = 0x00117463;
+    await Timer(1, unit="ns")
+    assert int(dut.rf_we.value) == 0;
+    assert int(dut.data_write_en.value) == 0;
+
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+    assert int(dut.current_pc.value) == 32;
+
+    dut.instr.value = 0x0010E463;
+    await Timer(1, unit="ns")
+    assert int(dut.rf_we.value) == 0;
+    assert int(dut.data_write_en.value) == 0;
+
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+    assert int(dut.current_pc.value) == 36;
+
+    dut.instr.value = 0x0010F463;
+    await Timer(1, unit="ns")
+    assert int(dut.rf_we.value) == 0;
+    assert int(dut.data_write_en.value) == 0;
+
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+    assert int(dut.current_pc.value) == 44;

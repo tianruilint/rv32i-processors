@@ -1,4 +1,4 @@
-# P1 v0.5 Implemented Processor Specification
+# P1 v1.0 Implemented Processor Specification
 
 ## Scope
 
@@ -8,7 +8,7 @@ input and a separate external data-memory interface. The synthesized top is
 `immediate_generator`, and `alu`.
 
 Instruction and data memories are supplied by cocotb/Python. No RTL instruction
-ROM, data RAM, SRAM macro, bus fabric, cache, or pipeline is part of v0.5.
+ROM, data RAM, SRAM macro, bus fabric, cache, or pipeline is part of v1.0.
 Automated tests check register values, memory values, PC, and selected control
 signals. They do not establish complete ISA compliance.
 
@@ -132,7 +132,7 @@ selected lane, SH places `rs2[15:0]` in lanes 0/1 or 2/3, and SW uses all four
 lanes. Strobe bit 0 corresponds to the lowest-address byte, so the supported
 patterns are SB `0001/0010/0100/1000`, SH `0011/1100`, and SW `1111`.
 
-Alignment limits are part of the v0.5 contract: LB/LBU/SB may use any byte
+Alignment limits are part of the v1.0 contract: LB/LBU/SB may use any byte
 address; LH/LHU/SH require `data_addr[0] == 0`; and LW/SW require
 `data_addr[1:0] == 2'b00`. Misaligned halfword/word accesses may span two
 aligned words. The current one-word external interface does not assemble or
@@ -209,4 +209,4 @@ shift-immediate forms are the deliberate exception described above.
 - FENCE, ECALL, EBREAK, CSR/privileged/trap/interrupt machinery.
 - Variable-latency memories, buses, caches, MMU, and pipeline hazards.
 - Assembly-to-image automation, whole-core ISA reference interpreter, formal
-  equivalence, technology-mapped PPA, and STA.
+  equivalence, and physical PPA/signoff.

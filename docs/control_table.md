@@ -1,4 +1,4 @@
-# v0.5 Decoder and Core Control Table
+# v1.0 Decoder and Core Control Table
 
 ## Encoding qualification
 

@@ -59,7 +59,7 @@ Do not recreate an existing working environment. Normal checks are:
 ```sh
 make env
 make lint-core
-make regression SEED=20260921
+make regression SEED=20260922
 ```
 
 `make regression` runs all seven test groups, reports case counts and failed
@@ -92,7 +92,7 @@ GTKWave. Run waveform targets serially: they use the shared `dump.fst` name.
 | `tb/` | cocotb component, instruction, and program tests |
 | `scripts/run_regression.py` | Test scheduling, XML statistics, logs, seed forwarding |
 | `docs/` | Implemented specification, architecture, verification, and debug evidence |
-| `build/`, `reports/`, `waves/` | Reproducible generated artifacts, ignored by Git |
+| `timing/` | Reproducible core-only STA constraints, script, and interpretation |
 
 - Only the 37 listed instruction types are supported; there is no FENCE,
   system/CSR, trap, interrupt, or privileged support.
@@ -111,5 +111,3 @@ GTKWave. Run waveform targets serially: they use the shared `dump.fst` name.
 
 Instruction semantics follow the
 [RISC-V unprivileged ISA specification](https://docs.riscv.org/reference/isa/v20240411/unpriv/rv32.html).
-
-Generated simulator output, reports, caches, and waveforms are ignored by Git.

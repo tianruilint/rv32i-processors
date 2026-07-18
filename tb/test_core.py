@@ -529,3 +529,59 @@ async def test_jal_jalr_control_flow(dut):
     assert actual_x4 == 0x12345000
     assert actual_x5 == 0
     assert actual_x6 == 0
+
+@cocotb.test()
+async def test_jal_negative_offset(dut):
+    clock = Clock(dut.clk, 10, unit="ns")
+    cocotb.start_soon(clock.start())
+
+    dut.reset.value = 1
+    dut.instr.value = 0
+    dut.data_read_data.value = 0
+
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+
+    dut.reset.value = 0
+    dut.instr.value = 0x00100093
+
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+
+    actual_pc = int(dut.current_pc.value)
+    actual_x1 = int(dut.u_register_file.registers[1].value)
+    assert actual_pc == 4
+    assert actual_x1 == 1
+
+    dut.instr.value = 0x00200113
+
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+
+    actual_pc = int(dut.current_pc.value)
+    actual_x2 = int(dut.u_register_file.registers[2].value)
+    assert actual_pc == 8
+    assert actual_x2 == 2
+
+    dut.instr.value = 0xFFDFF1EF
+
+    await Timer(1, unit="ns")
+
+    actual_rf_we = int(dut.rf_we.value)
+    actual_data_write_en = int(dut.data_write_en.value)
+    actual_data_write_strb = int(dut.data_write_strb.value)
+    assert actual_rf_we == 1
+    assert actual_data_write_en == 0
+    assert actual_data_write_strb == 0
+
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+
+    actual_pc = int(dut.current_pc.value)
+    actual_x1 = int(dut.u_register_file.registers[1].value)
+    actual_x2 = int(dut.u_register_file.registers[2].value)
+    actual_x3 = int(dut.u_register_file.registers[3].value)
+    assert actual_pc == 4
+    assert actual_x1 == 1
+    assert actual_x2 == 2
+    assert actual_x3 == 12

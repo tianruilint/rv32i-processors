@@ -1,9 +1,9 @@
-# v0.5 Single-cycle Datapath
+# v1.0 Single-cycle Datapath
 
 The boxes inside the core are synthesizable logic. Both memory models below
 are cocotb/Python testbench components, not RTL RAMs.
 
-The v0.5 datapath keeps the v0.1 single-cycle structure. The decoder selects
+The v1.0 datapath keeps the v0.1 single-cycle structure. The decoder selects
 XOR, unsigned comparison, register/immediate shifts, six branch types, and the
 byte/halfword load/store group, plus LUI/AUIPC/JAL/JALR. Pipeline registers
 remain outside this checkpoint.
