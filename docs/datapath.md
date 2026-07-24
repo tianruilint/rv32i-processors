@@ -1,12 +1,59 @@
-# v1.0 Single-cycle Datapath
+# P1 Datapaths: single-cycle and five-stage pipeline
 
-The boxes inside the core are synthesizable logic. Both memory models below
-are cocotb/Python testbench components, not RTL RAMs.
+Source tops: `rtl/rv32i_core.sv` and `rtl/rv32i_pipeline_core.sv`.
+Both use the shared decoder, register file, immediate generator, and ALU.
+Instruction and data memories are external cocotb/Python components.
 
-The v1.0 datapath keeps the v0.1 single-cycle structure. The decoder selects
-XOR, unsigned comparison, register/immediate shifts, six branch types, and the
-byte/halfword load/store group, plus LUI/AUIPC/JAL/JALR. Pipeline registers
-remain outside this checkpoint.
+## v2.0 stage map
+
+```mermaid
+flowchart LR
+    IF["IF: PC + external instruction word"] --> IFID["IF/ID"]
+    IFID --> ID["ID: decoder + immediate + register-file reads"]
+    ID --> IDEX["ID/EX"]
+    IDEX --> EX["EX: forwarding + ALU + branch/jump target"]
+    EX --> EXMEM["EX/MEM"]
+    EXMEM --> MEM["MEM: external word + lane selection/store strobe"]
+    MEM --> MEMWB["MEM/WB"]
+    MEMWB --> WB["WB: result selection + register-file write"]
+    EXMEM -. "ALU / LUI / PC+4 forward" .-> EX
+    MEMWB -. "all WB results forward" .-> EX
+    MEMWB -. "same-edge bypass" .-> ID
+    IDEX -. "load-use detector" .-> IFID
+    EX -. "taken redirect: PC update and two-slot flush" .-> IFID
+```
+
+Only MEM may write external data memory; only WB may write the register file.
+An invalid slot cannot perform either write. The EX/MEM forwarding path is
+disabled for loads because load data is captured at MEM/WB. If ID uses the rd
+of a load in EX, the frontend and IF/ID hold while ID/EX becomes a bubble.
+During the held cycle the load advances through MEM while EX contains the
+bubble. At the following edge the load enters MEM/WB and the consumer enters
+EX, where MEM/WB forwarding supplies the data. A taken EX branch or jump
+invalidates both younger slots, then fetch resumes from the target PC.
+Counters count non-reset cycles and valid WB retirements, not test cases or
+static instruction kinds.
+
+## RTL modules and stored state
+
+| File/module | Role |
+| --- | --- |
+| `pipeline_frontend.sv` | PC and IF/ID registers; normal fetch, hold, and redirect |
+| `pipeline_id.sv` | Combinational decode/read/bypass; contains the shared register-file instance |
+| `pipeline_id_ex.sv` | ID/EX state, cleared for reset, bubble, or flush |
+| `pipeline_ex.sv` | Combinational forwarding, ALU, branch comparison, and redirect |
+| `pipeline_ex_mem.sv` | EX/MEM state; carries the raw forwarded store operand |
+| `pipeline_hazard.sv` | Combinational load-use detection and stall/bubble/flush controls |
+| `pipeline_mem.sv` | Combinational load extension and lane-aligned store interface |
+| `pipeline_mem_wb.sv` | MEM/WB state, including retirement PC |
+| `rv32i_pipeline_core.sv` | Wiring, WB selection, EX/MEM PC observation register, and counters |
+
+The register-file instance sits inside the ID module, but its write port is
+driven exclusively by WB. Physical module placement does not change the stage
+that authorizes the write. EX/MEM and MEM/WB continue advancing during a
+load-use stall; only PC/IF-ID hold, and ID/EX receives a bubble.
+
+## v1.0 single-cycle map
 
 ```mermaid
 flowchart LR
@@ -125,3 +172,31 @@ operations, even addresses for which a word access would be misaligned.
 The core has no internal memory and no cross-word assembly/split path. A
 halfword or word access that is misaligned under the documented limits is
 unsupported and unverified, with no misalignment exception.
+
+## Why an array becomes flip-flops and MUXes
+
+`register_file.sv` declares 32 words of 32 bits. The single-cycle hierarchical generic synthesis
+reported 1024 enabled single-bit flip-flops and 1984 MUXes in this module.
+Two independent read addresses require two data-selection networks. A binary
+32-to-1 selection tree has 31 two-input MUXes per bit; `31 * 32 * 2 = 1984`
+matches this run. This is an explanation of the observed structure, not a
+guarantee that every synthesis configuration will produce identical cells.
+
+No memory objects remained after mapping; storage did not disappear. No SRAM
+macro was selected. Architectural x0 behavior is implemented by the RTL's
+read bypass/write protection; do not infer that synthesis must remove exactly
+32 storage cells for x0.
+
+## Timing and performance boundary
+
+Register-file reads are combinational; writes occur on clock edges. A complete
+single-cycle load path includes register read, address calculation, external
+memory, and writeback. Core-only STA omits the memory delay and therefore
+cannot measure that complete path.
+
+Pipelining separates combinational work with registers and adds forwarding
+and control logic. It can shorten a required clock period, while stalls,
+flushes, and fill increase finite-program cycle counts. Actual execution time
+depends on both quantities. The measured cycles/CPI are in
+[verification.md](verification.md); the pre-layout STA results and unresolved
+electrical constraints are in [synthesis.md](synthesis.md).

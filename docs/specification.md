@@ -1,18 +1,22 @@
-# P1 v1.0 Implemented Processor Specification
+# P1 Processor Specification
+
+The single-cycle core (v1.0) and five-stage core (v2.0) implement the same
+37-instruction RV32I subset. This is not complete RV32I ISA compliance.
 
 ## Scope
 
-The design is a 32-bit, single-cycle, RV32I-subset core with an instruction
+The v1.0 design is a 32-bit, single-cycle, RV32I-subset core with an instruction
 input and a separate external data-memory interface. The synthesized top is
 `rv32i_core`; it instantiates `pc`, `decoder`, `register_file`,
 `immediate_generator`, and `alu`.
 
 Instruction and data memories are supplied by cocotb/Python. No RTL instruction
-ROM, data RAM, SRAM macro, bus fabric, cache, or pipeline is part of v1.0.
+ROM, data RAM, SRAM macro, bus fabric, or cache is part of either core.
+The pipeline is implemented in a separate `rv32i_pipeline_core` top.
 Automated tests check register values, memory values, PC, and selected control
 signals. They do not establish complete ISA compliance.
 
-## Core interface
+## v1.0 core interface
 
 Directions are relative to `rv32i_core`. Data/address ports are unsigned
 `logic` vectors; signed operations are selected explicitly inside the ALU.
@@ -35,7 +39,7 @@ decide when to supply read data. For non-memory instructions, `data_addr`,
 `data_write_data`, and `data_write_strb` may still change; they do not indicate
 a memory operation without the relevant instruction or write enable.
 
-## Architectural state and timing
+## Shared architectural state and v1.0 timing
 
 - `x0` through `x31` are 32-bit architectural registers.
 - The register file has two combinational read ports and one synchronous write
@@ -111,10 +115,12 @@ decoder's safe inactive defaults.
 ## Memory and alignment contract
 
 The external instruction model maps byte addresses to 32-bit machine words.
-Each iteration reads the DUT PC and supplies `imem[pc]`; the testbench does not
-drive PC. An absent dictionary entry fails the Python test, not an architectural
-fetch exception. Program-completion PC values are testbench sentinels; there is
-no CPU halt instruction or halt mechanism.
+The testbench reads the DUT PC and supplies the corresponding instruction;
+it does not drive PC. Single-cycle program tests use explicit dictionary
+entries. Pipeline program tests supply ADDI x0,x0,0 outside the supplied
+program while waiting for the terminal instruction to retire. These are
+testbench policies, not architectural fetch exceptions. There is no CPU halt
+instruction or halt mechanism.
 
 The external data model owns a byte-addressed, little-endian dictionary. The
 core exports the full 32-bit effective byte address in `data_addr`. For a load,
@@ -142,8 +148,9 @@ architectural behavior.
 
 The RTL contains no instruction or data memory. Python owns dictionary contents,
 word assembly, and strobe-preserving writes through the test helpers
-`read_word` and `apply_write`. An uninitialized dictionary read is not defined
-to return zero.
+`read_word` and `apply_write`. Uninitialized memory has no architectural
+guarantee; the pipeline/benchmark helpers return zero for absent bytes as a
+testbench convention.
 
 ## Branch controls
 
@@ -186,7 +193,7 @@ input. `jump_type` is none=`00`, JAL=`01`, and JALR=`10`.
 
 The core uses ALU ADD=`0000`, SUB=`0001`, AND=`0010`, OR=`0011`, XOR=`0100`,
 SLL=`0101`, SRL=`0110`, SRA=`0111`, SLT=`1000`, and SLTU=`1001`. See
-[control_table.md](control_table.md) for all v0.5 controls and encoding
+[control_table.md](control_table.md) for all implemented controls and encoding
 qualification rules.
 
 Unsupported opcodes or invalid combinations for the supported instruction
@@ -200,13 +207,57 @@ For ordinary I-type arithmetic, instruction bits [31:25] belong to the
 immediate; they are not constrained as a register-register `funct7`. The
 shift-immediate forms are the deliberate exception described above.
 
-## Unsupported features and deferred work
+## v2.0 five-stage pipeline contract
+
+`rv32i_pipeline_core` has the same clock, reset, instruction, data-read, PC,
+address, write-data, write-enable, and byte-strobe ports as the single-cycle
+core. It additionally exposes `retire_valid`, `retire_pc`, `cycle_count`, and
+`retired_count` for deterministic test termination and performance measurement.
+Counters clear on synchronous reset. `cycle_count` increments each non-reset
+edge; `retired_count` increments when a valid MEM/WB instruction retires at
+that edge. A valid slot containing an unsupported encoding still occupies the
+pipeline and counts as retired, but its decoded write controls remain inactive.
+
+The four stage boundaries are IF/ID, ID/EX, EX/MEM, and MEM/WB. IF reads the
+external instruction word for `current_pc`. ID shares the v1.0 decoder,
+immediate generator, and register file, and includes a WB-to-ID bypass.
+EX uses the ALU, compares branches, chooses JAL/JALR targets, and forwards
+operands from EX/MEM or MEM/WB. A load cannot forward from EX/MEM because its
+data has not yet passed through MEM. The EX/MEM candidate has priority over
+MEM/WB for the same destination. MEM selects little-endian subword lanes and
+performs stores; WB alone writes the register file. Stores require a valid
+EX/MEM slot, store control, a legal lane strobe, and reset low. WB writes
+require a valid MEM/WB slot, register-write control, reset low, and nonzero rd.
+
+When an EX-stage load writes a register used by the instruction in ID, the
+hazard unit holds PC and IF/ID for one cycle and inserts an invalid ID/EX
+bubble. The older EX/MEM and MEM/WB stages keep advancing. Taken branches and
+jumps resolve in EX, set the target PC, and flush IF/ID and ID/EX. The control
+priority is reset, then redirect/flush, then load-use stall, then normal
+advance. Invalid slots carry no register or memory write control. Pipeline
+reset clears all valid bits, PC, and counters, but not the register-file array.
+
+The external instruction and data memory contract remains zero-wait and
+combinational. The testbench supplies `instr` for the currently exposed fetch
+PC and the aligned data word for the address exposed by the MEM stage before
+the next rising edge. There is no memory request/response handshake.
+
+## Unsupported features
 
 - Misaligned halfword/word accesses that require two aligned external words;
   no split/assemble path or misalignment trap exists.
 - Instruction-address-misaligned targets and the corresponding exception;
   targets with bit 1 set are unsupported/unverified.
 - FENCE, ECALL, EBREAK, CSR/privileged/trap/interrupt machinery.
-- Variable-latency memories, buses, caches, MMU, and pipeline hazards.
+- Variable-latency memories, buses, caches, and MMU. The implemented pipeline
+  handles the listed RAW/branch hazards, not structural or variable-latency
+  memory hazards.
 - Assembly-to-image automation, whole-core ISA reference interpreter, formal
-  equivalence, and physical PPA/signoff.
+  equivalence, and physical PPA/signoff. A basic core-only pre-layout STA run
+  exists, but not a memory-inclusive or post-layout timing result.
+
+## Verification
+
+The test inventory and cycle/CPI measurements are documented in
+[verification.md](verification.md). Tool, library, constraint, and physical
+implementation limits are documented in [synthesis.md](synthesis.md).

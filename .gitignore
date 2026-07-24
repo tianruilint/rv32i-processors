@@ -1,10 +1,10 @@
-# Project-local Python environment and caches
 .venv/
 __pycache__/
 *.py[cod]
 .pytest_cache/
 
-# Simulator and synthesis products
+/build/
+/waves/
 obj_dir/
 sim_build/
 *.o
@@ -12,19 +12,16 @@ sim_build/
 *.a
 *.so
 *.log
-dump.vcd
-dump.fst
+*.fst
+*.vcd
 results.xml
 
-# Managed generated-output directories
-build/*
-!build/.gitkeep
-reports/*
-!reports/.gitkeep
-waves/*
-!waves/.gitkeep
+/reports/*
+!/reports/timing/
+/reports/timing/*
+!/reports/timing/core_setup_nangate45_typ_10ns.txt
+!/reports/timing/pipeline_setup_nangate45_typ_10ns.txt
 
-# Editor and OS metadata
 *~
 .DS_Store
 Thumbs.db

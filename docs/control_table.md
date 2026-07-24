@@ -1,4 +1,27 @@
-# v1.0 Decoder and Core Control Table
+# Shared Decoder and Pipeline Control Table
+
+Source: `rtl/decoder.sv`, `rtl/rv32i_core.sv`, and `rtl/rv32i_pipeline_core.sv`.
+The instruction decode values are shared by the single-cycle and pipeline tops.
+This table records implemented outputs, not proposed behavior.
+
+## v2.0 control lifetime
+
+| Control/data | ID/EX | EX/MEM | MEM/WB | Consumer |
+| --- | --- | --- | --- | --- |
+| `alu_op`, `alu_src`, `alu_a_pc`, operands, immediate | yes | result only | result only | EX ALU |
+| `branch`, `branch_type`, `jump_type` | yes | no | no | EX redirect |
+| `funct3` | yes | yes | no | MEM byte/half/word selection |
+| `mem_write`, store data | yes | yes | no | MEM store interface |
+| `reg_write`, `rd_addr`, `result_src` | yes | yes | yes | WB register write |
+| `imm`, `pc_plus_4` | yes | yes | yes | LUI/link WB and forwarding |
+| `valid` | yes | yes | yes | side-effect and retirement gating |
+
+Hazard priority is reset > EX redirect/flush > load-use stall > normal
+advance. An EX-stage load with nonzero rd matching an actual ID source holds
+the frontend and inserts one invalid ID/EX bubble. EX/MEM forwards only
+non-load writeback results; MEM/WB forwards all four result types. A taken
+redirect flushes the two younger pipeline slots. The register file is written
+only by valid WB, while stores commit only from valid MEM.
 
 ## Encoding qualification
 
@@ -96,8 +119,8 @@ ALU operation codes here are internal, not ISA funct3 values.
 | BGEU | 0 | 0 | 0 | 0 | 1 | B | SUB `0001` |
 | Unsupported/invalid | 0 | 0 | 0 | 0 | 0 | I | ADD `0000` |
 
-All rows above have `alu_a_pc=0` and `jump_type=00`. The v0.5 rows and their
-new controls are:
+All rows above have `alu_a_pc=0` and `jump_type=00`. Upper-immediate and
+jump controls are:
 
 | Instruction | reg_write | alu_src | mem_write | result_src | branch | imm_type | alu_op | alu_a_pc | jump_type |
 | --- | ---: | ---: | ---: | --- | ---: | --- | --- | ---: | --- |
@@ -110,7 +133,7 @@ new controls are:
 All outputs receive defaults before the opcode case. Empty/default branches
 retain these assignments, rather than retaining a previous instruction's state.
 
-## Core qualification and side effects
+## Single-cycle qualification and side effects
 
 - `rf_we` is `reg_write` gated off by reset. The register file separately rejects
   writes to destination x0.
@@ -138,8 +161,8 @@ retain these assignments, rather than retaining a previous instruction's state.
   but PC advances by four when not in reset. No illegal-instruction trap exists.
 
 The decoder unit test is one cocotb case containing 42 legal and boundary
-vectors; it is not exhaustive. Its v0.5 vectors include LUI, AUIPC, JAL, a
+vectors; it is not exhaustive. Its vectors include LUI, AUIPC, JAL, a
 valid JALR with nonzero immediate upper bits, and an invalid JALR funct3. Valid
 OR/SLT and other architectural outcomes
 are also exercised by the integrated arithmetic chain;
-see [verification_plan.md](verification_plan.md) for the evidence boundary.
+see [verification.md](verification.md) for the evidence boundary.

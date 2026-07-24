@@ -42,16 +42,26 @@ def main():
     args = parser.parse_args()
 
     targets = {
-        "test": "reports/full_adder.xml",
-        "test-alu": "reports/alu.xml",
-        "test-register-file": "reports/register_file.xml",
-        "test-pc": "reports/pc.xml",
-        "test-immediate-generator": "reports/immediate_generator.xml",
-        "test-decoder": "reports/decoder.xml",
-        "test-core": "reports/core.xml",
+        "test": "build/reports/full_adder.xml",
+        "test-alu": "build/reports/alu.xml",
+        "test-register-file": "build/reports/register_file.xml",
+        "test-pc": "build/reports/pc.xml",
+        "test-immediate-generator": "build/reports/immediate_generator.xml",
+        "test-decoder": "build/reports/decoder.xml",
+        "test-core": "build/reports/core.xml",
+        "test-single-cycle-benchmark": "build/reports/single_cycle_benchmark.xml",
+        "test-pipeline-frontend": "build/reports/pipeline_frontend.xml",
+        "test-pipeline-id": "build/reports/pipeline_id.xml",
+        "test-pipeline-id-ex": "build/reports/pipeline_id_ex.xml",
+        "test-pipeline-ex": "build/reports/pipeline_ex.xml",
+        "test-pipeline-ex-mem": "build/reports/pipeline_ex_mem.xml",
+        "test-pipeline-hazard": "build/reports/pipeline_hazard.xml",
+        "test-pipeline-mem": "build/reports/pipeline_mem.xml",
+        "test-pipeline-mem-wb": "build/reports/pipeline_mem_wb.xml",
+        "test-pipeline-core": "build/reports/pipeline_core.xml",
     }
 
-    os.makedirs("reports/regression", exist_ok=True)
+    os.makedirs("build/reports/regression", exist_ok=True)
 
     failed = []
 
@@ -60,7 +70,7 @@ def main():
     total_skipped = 0
 
     for target, report_path in targets.items():
-        log_path = f"reports/regression/{target}.log"
+        log_path = f"build/reports/regression/{target}.log"
 
         code = run_one(target, args.seed, log_path)
         if code != 0:
