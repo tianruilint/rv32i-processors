@@ -20,17 +20,16 @@ See the [datapath diagrams](docs/datapath.md) and
 
 ## Verification
 
-Tests check instruction results, x0, reset, subword memory, forwarding,
-load-use stalls, and suppression of wrong-path register/memory writes.
+`make regression` runs **74 cocotb cases across 17 Verilator targets**:
+44 module-level, 20 single-cycle integration/benchmark and 10 pipeline
+integration cases. Tests check instruction results, x0, reset, subword
+memory, forwarding, load-use stalls, and suppression of wrong-path
+register/memory writes.
 
 ## Cycle and CPI comparison
 
-The same machine-code programs run on both cores with zero-wait memory.
-Cycles exclude reset and include pipeline fill, stalls, and flushes.
-
-Execution time also depends on clock period; frequency measurements are
-outside this comparison. The [measurement method](docs/verification.md#cycle-and-cpi-measurements)
-explains retirement boundaries and hazard penalties.
+`make benchmark SEED=20261005` runs four workloads on each core
+(separate from the default 74). See the [measurement method](docs/verification.md#cycle-and-cpi-measurements).
 
 ## Supported instructions
 
@@ -43,7 +42,9 @@ explains retirement boundaries and hazard penalties.
 
 ## Known limitations
 
-- RV32I subset without FENCE, system/CSR instructions, exceptions, or interrupts.
+- Excluded RV32I base instructions: FENCE, ECALL, EBREAK.
+- Also unsupported: Zicsr CSR instructions, Zifencei FENCE.I, privileged MRET,
+  exceptions/traps and interrupts; these are not all RV32I base instructions.
 - External zero-wait memory models; naturally aligned halfword/word accesses
   and four-byte-aligned instruction addresses.
 
@@ -76,7 +77,8 @@ python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -r requirements.txt
 make lint-core lint-pipeline
-make regression SEED=20260924
+make regression SEED=20261005
+make benchmark SEED=20261005
 ```
 
 `make test-pipeline-core` runs the

@@ -176,6 +176,15 @@ async def test_invalid_slot_safety(dut):
 async def test_wb_to_id_bypass(dut):
     await setup(dut)
 
+    dut.wb_valid.value = 1
+    dut.wb_reg_write.value = 1
+    dut.wb_rd_addr.value = 5
+    dut.wb_data.value = 0
+    await RisingEdge(dut.clk)
+    await Timer(1, unit="ns")
+    dut.wb_valid.value = 0
+    dut.wb_reg_write.value = 0
+
     dut.if_id_instr.value = 0x005281B3
     dut.if_id_valid.value = 1
 

@@ -1,4 +1,5 @@
 SHELL := /bin/bash
+.DEFAULT_GOAL := regression
 export PYTHONDONTWRITEBYTECODE := 1
 
 PROJECT_ROOT := $(abspath .)
@@ -42,6 +43,33 @@ PIPELINE_RTL_SOURCES := \
 	$(ALU_RTL_SOURCE)
 COCOTB_MAKEFILES := $(shell $(COCOTB_CONFIG) --makefiles 2>/dev/null)
 SEED ?= 20260916
+BENCHMARK_DIR := $(BUILD_DIR)/benchmarks
+
+.PHONY: benchmark benchmark-single benchmark-pipeline
+
+benchmark: check-venv
+	@'$(PYTHON)' scripts/run_benchmarks.py --seed '$(SEED)'
+
+define RUN_MATCHED_BENCHMARK
+	@mkdir -p '$(BENCHMARK_DIR)' '$(BENCHMARK_DIR)/results'
+	@rm -f '$(BENCHMARK_DIR)/$(1).xml'
+	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
+	BENCHMARK_RESULTS_DIR='$(BENCHMARK_DIR)/results' \
+	COMPILE_ARGS='--Wall -Wno-fatal' \
+	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
+		SIM=verilator TOPLEVEL_LANG=verilog \
+		VERILOG_SOURCES='$(3)' COCOTB_TOPLEVEL=$(2) \
+		COCOTB_TEST_MODULES=test_benchmarks_extended \
+		SIM_BUILD='$(BUILD_DIR)/$(4)' \
+		COCOTB_RESULTS_FILE='$(BENCHMARK_DIR)/$(1).xml' \
+		'$(BENCHMARK_DIR)/$(1).xml'
+endef
+
+benchmark-single: check-venv
+	$(call RUN_MATCHED_BENCHMARK,single_cycle,rv32i_core,$(CORE_RTL_SOURCES),verilator-core)
+
+benchmark-pipeline: check-venv
+	$(call RUN_MATCHED_BENCHMARK,pipeline,rv32i_pipeline_core,$(PIPELINE_RTL_SOURCES),verilator-pipeline_core)
 
 .PHONY: env lint test waves clean check-venv prepare-generated-dirs lint-alu lint-core lint-pipeline test-alu waves-alu test-register-file test-pc test-immediate-generator test-decoder test-core test-single-cycle-benchmark waves-core regression test-pipeline-frontend test-pipeline-id test-pipeline-id-ex test-pipeline-ex test-pipeline-ex-mem test-pipeline-hazard test-pipeline-mem test-pipeline-mem-wb test-pipeline-core
 

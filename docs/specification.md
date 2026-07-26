@@ -248,7 +248,10 @@ the next rising edge. There is no memory request/response handshake.
   no split/assemble path or misalignment trap exists.
 - Instruction-address-misaligned targets and the corresponding exception;
   targets with bit 1 set are unsupported/unverified.
-- FENCE, ECALL, EBREAK, CSR/privileged/trap/interrupt machinery.
+- Excluded RV32I base instructions: FENCE, ECALL, EBREAK.
+- Also unsupported: Zicsr CSR instructions, Zifencei FENCE.I, privileged
+  MRET and trap/interrupt machinery. These are extension/system capabilities,
+  not additional RV32I base instruction omissions.
 - Variable-latency memories, buses, caches, and MMU. The implemented pipeline
   handles the listed RAW/branch hazards, not structural or variable-latency
   memory hazards.

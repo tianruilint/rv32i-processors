@@ -3,8 +3,22 @@
 ## Regression
 
 ```sh
-make regression SEED=20260924
+make regression SEED=20261005
 ```
+
+The mutually exclusive accounting is:
+
+| Category | Cases | Definition |
+| --- | ---: | --- |
+| Module-level | 44 | 43 CPU module cases + 1 full-adder bootstrap |
+| Single-cycle integration/benchmarks | 20 | 17 in test-core + 3 single-cycle matched benchmarks |
+| Pipeline integration | 10 | 10 in test-pipeline-core |
+| Total | 74 | No case appears in two categories |
+
+`test-core` comprises 7 core, 3 load/store, 4 branch and 3 program cases.
+The three separate single-cycle benchmark cases bring the category to 20.
+Forwarding, hazard, x0 and reset are intersecting checks, not additional
+cases. The 17 targets and 74 cases are listed below.
 
 | Make target | XML under build/reports/ | Cases |
 | --- | --- | ---: |
@@ -83,6 +97,27 @@ The single-cycle harness counts committing edges through its terminal
 instruction. The pipeline harness counts from the first non-reset edge
 through retirement of the terminal instruction and checks `retired_count`
 against the observed retirement trace.
+
+## Optional longer matched programs
+
+```sh
+make benchmark SEED=20261005
+```
+
+`tb/test_benchmarks_extended.py` runs four independent cases on each core.
+`scripts/run_benchmarks.py` checks 4+4 XML results and matching machine-code
+and complete retirement-PC trace hashes. It binds actual RTL/test/runner
+hashes to `build/benchmarks/summary.json`; reset is excluded from the window,
+which ends at the designated terminal instruction's commit/retirement.
+Each benchmark target regenerates its XML, and the runner rejects a report
+that was not written during the current execution.
+
+These **8 optional cases are not in the default 17-target/74-case inventory**.
+
+The optional checks establish all checked register preconditions, final
+register values, complete retirement sequences, zero unexpected stores,
+and exact stall/redirect/counter values. They remain directed expectations,
+not an independent whole-core ISA interpreter.
 
 ## Reports and reproduction
 
