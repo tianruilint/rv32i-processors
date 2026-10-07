@@ -1,4 +1,4 @@
-# P1 Processor Specification
+# Processor Specification
 
 The single-cycle core (v1.0) and five-stage core (v2.0) implement the same
 37-instruction RV32I subset. This is not complete RV32I ISA compliance.
@@ -255,7 +255,7 @@ the next rising edge. There is no memory request/response handshake.
 - Variable-latency memories, buses, caches, and MMU. The implemented pipeline
   handles the listed RAW/branch hazards, not structural or variable-latency
   memory hazards.
-- Assembly-to-image automation, whole-core ISA reference interpreter, formal
+- Assembly-to-image automation, external ISS/ISA compliance suite, formal
   equivalence, and physical PPA/signoff. A basic core-only pre-layout STA run
   exists, but not a memory-inclusive or post-layout timing result.
 

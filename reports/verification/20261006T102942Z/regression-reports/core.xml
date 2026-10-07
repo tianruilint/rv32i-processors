@@ -1,0 +1,22 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="20261006" />
+    <testcase name="test_arithmetic_chain" classname="test_core" file="/home/terrylin/work/rv32i-single-cycle/tb/test_core.py" lineno="6" time="0.0008449554443359375" sim_time_ns="131.0" ratio_time="155037.76072234762" />
+    <testcase name="test_reset_blocks_register_write" classname="test_core" file="/home/terrylin/work/rv32i-single-cycle/tb/test_core.py" lineno="146" time="0.00018477439880371094" sim_time_ns="31.0" ratio_time="167772.16" />
+    <testcase name="test_xor_sltu_instrs" classname="test_core" file="/home/terrylin/work/rv32i-single-cycle/tb/test_core.py" lineno="182" time="0.0002815723419189453" sim_time_ns="91.0" ratio_time="323185.1515664691" />
+    <testcase name="test_shift_instrs" classname="test_core" file="/home/terrylin/work/rv32i-single-cycle/tb/test_core.py" lineno="278" time="0.00036334991455078125" sim_time_ns="141.0" ratio_time="388055.6850393701" />
+    <testcase name="test_upper_immediate_instrs" classname="test_core" file="/home/terrylin/work/rv32i-single-cycle/tb/test_core.py" lineno="426" time="0.00019502639770507812" sim_time_ns="31.0" ratio_time="158952.84107579463" />
+    <testcase name="test_jal_jalr_control_flow" classname="test_core" file="/home/terrylin/work/rv32i-single-cycle/tb/test_core.py" lineno="472" time="0.00027632713317871094" sim_time_ns="71.0" ratio_time="256941.8326143227" />
+    <testcase name="test_jal_negative_offset" classname="test_core" file="/home/terrylin/work/rv32i-single-cycle/tb/test_core.py" lineno="533" time="0.000553131103515625" sim_time_ns="41.0" ratio_time="74123.47586206897" />
+    <testcase name="test_lw_sw" classname="test_lw_sw" file="/home/terrylin/work/rv32i-single-cycle/tb/test_lw_sw.py" lineno="23" time="0.0009579658508300781" sim_time_ns="51.0" ratio_time="53237.80587356894" />
+    <testcase name="test_subword_load_store" classname="test_lw_sw" file="/home/terrylin/work/rv32i-single-cycle/tb/test_lw_sw.py" lineno="109" time="0.0004107952117919922" sim_time_ns="91.0" ratio_time="221521.56935577482" />
+    <testcase name="test_subword_lane_boundaries" classname="test_lw_sw" file="/home/terrylin/work/rv32i-single-cycle/tb/test_lw_sw.py" lineno="260" time="0.0005583763122558594" sim_time_ns="121.0" ratio_time="216699.73697694278" />
+    <testcase name="test_beq" classname="test_beq" file="/home/terrylin/work/rv32i-single-cycle/tb/test_beq.py" lineno="6" time="0.0002627372741699219" sim_time_ns="71.0" ratio_time="270231.9274047187" />
+    <testcase name="test_bne" classname="test_beq" file="/home/terrylin/work/rv32i-single-cycle/tb/test_beq.py" lineno="79" time="0.0003254413604736328" sim_time_ns="61.0" ratio_time="187437.76117216118" />
+    <testcase name="test_blt_bge" classname="test_beq" file="/home/terrylin/work/rv32i-single-cycle/tb/test_beq.py" lineno="140" time="0.0003037452697753906" sim_time_ns="91.0" ratio_time="299593.14285714284" />
+    <testcase name="test_bltu_bgeu" classname="test_beq" file="/home/terrylin/work/rv32i-single-cycle/tb/test_beq.py" lineno="220" time="0.0002980232238769531" sim_time_ns="90.99999999999989" ratio_time="305345.3311999996" />
+    <testcase name="test_program" classname="test_program" file="/home/terrylin/work/rv32i-single-cycle/tb/test_program.py" lineno="7" time="0.0001552104949951172" sim_time_ns="41.0" ratio_time="264157.3947772657" />
+    <testcase name="test_program2" classname="test_program" file="/home/terrylin/work/rv32i-single-cycle/tb/test_program.py" lineno="44" time="0.000385284423828125" sim_time_ns="61.0" ratio_time="158324.59405940594" />
+    <testcase name="test_program2_initial_one" classname="test_program" file="/home/terrylin/work/rv32i-single-cycle/tb/test_program.py" lineno="115" time="0.0005779266357421875" sim_time_ns="101.0" ratio_time="174762.66666666666" />
+  </testsuite>
+</testsuites>

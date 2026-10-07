@@ -1,4 +1,4 @@
-# P1 Datapaths: single-cycle and five-stage pipeline
+# Datapaths: single-cycle and five-stage pipeline
 
 Source tops: `rtl/rv32i_core.sv` and `rtl/rv32i_pipeline_core.sv`.
 Both use the shared decoder, register file, immediate generator, and ALU.

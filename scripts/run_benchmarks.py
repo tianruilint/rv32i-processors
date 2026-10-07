@@ -27,7 +27,7 @@ def sources():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--seed", type=int, default=20261005)
+    parser.add_argument("--seed", type=int, default=20261006)
     args = parser.parse_args()
     OUTPUT.mkdir(parents=True, exist_ok=True)
     before = sources()

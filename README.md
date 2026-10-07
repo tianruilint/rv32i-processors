@@ -20,16 +20,62 @@ See the [datapath diagrams](docs/datapath.md) and
 
 ## Verification
 
+Latest full regression, matched benchmarks, synthesis and STA rerun:
+**2026-10-06**. The
+[dated run manifest](reports/verification/20261006T102942Z/manifest.json)
+records source hashes, tool versions, commands and raw outputs.
+
 `make regression` runs **74 cocotb cases across 17 Verilator targets**:
 44 module-level, 20 single-cycle integration/benchmark and 10 pipeline
 integration cases. Tests check instruction results, x0, reset, subword
 memory, forwarding, load-use stalls, and suppression of wrong-path
 register/memory writes.
 
+Both cores passed Yosys structural checks. Detailed test assertions,
+vector counts, and reproduction instructions are in
+[verification](docs/verification.md); mapped results and STA are in
+[synthesis and timing](docs/synthesis.md).
+
 ## Cycle and CPI comparison
 
-`make benchmark SEED=20261005` runs four workloads on each core
-(separate from the default 74). See the [measurement method](docs/verification.md#cycle-and-cpi-measurements).
+Measured cycles on hazard workloads match the zero-wait-memory model
+`C = N + 4 + L + 2R`: retired instructions, four fill cycles, one cycle per
+load-use stall, and two per taken EX redirect. The same machine-code programs
+and retirement-PC sequences run on both cores. Cycles exclude reset.
+
+| Optional matched workload | N | Single-cycle cycles | Pipeline cycles | L | R |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Independent ALU | 512 | 512 | 516 | 0 | 0 |
+| Dependent ALU | 512 | 512 | 516 | 0 | 0 |
+| Branch loop | 771 | 771 | 1,285 | 0 | 255 |
+| Repeated load-use | 259 | 259 | 391 | 128 | 0 |
+
+`make benchmark SEED=20261006` runs these four workloads on each core
+(separate from the default 74). With no hazards the pipeline needs only the
+four fill cycles (512 → 516); each taken branch costs two cycles and each
+load-use pair one. See the [measurement method](docs/verification.md#cycle-and-cpi-measurements).
+
+## Synthesis and STA
+
+Yosys maps both cores to Nangate45 (typical corner); OpenSTA analyses them
+core-only and pre-layout at a 10 ns ideal clock (0.1 ns setup uncertainty,
+0.5 ns I/O delay):
+
+| Metric | Single-cycle | Pipeline |
+| --- | ---: | ---: |
+| Worst setup slack | +5.202 ns | +6.181 ns |
+| Critical arrival / required | 4.198 / 9.400 ns | 3.676 / 9.857 ns |
+| Mapped cells | 6,267 | 9,556 |
+| Liberty cell-area sum | 12,737.410 | 17,515.302 |
+| Max-slew violating report rows | 49 | 1,576 |
+| Max-capacitance violating report rows | 91 | 84 |
+
+Critical paths: instruction input `instr[21]` through decode, register read
+and store-data selection to `data_write_data[10]` (single-cycle); IF/ID rs1
+address bit → register-file read mux → ID/EX `rs1_data[0]` (pipeline).
+The worst max-slew violators are the register-address flops (e.g. the rs1
+address bit above) that fan out across the 32-entry register-file read mux;
+these still need buffering or upsizing, so the slack is not quoted as an Fmax.
 
 ## Supported instructions
 
@@ -44,12 +90,15 @@ register/memory writes.
 
 - Excluded RV32I base instructions: FENCE, ECALL, EBREAK.
 - Also unsupported: Zicsr CSR instructions, Zifencei FENCE.I, privileged MRET,
-  exceptions/traps and interrupts; these are not all RV32I base instructions.
+  exceptions/traps and interrupts.
 - External zero-wait memory models; naturally aligned halfword/word accesses
   and four-byte-aligned instruction addresses.
+- STA is typical-corner, core-only, and pre-layout, with unresolved electrical
+  constraints; no achievable Fmax or physical signoff is claimed.
 
 The [specification](docs/specification.md) defines the complete interface
-contract.
+contract. Detailed [verification limits](docs/verification.md#verification-limits)
+and [timing limits](docs/synthesis.md#interpretation) accompany the results.
 
 ## Documentation
 
@@ -64,7 +113,7 @@ contract.
 
 Source is under `rtl/`, tests under `tb/`, and timing constraints/scripts
 under `timing/`. Generated test results and waveforms stay under ignored
-`build/`.
+`build/`; `reports/timing/` contains the two saved STA analysis reports.
 
 ## Quick start
 
@@ -77,8 +126,8 @@ python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install -r requirements.txt
 make lint-core lint-pipeline
-make regression SEED=20261005
-make benchmark SEED=20261005
+make regression SEED=20261006
+make benchmark SEED=20261006
 ```
 
 `make test-pipeline-core` runs the

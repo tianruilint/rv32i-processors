@@ -38,7 +38,7 @@ def read_report(path):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--seed", type=int, default=20260915)
+    parser.add_argument("--seed", type=int, default=20261006)
     args = parser.parse_args()
 
     targets = {

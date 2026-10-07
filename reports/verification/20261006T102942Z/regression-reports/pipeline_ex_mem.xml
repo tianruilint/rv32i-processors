@@ -1,0 +1,10 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="20261006" />
+    <testcase name="test_reset" classname="test_pipeline_ex_mem" file="/home/terrylin/work/rv32i-single-cycle/tb/test_pipeline_ex_mem.py" lineno="40" time="0.0005643367767333984" sim_time_ns="11.0" ratio_time="19491.907055344316" />
+    <testcase name="test_capture_valid" classname="test_pipeline_ex_mem" file="/home/terrylin/work/rv32i-single-cycle/tb/test_pipeline_ex_mem.py" lineno="53" time="0.00019741058349609375" sim_time_ns="21.0" ratio_time="106377.27536231885" />
+    <testcase name="test_invalid_clears_output" classname="test_pipeline_ex_mem" file="/home/terrylin/work/rv32i-single-cycle/tb/test_pipeline_ex_mem.py" lineno="83" time="0.0001995563507080078" sim_time_ns="31.0" ratio_time="155344.59259259258" />
+    <testcase name="test_hold_when_valid" classname="test_pipeline_ex_mem" file="/home/terrylin/work/rv32i-single-cycle/tb/test_pipeline_ex_mem.py" lineno="120" time="0.000194549560546875" sim_time_ns="31.0" ratio_time="159342.431372549" />
+    <testcase name="test_reset_priority_over_valid" classname="test_pipeline_ex_mem" file="/home/terrylin/work/rv32i-single-cycle/tb/test_pipeline_ex_mem.py" lineno="165" time="0.0001747608184814453" sim_time_ns="31.0" ratio_time="177385.29877216916" />
+  </testsuite>
+</testsuites>

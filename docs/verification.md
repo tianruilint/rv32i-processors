@@ -2,18 +2,25 @@
 
 ## Regression
 
+Latest verified default run: 2026-10-06, Verilator 5.050 and cocotb 2.0.1.
+Exact source/runner hashes, commands, tool versions, UTC start/end times and
+output hashes are recorded in the
+[run manifest](../reports/verification/20261006T102942Z/manifest.json).
+
 ```sh
-make regression SEED=20261005
+make regression SEED=20261006
 ```
 
-The mutually exclusive accounting is:
+All 17 targets passed: **74 cases, 74 passed, 0 failed, 0 skipped**.
+
+The 74 cases break down as:
 
 | Category | Cases | Definition |
 | --- | ---: | --- |
 | Module-level | 44 | 43 CPU module cases + 1 full-adder bootstrap |
 | Single-cycle integration/benchmarks | 20 | 17 in test-core + 3 single-cycle matched benchmarks |
 | Pipeline integration | 10 | 10 in test-pipeline-core |
-| Total | 74 | No case appears in two categories |
+| Total | 74 | |
 
 `test-core` comprises 7 core, 3 load/store, 4 branch and 3 program cases.
 The three separate single-cycle benchmark cases bring the category to 20.
@@ -85,6 +92,12 @@ preconditions. The register-file array has no reset. Pipeline program and
 benchmark memory helpers return zero for absent bytes; that is a testbench
 choice, not an architectural guarantee about uninitialized memory.
 
+The WB→ID bypass case explicitly writes x5=0 through WB before checking
+its old value. This fixes a test assumption about simulator initialization,
+not an RTL reset requirement. The corrected five-case ID group also passed
+with Verilator `--x-initial unique --x-assign unique` and runtime seed
+20261006. That repeat is not added to the default 74.
+
 Pipeline program fetch uses an ADDI x0,x0,0 outside the supplied program while
 the pipeline drains. Completion is the retirement of a designated terminal
 instruction; the CPU itself has no halt port or halt instruction.
@@ -98,10 +111,26 @@ instruction. The pipeline harness counts from the first non-reset edge
 through retirement of the terminal instruction and checks `retired_count`
 against the observed retirement trace.
 
+| Program | Retired instructions | Single-cycle cycles | Pipeline cycles | Load-use stalls | Taken redirects |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| ALU dependencies | 8 | 8 | 12 | 0 | 0 |
+| Subword memory | 10 | 10 | 16 | 2 | 0 |
+| Loop sum 1..5 | 22 | 22 | 35 | 1 | 4 |
+
+For these programs the pipeline counts satisfy
+`cycles = retired + 4 + load_use_stalls + 2 * taken_redirects`.
+The four extra cycles fill the pipeline. Each load-use hazard inserts one
+bubble, and each taken EX redirect discards two younger slots.
+CPI is `cycles / retired`: 1.5000, 1.6000, and 1.5909 for the pipeline;
+1.0000 for the single-cycle core.
+
+These measurements use zero-wait memory. They do not measure execution time
+at a physically achievable clock frequency.
+
 ## Optional longer matched programs
 
 ```sh
-make benchmark SEED=20261005
+make benchmark SEED=20261006
 ```
 
 `tb/test_benchmarks_extended.py` runs four independent cases on each core.
@@ -112,7 +141,17 @@ which ends at the designated terminal instruction's commit/retirement.
 Each benchmark target regenerates its XML, and the runner rejects a report
 that was not written during the current execution.
 
+| Workload | N | SC cycles | Pipeline cycles | CPI | L | R |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Independent ALU | 512 | 512 | 516 | 1.0078125 | 0 | 0 |
+| Dependent ALU | 512 | 512 | 516 | 1.0078125 | 0 | 0 |
+| Branch loop | 771 | 771 | 1,285 | 1.666667 | 0 | 255 |
+| Repeated load-use | 259 | 259 | 391 | 1.509653 | 128 | 0 |
+
 These **8 optional cases are not in the default 17-target/74-case inventory**.
+For these workloads, hazard cycles match `C=N+4+L+2R`. The 512/516
+examples establish the no-stall fill baseline, not a performance optimization.
+IPC is `N/C`; execution time still needs a defensible clock period.
 
 The optional checks establish all checked register preconditions, final
 register values, complete retirement sequences, zero unexpected stores,
@@ -120,6 +159,20 @@ and exact stall/redirect/counter values. They remain directed expectations,
 not an independent whole-core ISA interpreter.
 
 ## Reports and reproduction
+
+The [2026-10-06 published run](../reports/verification/20261006T102942Z/)
+contains the raw regression logs/XML, matched-benchmark results, the separate
+five-case WB→ID initialization repeat, synthesis logs and both STA reports.
+It was produced by one invocation of
+
+```sh
+python3 scripts/record_run.py --seed 20261006
+```
+
+which runs every command listed in its manifest in order, stops on the first
+failure, and records tool versions and SHA-256 hashes of the sources and of
+every saved output. OpenSTA must be on `PATH` as `sta`, and the Nangate45
+Liberty file must be in `build/timing/` (see [synthesis.md](synthesis.md)).
 
 Each target overwrites its XML under `build/reports/`. The runner combines
 stdout/stderr in `build/reports/regression/<target>.log`, also overwritten per
@@ -160,15 +213,33 @@ The output layout is:
 | `build/reports/*.xml` | Latest cocotb results per target |
 | `build/reports/regression/*.log` | Latest regression stdout/stderr per target |
 | `build/waves/*.fst` | Waveforms generated on request |
+| `reports/timing/*.txt` | Two saved STA analysis reports |
+| `reports/verification/<UTC>/` | Dated run manifest, raw logs/XML and benchmark results |
 
 `make clean` clears generated simulation products, test reports, and waveforms.
+It preserves `build/timing/` dependencies and the saved `reports/timing/`
+evidence. STA constraints and interpretation are in [synthesis.md](synthesis.md).
 
 ## Verification limits
 
-There is no independent whole-core ISA interpreter, randomized differential
-test, formal proof, gate-level equivalence result, or automated coverage
-percentage. The ALU has an independent Python reference; program checks use
-directed expected architectural values and selected retirement traces.
+The optional `make test-isa-reference` target uses a separate Python
+interpreter to decode instruction words and compare both cores against its
+architectural state after each retired instruction. It checks retirement PCs,
+initialized integer registers, ordered byte-write events, and final memory.
+The 64 deterministic generated programs exercise the supported 37 instructions.
+A separate case checks all 256 FENCE predecessor/successor masks only under the
+existing strongly ordered memory model; FENCE remains outside the supported
+instruction claim. These four cocotb cases are separate from the default 74.
+The additional reference run on 2026-10-06 passed all four cases;
+[raw XML and per-program records](../reports/verification/20261006T102942Z/isa-reference/)
+are saved separately.
+XML results and per-program JSON records are written to `build/isa-reference/`.
+
+This custom model is not an external ISS or ISA compliance suite. It assumes
+naturally aligned accesses and zero-wait memory, without traps, interrupts,
+CSRs, caches, MMIO, or external observers. There is no formal proof, gate-level
+equivalence result, or automated coverage percentage. The default program
+checks still use directed expected values and selected retirement traces.
 
 Unsupported/misaligned instructions, every reset interaction, variable-latency
 memory, and all runner error paths are not exhaustively tested. Some assertions

@@ -1,0 +1,21 @@
+{
+  "workload": "branch_loop_256",
+  "core": "pipeline",
+  "cycles": 1285,
+  "retired": 771,
+  "cpi": 1.6666666666666667,
+  "ipc": 0.6,
+  "stalls": 0,
+  "redirects": 255,
+  "program_sha256": "3748ff774db851a7a5e83f11f0be24be36de1674c6c11486522347f73cdc702f",
+  "retirement_trace_sha256": "a33662cad7b3cadaaeb708162c0ba9f4d3c76ef3a1e6c1703cadba26350658da",
+  "checked_registers": {
+    "0": 0,
+    "1": 0,
+    "2": 32896,
+    "31": 1
+  },
+  "no_store_checked_each_cycle": true,
+  "memory_contract": "zero-wait aligned-word input",
+  "measurement_window": "first active edge through terminal instruction commit; reset excluded"
+}

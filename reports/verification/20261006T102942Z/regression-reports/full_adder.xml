@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="20261006" />
+    <testcase name="test_all_input_combinations" classname="test_full_adder" file="/home/terrylin/work/rv32i-single-cycle/tb/test_full_adder.py" lineno="17" time="0.0003592967987060547" sim_time_ns="8.0" ratio_time="22265.714664897147" />
+  </testsuite>
+</testsuites>

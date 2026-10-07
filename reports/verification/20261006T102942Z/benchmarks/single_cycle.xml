@@ -1,0 +1,9 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="20261006" />
+    <testcase name="test_long_independent" classname="test_benchmarks_extended" file="/home/terrylin/work/rv32i-single-cycle/tb/test_benchmarks_extended.py" lineno="108" time="0.021840810775756836" sim_time_ns="2050.0" ratio_time="93860.98442258779" />
+    <testcase name="test_long_dependent" classname="test_benchmarks_extended" file="/home/terrylin/work/rv32i-single-cycle/tb/test_benchmarks_extended.py" lineno="122" time="0.02426457405090332" sim_time_ns="2050.0" ratio_time="84485.30749805941" />
+    <testcase name="test_long_branch_loop" classname="test_benchmarks_extended" file="/home/terrylin/work/rv32i-single-cycle/tb/test_benchmarks_extended.py" lineno="131" time="0.029024362564086914" sim_time_ns="3086.0" ratio_time="106324.4711468165" />
+    <testcase name="test_repeated_load_use" classname="test_benchmarks_extended" file="/home/terrylin/work/rv32i-single-cycle/tb/test_benchmarks_extended.py" lineno="140" time="0.017194271087646484" sim_time_ns="1038.000000000001" ratio_time="60368.94467400654" />
+  </testsuite>
+</testsuites>

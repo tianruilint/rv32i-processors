@@ -1,0 +1,35 @@
+COMMAND: ['make', 'benchmark-pipeline']
+make[1]: Entering directory '/home/terrylin/work/rv32i-single-cycle'
+rm -f /home/terrylin/work/rv32i-single-cycle/build/benchmarks/pipeline.xml
+COCOTB_TEST_MODULES=test_benchmarks_extended COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=rv32i_pipeline_core TOPLEVEL_LANG=verilog \
+         /home/terrylin/work/rv32i-single-cycle/build/verilator-pipeline_core/Vtop     
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.12.4 interpreter at /home/terrylin/work/rv32i-single-cycle/.venv/bin/python3
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Verilator version 5.050 2026-07-01
+     0.00ns INFO     cocotb                             Seeding Python random module with supplied seed 20261006
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /home/terrylin/work/rv32i-single-cycle/.venv/lib/python3.12/site-packages/cocotb
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_benchmarks_extended.test_long_independent (1/4)
+  2066.00ns INFO     cocotb.rv32i_pipeline_core         BENCHMARK {"workload": "independent_512", "core": "pipeline", "cycles": 516, "retired": 512, "cpi": 1.0078125, "ipc": 0.9922480620155039, "stalls": 0, "redirects": 0, "program_sha256": "b19d6c6b786e4721b6b279e6aa710cd051671a0ab279038c9a80d088ba0e1cb0", "retirement_trace_sha256": "770e0803a1a1ce78f5c41796338a6a15a6a72a97523decbcb637665e96733d9e", "checked_registers": {"0": 0, "1": 870, "2": 1797, "3": 1834, "4": 1871, "5": 1908, "6": 1945, "7": 1982, "8": 19, "9": 56, "10": 93, "11": 130, "12": 167, "13": 204, "14": 241, "15": 278, "16": 315, "17": 352, "18": 389, "19": 426, "20": 463, "21": 500, "22": 537, "23": 574, "24": 611, "25": 648, "26": 685, "27": 722, "28": 759, "29": 796, "30": 833, "31": 1}, "no_store_checked_each_cycle": true, "memory_contract": "zero-wait aligned-word input", "measurement_window": "first active edge through terminal instruction commit; reset excluded"}
+  2066.00ns INFO     cocotb.regression                  test_benchmarks_extended.test_long_independent passed
+  2066.00ns INFO     cocotb.regression                  running test_benchmarks_extended.test_long_dependent (2/4)
+  4132.00ns INFO     cocotb.rv32i_pipeline_core         BENCHMARK {"workload": "dependent_512", "core": "pipeline", "cycles": 516, "retired": 512, "cpi": 1.0078125, "ipc": 0.9922480620155039, "stalls": 0, "redirects": 0, "program_sha256": "732da613170de4eab752c77399ccf0bcb73d28c0f4fd488f895d346cee77a457", "retirement_trace_sha256": "770e0803a1a1ce78f5c41796338a6a15a6a72a97523decbcb637665e96733d9e", "checked_registers": {"0": 0, "1": 510, "31": 1}, "no_store_checked_each_cycle": true, "memory_contract": "zero-wait aligned-word input", "measurement_window": "first active edge through terminal instruction commit; reset excluded"}
+  4132.00ns INFO     cocotb.regression                  test_benchmarks_extended.test_long_dependent passed
+  4132.00ns INFO     cocotb.regression                  running test_benchmarks_extended.test_long_branch_loop (3/4)
+  9274.00ns INFO     cocotb.rv32i_pipeline_core         BENCHMARK {"workload": "branch_loop_256", "core": "pipeline", "cycles": 1285, "retired": 771, "cpi": 1.6666666666666667, "ipc": 0.6, "stalls": 0, "redirects": 255, "program_sha256": "3748ff774db851a7a5e83f11f0be24be36de1674c6c11486522347f73cdc702f", "retirement_trace_sha256": "a33662cad7b3cadaaeb708162c0ba9f4d3c76ef3a1e6c1703cadba26350658da", "checked_registers": {"0": 0, "1": 0, "2": 32896, "31": 1}, "no_store_checked_each_cycle": true, "memory_contract": "zero-wait aligned-word input", "measurement_window": "first active edge through terminal instruction commit; reset excluded"}
+  9274.00ns INFO     cocotb.regression                  test_benchmarks_extended.test_long_branch_loop passed
+  9274.00ns INFO     cocotb.regression                  running test_benchmarks_extended.test_repeated_load_use (4/4)
+ 10840.00ns INFO     cocotb.rv32i_pipeline_core         BENCHMARK {"workload": "load_use_128", "core": "pipeline", "cycles": 391, "retired": 259, "cpi": 1.5096525096525097, "ipc": 0.6624040920716112, "stalls": 128, "redirects": 0, "program_sha256": "694c59917a9d0193369e05a171186b17a47a89c257ffb54ffdabae4951eed681", "retirement_trace_sha256": "c76c00f2ad2d8090550545fc24ae76362cd67b6112139aa8ec7d54479b689c3e", "checked_registers": {"0": 0, "1": 7, "2": 896, "3": 256, "31": 1}, "no_store_checked_each_cycle": true, "memory_contract": "zero-wait aligned-word input", "measurement_window": "first active edge through terminal instruction commit; reset excluded"}
+ 10840.00ns INFO     cocotb.regression                  test_benchmarks_extended.test_repeated_load_use passed
+ 10840.00ns INFO     cocotb.regression                  *********************************************************************************************************
+                                                        ** TEST                                             STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        *********************************************************************************************************
+                                                        ** test_benchmarks_extended.test_long_independent    PASS        2066.00           0.05      41222.54  **
+                                                        ** test_benchmarks_extended.test_long_dependent      PASS        2066.00           0.02      87940.00  **
+                                                        ** test_benchmarks_extended.test_long_branch_loop    PASS        5142.00           0.07      70307.51  **
+                                                        ** test_benchmarks_extended.test_repeated_load_use   PASS        1566.00           0.03      57337.85  **
+                                                        *********************************************************************************************************
+                                                        ** TESTS=4 PASS=4 FAIL=0 SKIP=0                                 10840.00           0.18      61429.61  **
+                                                        *********************************************************************************************************
+- :0: Verilog $finish
+make[1]: Leaving directory '/home/terrylin/work/rv32i-single-cycle'

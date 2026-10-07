@@ -1,0 +1,6 @@
+benchmark-single 4/4 PASS
+benchmark-pipeline 4/4 PASS
+independent_512 N= 512 cycles= 516 L= 0 R= 0
+dependent_512 N= 512 cycles= 516 L= 0 R= 0
+branch_loop_256 N= 771 cycles= 1285 L= 0 R= 255
+load_use_128 N= 259 cycles= 391 L= 128 R= 0

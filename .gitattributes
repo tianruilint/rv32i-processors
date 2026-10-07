@@ -1,0 +1,2 @@
+# Preserve generated evidence bytes so recorded hashes match fresh clones.
+reports/** -text -whitespace

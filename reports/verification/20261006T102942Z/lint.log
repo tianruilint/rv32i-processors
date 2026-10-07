@@ -1,0 +1,20 @@
+verilator --lint-only --Wall -Wno-fatal --top-module rv32i_core /home/terrylin/work/rv32i-single-cycle/rtl/rv32i_core.sv /home/terrylin/work/rv32i-single-cycle/rtl/pc.sv /home/terrylin/work/rv32i-single-cycle/rtl/decoder.sv /home/terrylin/work/rv32i-single-cycle/rtl/register_file.sv /home/terrylin/work/rv32i-single-cycle/rtl/immediate_generator.sv /home/terrylin/work/rv32i-single-cycle/rtl/alu.sv
+%Warning-UNUSEDSIGNAL: /home/terrylin/work/rv32i-single-cycle/rtl/immediate_generator.sv:2:25: Bits of signal are not used: 'instr'[6:0]
+                                                                                             : ... note: In instance 'rv32i_core.u_immediate_generator'
+    2 |     input  logic [31:0] instr,
+      |                         ^~~~~
+                       ... For warning description see https://verilator.org/warn/UNUSEDSIGNAL?v=5.050
+                       ... Use "/* verilator lint_off UNUSEDSIGNAL */" and lint_on around source to disable this message.
+- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev v5.050
+- Verilator: Built from 0.192 MB sources in 7 modules, into 0.176 MB in 3 C++ files needing 0.000 MB
+- Verilator: Walltime 0.029 s (elab=0.002, cvt=0.019, bld=0.000); cpu 0.029 s on 1 threads; allocated 23.754 MB
+verilator --lint-only --Wall -Wno-fatal --top-module rv32i_pipeline_core /home/terrylin/work/rv32i-single-cycle/rtl/rv32i_pipeline_core.sv /home/terrylin/work/rv32i-single-cycle/rtl/pipeline_frontend.sv /home/terrylin/work/rv32i-single-cycle/rtl/pipeline_id.sv /home/terrylin/work/rv32i-single-cycle/rtl/pipeline_id_ex.sv /home/terrylin/work/rv32i-single-cycle/rtl/pipeline_ex.sv /home/terrylin/work/rv32i-single-cycle/rtl/pipeline_ex_mem.sv /home/terrylin/work/rv32i-single-cycle/rtl/pipeline_hazard.sv /home/terrylin/work/rv32i-single-cycle/rtl/pipeline_mem.sv /home/terrylin/work/rv32i-single-cycle/rtl/pipeline_mem_wb.sv /home/terrylin/work/rv32i-single-cycle/rtl/decoder.sv /home/terrylin/work/rv32i-single-cycle/rtl/immediate_generator.sv /home/terrylin/work/rv32i-single-cycle/rtl/register_file.sv /home/terrylin/work/rv32i-single-cycle/rtl/alu.sv
+%Warning-UNUSEDSIGNAL: /home/terrylin/work/rv32i-single-cycle/rtl/immediate_generator.sv:2:25: Bits of signal are not used: 'instr'[6:0]
+                                                                                             : ... note: In instance 'rv32i_pipeline_core.u_id.u_immediate_generator'
+    2 |     input  logic [31:0] instr,
+      |                         ^~~~~
+                       ... For warning description see https://verilator.org/warn/UNUSEDSIGNAL?v=5.050
+                       ... Use "/* verilator lint_off UNUSEDSIGNAL */" and lint_on around source to disable this message.
+- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev v5.050
+- Verilator: Built from 0.647 MB sources in 14 modules, into 0.236 MB in 3 C++ files needing 0.000 MB
+- Verilator: Walltime 0.051 s (elab=0.006, cvt=0.029, bld=0.000); cpu 0.051 s on 1 threads; allocated 25.055 MB

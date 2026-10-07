@@ -21,6 +21,8 @@ results.xml
 /reports/timing/*
 !/reports/timing/core_setup_nangate45_typ_10ns.txt
 !/reports/timing/pipeline_setup_nangate45_typ_10ns.txt
+!/reports/verification/
+!/reports/verification/**
 
 *~
 .DS_Store

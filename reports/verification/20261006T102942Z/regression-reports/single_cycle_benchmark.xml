@@ -1,0 +1,8 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="20261006" />
+    <testcase name="test_alu_forwarding_benchmark" classname="test_single_cycle_benchmark" file="/home/terrylin/work/rv32i-single-cycle/tb/test_single_cycle_benchmark.py" lineno="70" time="0.0008747577667236328" sim_time_ns="34.0" ratio_time="38867.90297083674" />
+    <testcase name="test_memory_hazards_benchmark" classname="test_single_cycle_benchmark" file="/home/terrylin/work/rv32i-single-cycle/tb/test_single_cycle_benchmark.py" lineno="88" time="0.0013592243194580078" sim_time_ns="42.00000000000001" ratio_time="30899.976846167345" />
+    <testcase name="test_loop_sum5_benchmark" classname="test_single_cycle_benchmark" file="/home/terrylin/work/rv32i-single-cycle/tb/test_single_cycle_benchmark.py" lineno="109" time="0.0010280609130859375" sim_time_ns="90.00000000000001" ratio_time="87543.45083487942" />
+  </testsuite>
+</testsuites>

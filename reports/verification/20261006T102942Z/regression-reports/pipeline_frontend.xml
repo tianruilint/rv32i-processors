@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="20261006" />
+    <testcase name="test_pipeline_frontend" classname="test_pipeline_frontend" file="/home/terrylin/work/rv32i-single-cycle/tb/test_pipeline_frontend.py" lineno="6" time="0.0006182193756103516" sim_time_ns="51.0" ratio_time="82494.98804473583" />
+  </testsuite>
+</testsuites>

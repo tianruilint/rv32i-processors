@@ -1,0 +1,19 @@
+test passed 1 failed 0 skipped 0
+test-alu passed 2 failed 0 skipped 0
+test-register-file passed 5 failed 0 skipped 0
+test-pc passed 3 failed 0 skipped 0
+test-immediate-generator passed 1 failed 0 skipped 0
+test-decoder passed 1 failed 0 skipped 0
+test-core passed 17 failed 0 skipped 0
+test-single-cycle-benchmark passed 3 failed 0 skipped 0
+test-pipeline-frontend passed 1 failed 0 skipped 0
+test-pipeline-id passed 5 failed 0 skipped 0
+test-pipeline-id-ex passed 1 failed 0 skipped 0
+test-pipeline-ex passed 13 failed 0 skipped 0
+test-pipeline-ex-mem passed 5 failed 0 skipped 0
+test-pipeline-hazard passed 2 failed 0 skipped 0
+test-pipeline-mem passed 3 failed 0 skipped 0
+test-pipeline-mem-wb passed 1 failed 0 skipped 0
+test-pipeline-core passed 10 failed 0 skipped 0
+TOTAL: 74 cases, 74 passed, 0 failed, 0 skipped
+Failed targets: []

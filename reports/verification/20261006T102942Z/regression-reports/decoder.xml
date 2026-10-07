@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="20261006" />
+    <testcase name="test_decoder" classname="test_decoder" file="/home/terrylin/work/rv32i-single-cycle/tb/test_decoder.py" lineno="27" time="0.0013277530670166016" sim_time_ns="42.0" ratio_time="31632.38786137547" />
+  </testsuite>
+</testsuites>

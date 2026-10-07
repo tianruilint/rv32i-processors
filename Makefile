@@ -42,7 +42,7 @@ PIPELINE_RTL_SOURCES := \
 	$(REGISTER_FILE_RTL_SOURCE) \
 	$(ALU_RTL_SOURCE)
 COCOTB_MAKEFILES := $(shell $(COCOTB_CONFIG) --makefiles 2>/dev/null)
-SEED ?= 20260916
+SEED ?= 20261006
 BENCHMARK_DIR := $(BUILD_DIR)/benchmarks
 
 .PHONY: benchmark benchmark-single benchmark-pipeline
@@ -361,3 +361,27 @@ clean:
 	@rm -rf '$(PROJECT_ROOT)/.pytest_cache'
 	@rm -f '$(PROJECT_ROOT)/dump.vcd' '$(PROJECT_ROOT)/dump.fst' \
 		'$(PROJECT_ROOT)/results.xml'
+
+# Optional architectural reference checks, separate from the default 74 cases.
+.PHONY: test-isa-reference test-isa-reference-single test-isa-reference-pipeline
+
+test-isa-reference: test-isa-reference-single test-isa-reference-pipeline
+
+define RUN_ISA_REFERENCE
+	@mkdir -p '$(BUILD_DIR)/isa-reference'
+	@rm -f '$(BUILD_DIR)/isa-reference/$(1).xml'
+	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
+	ISA_RESULTS_DIR='$(BUILD_DIR)/isa-reference' COMPILE_ARGS='--Wall -Wno-fatal' \
+	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
+		SIM=verilator TOPLEVEL_LANG=verilog VERILOG_SOURCES='$(3)' \
+		COCOTB_TOPLEVEL=$(2) COCOTB_TEST_MODULES=test_isa_reference \
+		SIM_BUILD='$(BUILD_DIR)/verilator-isa-$(1)' \
+		COCOTB_RESULTS_FILE='$(BUILD_DIR)/isa-reference/$(1).xml' \
+		'$(BUILD_DIR)/isa-reference/$(1).xml'
+endef
+
+test-isa-reference-single: check-venv
+	$(call RUN_ISA_REFERENCE,single,rv32i_core,$(CORE_RTL_SOURCES))
+
+test-isa-reference-pipeline: check-venv
+	$(call RUN_ISA_REFERENCE,pipeline,rv32i_pipeline_core,$(PIPELINE_RTL_SOURCES))

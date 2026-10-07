@@ -1,0 +1,8 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="20261006" />
+    <testcase name="test_reset_and_sequential_increment" classname="test_pc" file="/home/terrylin/work/rv32i-single-cycle/tb/test_pc.py" lineno="6" time="0.0007586479187011719" sim_time_ns="21.0" ratio_time="27680.82463859208" />
+    <testcase name="test_target_selection_and_reset_priority" classname="test_pc" file="/home/terrylin/work/rv32i-single-cycle/tb/test_pc.py" lineno="33" time="0.0002834796905517578" sim_time_ns="30.999999999999996" ratio_time="109355.27670311184" />
+    <testcase name="test_pc_wraparound" classname="test_pc" file="/home/terrylin/work/rv32i-single-cycle/tb/test_pc.py" lineno="68" time="0.00015735626220703125" sim_time_ns="30.999999999999993" ratio_time="197005.18787878784" />
+  </testsuite>
+</testsuites>

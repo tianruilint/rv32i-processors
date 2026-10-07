@@ -1,0 +1,2295 @@
+
+-- Running command `read_verilog -sv rtl/rv32i_core.sv rtl/pc.sv rtl/decoder.sv rtl/register_file.sv rtl/immediate_generator.sv rtl/alu.sv; synth -top rv32i_core; check -assert; stat; write_verilog -noattr build/synthesis/rv32i_core.v' --
+
+1. Executing Verilog-2005 frontend: rtl/rv32i_core.sv
+Parsing SystemVerilog input from `rtl/rv32i_core.sv' to AST representation.
+Generating RTLIL representation for module `\rv32i_core'.
+Successfully finished Verilog frontend.
+
+2. Executing Verilog-2005 frontend: rtl/pc.sv
+Parsing SystemVerilog input from `rtl/pc.sv' to AST representation.
+Generating RTLIL representation for module `\pc'.
+Successfully finished Verilog frontend.
+
+3. Executing Verilog-2005 frontend: rtl/decoder.sv
+Parsing SystemVerilog input from `rtl/decoder.sv' to AST representation.
+Generating RTLIL representation for module `\decoder'.
+Successfully finished Verilog frontend.
+
+4. Executing Verilog-2005 frontend: rtl/register_file.sv
+Parsing SystemVerilog input from `rtl/register_file.sv' to AST representation.
+Generating RTLIL representation for module `\register_file'.
+Successfully finished Verilog frontend.
+
+5. Executing Verilog-2005 frontend: rtl/immediate_generator.sv
+Parsing SystemVerilog input from `rtl/immediate_generator.sv' to AST representation.
+Generating RTLIL representation for module `\immediate_generator'.
+Successfully finished Verilog frontend.
+
+6. Executing Verilog-2005 frontend: rtl/alu.sv
+Parsing SystemVerilog input from `rtl/alu.sv' to AST representation.
+Generating RTLIL representation for module `\alu'.
+Successfully finished Verilog frontend.
+
+7. Executing SYNTH pass.
+
+7.1. Executing HIERARCHY pass (managing design hierarchy).
+
+7.1.1. Analyzing design hierarchy..
+Top module:  \rv32i_core
+Used module:     \alu
+Used module:     \immediate_generator
+Used module:     \register_file
+Used module:     \decoder
+Used module:     \pc
+
+7.1.2. Analyzing design hierarchy..
+Top module:  \rv32i_core
+Used module:     \alu
+Used module:     \immediate_generator
+Used module:     \register_file
+Used module:     \decoder
+Used module:     \pc
+Removed 0 unused modules.
+
+7.2. Executing PROC pass (convert processes to netlists).
+
+7.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+7.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 1 switch rules as full_case in process $proc$rtl/alu.sv:0$68 in module alu.
+Marked 1 switch rules as full_case in process $proc$rtl/immediate_generator.sv:0$67 in module immediate_generator.
+Marked 1 switch rules as full_case in process $proc$rtl/register_file.sv:17$58 in module register_file.
+Removed 1 dead cases from process $proc$rtl/decoder.sv:0$32 in module decoder.
+Marked 21 switch rules as full_case in process $proc$rtl/decoder.sv:0$32 in module decoder.
+Marked 1 switch rules as full_case in process $proc$rtl/pc.sv:18$31 in module pc.
+Marked 1 switch rules as full_case in process $proc$rtl/pc.sv:0$29 in module pc.
+Marked 1 switch rules as full_case in process $proc$rtl/rv32i_core.sv:0$26 in module rv32i_core.
+Marked 1 switch rules as full_case in process $proc$rtl/rv32i_core.sv:0$25 in module rv32i_core.
+Removed 1 dead cases from process $proc$rtl/rv32i_core.sv:0$24 in module rv32i_core.
+Marked 1 switch rules as full_case in process $proc$rtl/rv32i_core.sv:0$24 in module rv32i_core.
+Marked 1 switch rules as full_case in process $proc$rtl/rv32i_core.sv:0$20 in module rv32i_core.
+Marked 2 switch rules as full_case in process $proc$rtl/rv32i_core.sv:0$12 in module rv32i_core.
+Removed 1 dead cases from process $proc$rtl/rv32i_core.sv:0$4 in module rv32i_core.
+Marked 5 switch rules as full_case in process $proc$rtl/rv32i_core.sv:0$4 in module rv32i_core.
+Removed 1 dead cases from process $proc$rtl/rv32i_core.sv:0$3 in module rv32i_core.
+Marked 1 switch rules as full_case in process $proc$rtl/rv32i_core.sv:0$3 in module rv32i_core.
+Removed a total of 4 dead cases.
+
+7.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 1 redundant assignment.
+Promoted 24 assignments to connections.
+
+7.2.4. Executing PROC_INIT pass (extract init attributes).
+
+7.2.5. Executing PROC_ARST pass (detect async resets in processes).
+
+7.2.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~38 debug messages>
+
+7.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\alu.$proc$rtl/alu.sv:0$68'.
+     1/1: $1\result[31:0]
+Creating decoders for process `\immediate_generator.$proc$rtl/immediate_generator.sv:0$67'.
+     1/1: $1\imm[31:0]
+Creating decoders for process `\register_file.$proc$rtl/register_file.sv:17$58'.
+     1/3: $1$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$66
+     2/3: $1$memwr$\registers$rtl/register_file.sv:19$51_DATA[31:0]$65
+     3/3: $1$memwr$\registers$rtl/register_file.sv:19$51_ADDR[4:0]$64
+Creating decoders for process `\decoder.$proc$rtl/decoder.sv:0$32'.
+     1/96: $2\jump_type[1:0]
+     2/96: $21\alu_op[3:0]
+     3/96: $20\imm_type[2:0]
+     4/96: $7\result_src[1:0]
+     5/96: $14\alu_src[0:0]
+     6/96: $2\alu_a_pc[0:0]
+     7/96: $12\reg_write[0:0]
+     8/96: $7\branch_type[2:0]
+     9/96: $20\alu_op[3:0]
+    10/96: $19\imm_type[2:0]
+    11/96: $7\branch[0:0]
+    12/96: $6\branch_type[2:0]
+    13/96: $19\alu_op[3:0]
+    14/96: $18\imm_type[2:0]
+    15/96: $6\branch[0:0]
+    16/96: $5\branch_type[2:0]
+    17/96: $18\alu_op[3:0]
+    18/96: $17\imm_type[2:0]
+    19/96: $5\branch[0:0]
+    20/96: $4\branch_type[2:0]
+    21/96: $17\alu_op[3:0]
+    22/96: $16\imm_type[2:0]
+    23/96: $4\branch[0:0]
+    24/96: $3\branch_type[2:0]
+    25/96: $16\alu_op[3:0]
+    26/96: $15\imm_type[2:0]
+    27/96: $3\branch[0:0]
+    28/96: $2\branch_type[2:0]
+    29/96: $15\alu_op[3:0]
+    30/96: $14\imm_type[2:0]
+    31/96: $2\branch[0:0]
+    32/96: $14\alu_op[3:0]
+    33/96: $13\imm_type[2:0]
+    34/96: $4\mem_write[0:0]
+    35/96: $13\alu_src[0:0]
+    36/96: $13\alu_op[3:0]
+    37/96: $12\imm_type[2:0]
+    38/96: $3\mem_write[0:0]
+    39/96: $12\alu_src[0:0]
+    40/96: $12\alu_op[3:0]
+    41/96: $11\imm_type[2:0]
+    42/96: $2\mem_write[0:0]
+    43/96: $11\alu_src[0:0]
+    44/96: $11\alu_op[3:0]
+    45/96: $10\imm_type[2:0]
+    46/96: $6\result_src[1:0]
+    47/96: $10\alu_src[0:0]
+    48/96: $11\reg_write[0:0]
+    49/96: $10\alu_op[3:0]
+    50/96: $9\imm_type[2:0]
+    51/96: $5\result_src[1:0]
+    52/96: $9\alu_src[0:0]
+    53/96: $10\reg_write[0:0]
+    54/96: $9\alu_op[3:0]
+    55/96: $8\imm_type[2:0]
+    56/96: $4\result_src[1:0]
+    57/96: $8\alu_src[0:0]
+    58/96: $9\reg_write[0:0]
+    59/96: $8\alu_op[3:0]
+    60/96: $7\imm_type[2:0]
+    61/96: $3\result_src[1:0]
+    62/96: $7\alu_src[0:0]
+    63/96: $8\reg_write[0:0]
+    64/96: $7\alu_op[3:0]
+    65/96: $6\imm_type[2:0]
+    66/96: $2\result_src[1:0]
+    67/96: $6\alu_src[0:0]
+    68/96: $7\reg_write[0:0]
+    69/96: $5\imm_type[2:0]
+    70/96: $5\alu_src[0:0]
+    71/96: $6\reg_write[0:0]
+    72/96: $6\alu_op[3:0]
+    73/96: $4\imm_type[2:0]
+    74/96: $4\alu_src[0:0]
+    75/96: $5\reg_write[0:0]
+    76/96: $5\alu_op[3:0]
+    77/96: $4\alu_op[3:0]
+    78/96: $3\imm_type[2:0]
+    79/96: $3\alu_src[0:0]
+    80/96: $4\reg_write[0:0]
+    81/96: $3\alu_op[3:0]
+    82/96: $2\imm_type[2:0]
+    83/96: $2\alu_src[0:0]
+    84/96: $3\reg_write[0:0]
+    85/96: $2\alu_op[3:0]
+    86/96: $2\reg_write[0:0]
+    87/96: $1\reg_write[0:0]
+    88/96: $1\alu_op[3:0]
+    89/96: $1\branch_type[2:0]
+    90/96: $1\jump_type[1:0]
+    91/96: $1\alu_a_pc[0:0]
+    92/96: $1\imm_type[2:0]
+    93/96: $1\branch[0:0]
+    94/96: $1\result_src[1:0]
+    95/96: $1\mem_write[0:0]
+    96/96: $1\alu_src[0:0]
+Creating decoders for process `\pc.$proc$rtl/pc.sv:18$31'.
+     1/1: $0\current_pc[31:0]
+Creating decoders for process `\pc.$proc$rtl/pc.sv:0$29'.
+     1/1: $1\next_pc[31:0]
+Creating decoders for process `\rv32i_core.$proc$rtl/rv32i_core.sv:0$26'.
+     1/1: $1\load_data[31:0]
+Creating decoders for process `\rv32i_core.$proc$rtl/rv32i_core.sv:0$25'.
+     1/1: $1\selected_half[15:0]
+Creating decoders for process `\rv32i_core.$proc$rtl/rv32i_core.sv:0$24'.
+     1/1: $1\selected_byte[7:0]
+Creating decoders for process `\rv32i_core.$proc$rtl/rv32i_core.sv:0$20'.
+     1/1: $1\target_pc[31:0]
+Creating decoders for process `\rv32i_core.$proc$rtl/rv32i_core.sv:0$12'.
+     1/2: $2\branch_taken[0:0]
+     2/2: $1\branch_taken[0:0]
+Creating decoders for process `\rv32i_core.$proc$rtl/rv32i_core.sv:0$4'.
+     1/10: $5\data_write_strb[3:0]
+     2/10: $5\data_write_data[31:0]
+     3/10: $4\data_write_strb[3:0]
+     4/10: $4\data_write_data[31:0]
+     5/10: $3\data_write_strb[3:0]
+     6/10: $3\data_write_data[31:0]
+     7/10: $2\data_write_strb[3:0]
+     8/10: $2\data_write_data[31:0]
+     9/10: $1\data_write_strb[3:0]
+    10/10: $1\data_write_data[31:0]
+Creating decoders for process `\rv32i_core.$proc$rtl/rv32i_core.sv:0$3'.
+     1/1: $1\wb_data[31:0]
+
+7.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\alu.\result' from process `\alu.$proc$rtl/alu.sv:0$68'.
+No latch inferred for signal `\immediate_generator.\imm' from process `\immediate_generator.$proc$rtl/immediate_generator.sv:0$67'.
+No latch inferred for signal `\decoder.\alu_src' from process `\decoder.$proc$rtl/decoder.sv:0$32'.
+No latch inferred for signal `\decoder.\mem_write' from process `\decoder.$proc$rtl/decoder.sv:0$32'.
+No latch inferred for signal `\decoder.\result_src' from process `\decoder.$proc$rtl/decoder.sv:0$32'.
+No latch inferred for signal `\decoder.\branch' from process `\decoder.$proc$rtl/decoder.sv:0$32'.
+No latch inferred for signal `\decoder.\imm_type' from process `\decoder.$proc$rtl/decoder.sv:0$32'.
+No latch inferred for signal `\decoder.\alu_op' from process `\decoder.$proc$rtl/decoder.sv:0$32'.
+No latch inferred for signal `\decoder.\alu_a_pc' from process `\decoder.$proc$rtl/decoder.sv:0$32'.
+No latch inferred for signal `\decoder.\jump_type' from process `\decoder.$proc$rtl/decoder.sv:0$32'.
+No latch inferred for signal `\decoder.\reg_write' from process `\decoder.$proc$rtl/decoder.sv:0$32'.
+No latch inferred for signal `\decoder.\branch_type' from process `\decoder.$proc$rtl/decoder.sv:0$32'.
+No latch inferred for signal `\pc.\next_pc' from process `\pc.$proc$rtl/pc.sv:0$29'.
+No latch inferred for signal `\rv32i_core.\load_data' from process `\rv32i_core.$proc$rtl/rv32i_core.sv:0$26'.
+No latch inferred for signal `\rv32i_core.\selected_half' from process `\rv32i_core.$proc$rtl/rv32i_core.sv:0$25'.
+No latch inferred for signal `\rv32i_core.\selected_byte' from process `\rv32i_core.$proc$rtl/rv32i_core.sv:0$24'.
+No latch inferred for signal `\rv32i_core.\target_pc' from process `\rv32i_core.$proc$rtl/rv32i_core.sv:0$20'.
+No latch inferred for signal `\rv32i_core.\branch_taken' from process `\rv32i_core.$proc$rtl/rv32i_core.sv:0$12'.
+No latch inferred for signal `\rv32i_core.\data_write_data' from process `\rv32i_core.$proc$rtl/rv32i_core.sv:0$4'.
+No latch inferred for signal `\rv32i_core.\data_write_strb' from process `\rv32i_core.$proc$rtl/rv32i_core.sv:0$4'.
+No latch inferred for signal `\rv32i_core.\wb_data' from process `\rv32i_core.$proc$rtl/rv32i_core.sv:0$3'.
+
+7.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\register_file.$memwr$\registers$rtl/register_file.sv:19$51_ADDR' using process `\register_file.$proc$rtl/register_file.sv:17$58'.
+  created $dff cell `$procdff$1334' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$rtl/register_file.sv:19$51_DATA' using process `\register_file.$proc$rtl/register_file.sv:17$58'.
+  created $dff cell `$procdff$1335' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$rtl/register_file.sv:19$51_EN' using process `\register_file.$proc$rtl/register_file.sv:17$58'.
+  created $dff cell `$procdff$1336' with positive edge clock.
+Creating register for signal `\pc.\current_pc' using process `\pc.$proc$rtl/pc.sv:18$31'.
+  created $dff cell `$procdff$1337' with positive edge clock.
+
+7.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+7.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 1 empty switch in `\alu.$proc$rtl/alu.sv:0$68'.
+Removing empty process `alu.$proc$rtl/alu.sv:0$68'.
+Found and cleaned up 1 empty switch in `\immediate_generator.$proc$rtl/immediate_generator.sv:0$67'.
+Removing empty process `immediate_generator.$proc$rtl/immediate_generator.sv:0$67'.
+Found and cleaned up 1 empty switch in `\register_file.$proc$rtl/register_file.sv:17$58'.
+Removing empty process `register_file.$proc$rtl/register_file.sv:17$58'.
+Found and cleaned up 21 empty switches in `\decoder.$proc$rtl/decoder.sv:0$32'.
+Removing empty process `decoder.$proc$rtl/decoder.sv:0$32'.
+Found and cleaned up 1 empty switch in `\pc.$proc$rtl/pc.sv:18$31'.
+Removing empty process `pc.$proc$rtl/pc.sv:18$31'.
+Found and cleaned up 1 empty switch in `\pc.$proc$rtl/pc.sv:0$29'.
+Removing empty process `pc.$proc$rtl/pc.sv:0$29'.
+Found and cleaned up 1 empty switch in `\rv32i_core.$proc$rtl/rv32i_core.sv:0$26'.
+Removing empty process `rv32i_core.$proc$rtl/rv32i_core.sv:0$26'.
+Found and cleaned up 1 empty switch in `\rv32i_core.$proc$rtl/rv32i_core.sv:0$25'.
+Removing empty process `rv32i_core.$proc$rtl/rv32i_core.sv:0$25'.
+Found and cleaned up 1 empty switch in `\rv32i_core.$proc$rtl/rv32i_core.sv:0$24'.
+Removing empty process `rv32i_core.$proc$rtl/rv32i_core.sv:0$24'.
+Found and cleaned up 1 empty switch in `\rv32i_core.$proc$rtl/rv32i_core.sv:0$20'.
+Removing empty process `rv32i_core.$proc$rtl/rv32i_core.sv:0$20'.
+Found and cleaned up 2 empty switches in `\rv32i_core.$proc$rtl/rv32i_core.sv:0$12'.
+Removing empty process `rv32i_core.$proc$rtl/rv32i_core.sv:0$12'.
+Found and cleaned up 5 empty switches in `\rv32i_core.$proc$rtl/rv32i_core.sv:0$4'.
+Removing empty process `rv32i_core.$proc$rtl/rv32i_core.sv:0$4'.
+Found and cleaned up 1 empty switch in `\rv32i_core.$proc$rtl/rv32i_core.sv:0$3'.
+Removing empty process `rv32i_core.$proc$rtl/rv32i_core.sv:0$3'.
+Cleaned up 38 empty switches.
+
+7.2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+<suppressed ~1 debug messages>
+Optimizing module immediate_generator.
+<suppressed ~1 debug messages>
+Optimizing module register_file.
+<suppressed ~3 debug messages>
+Optimizing module decoder.
+<suppressed ~11 debug messages>
+Optimizing module pc.
+Optimizing module rv32i_core.
+<suppressed ~14 debug messages>
+
+7.3. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module immediate_generator.
+Optimizing module register_file.
+Optimizing module decoder.
+Optimizing module pc.
+Optimizing module rv32i_core.
+
+7.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \rv32i_core..
+Removed 3 unused cells and 274 unused wires.
+<suppressed ~9 debug messages>
+
+7.5. Executing CHECK pass (checking for obvious problems).
+Checking module alu...
+Checking module decoder...
+Checking module immediate_generator...
+Checking module pc...
+Checking module register_file...
+Checking module rv32i_core...
+Found and reported 0 problems.
+
+7.6. Executing OPT pass (performing simple optimizations).
+
+7.6.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module decoder.
+Optimizing module immediate_generator.
+Optimizing module pc.
+Optimizing module register_file.
+Optimizing module rv32i_core.
+
+7.6.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\decoder'.
+<suppressed ~525 debug messages>
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\pc'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+<suppressed ~93 debug messages>
+Removed a total of 206 cells.
+
+7.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \decoder..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 2/2 on $mux $procmux$214.
+    dead port 2/2 on $mux $procmux$224.
+    dead port 2/2 on $mux $procmux$234.
+    dead port 2/2 on $mux $procmux$244.
+    dead port 2/2 on $mux $procmux$254.
+    dead port 2/2 on $mux $procmux$1005.
+    dead port 2/2 on $mux $procmux$264.
+    dead port 2/2 on $mux $procmux$274.
+    dead port 2/2 on $mux $procmux$284.
+    dead port 2/2 on $mux $procmux$294.
+    dead port 2/2 on $mux $procmux$304.
+    dead port 2/2 on $mux $procmux$1007.
+    dead port 2/2 on $mux $procmux$314.
+    dead port 2/2 on $mux $procmux$324.
+    dead port 2/2 on $mux $procmux$334.
+    dead port 2/2 on $mux $procmux$344.
+    dead port 2/2 on $mux $procmux$354.
+    dead port 2/2 on $mux $procmux$364.
+    dead port 2/2 on $mux $procmux$374.
+    dead port 2/2 on $mux $procmux$1045.
+    dead port 2/2 on $mux $procmux$384.
+    dead port 2/2 on $mux $procmux$395.
+    dead port 2/2 on $mux $procmux$116.
+    dead port 2/2 on $mux $procmux$406.
+    dead port 2/2 on $mux $procmux$1083.
+    dead port 2/2 on $mux $procmux$417.
+    dead port 2/2 on $mux $procmux$428.
+    dead port 2/2 on $mux $procmux$439.
+    dead port 2/2 on $mux $procmux$450.
+    dead port 2/2 on $mux $procmux$461.
+    dead port 2/2 on $mux $procmux$472.
+    dead port 2/2 on $mux $procmux$482.
+    dead port 2/2 on $mux $procmux$493.
+    dead port 2/2 on $mux $procmux$504.
+    dead port 2/2 on $mux $procmux$515.
+    dead port 2/2 on $mux $procmux$527.
+    dead port 2/2 on $mux $procmux$539.
+    dead port 2/2 on $mux $procmux$551.
+    dead port 2/2 on $mux $procmux$563.
+    dead port 2/2 on $mux $procmux$575.
+    dead port 2/2 on $mux $procmux$587.
+    dead port 2/2 on $mux $procmux$1105.
+    dead port 2/2 on $mux $procmux$599.
+    dead port 2/2 on $mux $procmux$611.
+    dead port 2/2 on $mux $procmux$111.
+    dead port 2/2 on $mux $procmux$623.
+    dead port 2/2 on $mux $procmux$635.
+    dead port 2/2 on $mux $procmux$647.
+    dead port 2/2 on $mux $procmux$659.
+    dead port 2/2 on $mux $procmux$671.
+    dead port 2/2 on $mux $procmux$683.
+    dead port 2/2 on $mux $procmux$695.
+    dead port 2/2 on $mux $procmux$707.
+    dead port 2/2 on $mux $procmux$719.
+    dead port 2/2 on $mux $procmux$121.
+    dead port 2/2 on $mux $procmux$731.
+    dead port 2/2 on $mux $procmux$743.
+    dead port 2/2 on $mux $procmux$755.
+    dead port 2/2 on $mux $procmux$127.
+    dead port 2/2 on $mux $procmux$766.
+    dead port 2/2 on $mux $procmux$1026.
+    dead port 2/2 on $mux $procmux$777.
+    dead port 2/2 on $mux $procmux$789.
+    dead port 2/2 on $mux $procmux$133.
+    dead port 2/2 on $mux $procmux$801.
+    dead port 2/2 on $mux $procmux$813.
+    dead port 2/2 on $mux $procmux$138.
+    dead port 1/2 on $mux $procmux$826.
+    dead port 2/2 on $mux $procmux$828.
+    dead port 2/2 on $mux $procmux$830.
+    dead port 1/2 on $mux $procmux$844.
+    dead port 2/2 on $mux $procmux$846.
+    dead port 2/2 on $mux $procmux$144.
+    dead port 2/2 on $mux $procmux$848.
+    dead port 1/2 on $mux $procmux$862.
+    dead port 2/2 on $mux $procmux$864.
+    dead port 2/2 on $mux $procmux$866.
+    dead port 2/2 on $mux $procmux$154.
+    dead port 1/2 on $mux $procmux$880.
+    dead port 2/2 on $mux $procmux$882.
+    dead port 2/2 on $mux $procmux$1128.
+    dead port 2/2 on $mux $procmux$884.
+    dead port 2/2 on $mux $procmux$897.
+    dead port 2/2 on $mux $procmux$164.
+    dead port 2/2 on $mux $procmux$899.
+    dead port 2/2 on $mux $procmux$1064.
+    dead port 2/2 on $mux $procmux$912.
+    dead port 2/2 on $mux $procmux$914.
+    dead port 2/2 on $mux $procmux$174.
+    dead port 2/2 on $mux $procmux$927.
+    dead port 2/2 on $mux $procmux$929.
+    dead port 2/2 on $mux $procmux$942.
+    dead port 2/2 on $mux $procmux$184.
+    dead port 2/2 on $mux $procmux$944.
+    dead port 2/2 on $mux $procmux$958.
+    dead port 2/2 on $mux $procmux$960.
+    dead port 2/2 on $mux $procmux$194.
+    dead port 2/2 on $mux $procmux$973.
+    dead port 2/2 on $mux $procmux$975.
+    dead port 2/2 on $mux $procmux$989.
+    dead port 2/2 on $mux $procmux$204.
+    dead port 2/2 on $mux $procmux$991.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \pc..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \rv32i_core..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 2/2 on $mux $procmux$1236.
+    dead port 2/2 on $mux $procmux$1246.
+    dead port 2/2 on $mux $procmux$1248.
+    dead port 2/2 on $mux $procmux$1255.
+    dead port 2/2 on $mux $procmux$1257.
+    dead port 2/2 on $mux $procmux$1266.
+    dead port 2/2 on $mux $procmux$1268.
+    dead port 2/2 on $mux $procmux$1277.
+    dead port 2/2 on $mux $procmux$1279.
+    dead port 2/2 on $mux $procmux$1290.
+    dead port 2/2 on $mux $procmux$1292.
+    dead port 2/2 on $mux $procmux$1303.
+    dead port 2/2 on $mux $procmux$1305.
+    dead port 2/2 on $mux $procmux$1313.
+    dead port 2/2 on $mux $procmux$1321.
+Removed 117 multiplexer ports.
+<suppressed ~27 debug messages>
+
+7.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \decoder.
+    New ctrl vector for $pmux cell $procmux$1140: { $procmux$1106_CMP $procmux$1008_CMP $procmux$1136_CMP $procmux$1143_CMP $procmux$1142_CMP }
+    New ctrl vector for $pmux cell $procmux$1117: $auto$opt_reduce.cc:134:opt_pmux$1340
+    New ctrl vector for $pmux cell $procmux$1055: { $auto$opt_reduce.cc:134:opt_pmux$1342 $eq$rtl/decoder.sv:187$37_Y $eq$rtl/decoder.sv:208$40_Y }
+    New ctrl vector for $pmux cell $procmux$1159: $procmux$1134_CMP
+    New ctrl vector for $pmux cell $procmux$1163: { $procmux$1008_CMP $procmux$1136_CMP $procmux$1143_CMP $procmux$1142_CMP $auto$opt_reduce.cc:134:opt_pmux$1344 $procmux$1133_CMP }
+    New ctrl vector for $pmux cell $procmux$1036: { $auto$opt_reduce.cc:134:opt_pmux$1346 $eq$rtl/decoder.sv:208$40_Y }
+    New ctrl vector for $pmux cell $procmux$1074: { $auto$opt_reduce.cc:134:opt_pmux$1348 $eq$rtl/decoder.sv:187$37_Y $eq$rtl/decoder.sv:208$40_Y }
+    New ctrl vector for $pmux cell $procmux$1131: { $procmux$1106_CMP $procmux$1008_CMP $procmux$1136_CMP $auto$opt_reduce.cc:134:opt_pmux$1350 $procmux$112_CMP }
+    New ctrl vector for $pmux cell $procmux$1036: $auto$opt_reduce.cc:134:opt_pmux$1352
+    New input vector for $reduce_or cell $auto$opt_reduce.cc:128:opt_pmux$1351: { $procmux$1020_CMP $eq$rtl/decoder.sv:269$49_Y $eq$rtl/decoder.sv:263$48_Y $eq$rtl/decoder.sv:208$40_Y $eq$rtl/decoder.sv:201$39_Y $eq$rtl/decoder.sv:194$38_Y $eq$rtl/decoder.sv:187$37_Y $eq$rtl/decoder.sv:180$36_Y }
+    New ctrl vector for $pmux cell $procmux$1140: { $procmux$1106_CMP $procmux$1008_CMP $procmux$1136_CMP $procmux$1142_CMP }
+    New ctrl vector for $pmux cell $procmux$1140: { $procmux$1106_CMP $procmux$1008_CMP $procmux$1142_CMP }
+    New ctrl vector for $pmux cell $procmux$1163: { $procmux$1008_CMP $procmux$1143_CMP $procmux$1142_CMP $auto$opt_reduce.cc:134:opt_pmux$1344 $procmux$1133_CMP }
+  Optimizing cells in module \decoder.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \pc.
+  Optimizing cells in module \register_file.
+    Consolidated identical input bits for $mux cell $procmux$99:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61
+      New ports: A=1'0, B=1'1, Y=$0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0]
+      New connections: $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [31:1] = { $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] $0$memwr$\registers$rtl/register_file.sv:19$51_EN[31:0]$61 [0] }
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \rv32i_core.
+    New ctrl vector for $pmux cell $procmux$1223: $eq$rtl/rv32i_core.sv:153$18_Y
+  Optimizing cells in module \rv32i_core.
+Performed a total of 26 changes.
+
+7.6.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\decoder'.
+<suppressed ~66 debug messages>
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\pc'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+Removed a total of 22 cells.
+
+7.6.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+7.6.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+Removed 2 unused cells and 358 unused wires.
+<suppressed ~4 debug messages>
+
+7.6.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module decoder.
+Optimizing module immediate_generator.
+Optimizing module pc.
+Optimizing module register_file.
+Optimizing module rv32i_core.
+
+7.6.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+7.6.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \decoder..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \pc..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \rv32i_core..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~35 debug messages>
+
+7.6.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \decoder.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \pc.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \rv32i_core.
+Performed a total of 0 changes.
+
+7.6.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\decoder'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\pc'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+Removed a total of 0 cells.
+
+7.6.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+7.6.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+
+7.6.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module decoder.
+Optimizing module immediate_generator.
+Optimizing module pc.
+Optimizing module register_file.
+Optimizing module rv32i_core.
+
+7.6.16. Finished OPT passes. (There is nothing left to do.)
+
+7.7. Executing FSM pass (extract and optimize FSM).
+
+7.7.1. Executing FSM_DETECT pass (finding FSMs in design).
+
+7.7.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+
+7.7.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+7.7.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+
+7.7.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+7.7.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+
+7.7.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+7.7.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+
+7.8. Executing OPT pass (performing simple optimizations).
+
+7.8.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module decoder.
+Optimizing module immediate_generator.
+Optimizing module pc.
+Optimizing module register_file.
+Optimizing module rv32i_core.
+
+7.8.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\decoder'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\pc'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+Removed a total of 0 cells.
+
+7.8.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \decoder..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \pc..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \rv32i_core..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~35 debug messages>
+
+7.8.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \decoder.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \pc.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \rv32i_core.
+Performed a total of 0 changes.
+
+7.8.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\decoder'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\pc'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+Removed a total of 0 cells.
+
+7.8.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $procdff$1337 ($dff) from module pc (D = \next_pc, Q = \current_pc, rval = 0).
+
+7.8.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+Removed 1 unused cells and 1 unused wires.
+<suppressed ~2 debug messages>
+
+7.8.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module decoder.
+Optimizing module immediate_generator.
+Optimizing module pc.
+Optimizing module register_file.
+Optimizing module rv32i_core.
+
+7.8.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+7.8.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \decoder..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \pc..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \rv32i_core..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~35 debug messages>
+
+7.8.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \decoder.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \pc.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \rv32i_core.
+Performed a total of 0 changes.
+
+7.8.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\decoder'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\pc'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+Removed a total of 0 cells.
+
+7.8.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+7.8.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+
+7.8.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module decoder.
+Optimizing module immediate_generator.
+Optimizing module pc.
+Optimizing module register_file.
+Optimizing module rv32i_core.
+
+7.8.16. Finished OPT passes. (There is nothing left to do.)
+
+7.9. Executing WREDUCE pass (reducing word size of cells).
+Removed top 1 bits (of 4) from port B of cell alu.$procmux$83_CMP0 ($eq).
+Removed top 1 bits (of 4) from port B of cell alu.$procmux$84_CMP0 ($eq).
+Removed top 1 bits (of 4) from port B of cell alu.$procmux$85_CMP0 ($eq).
+Removed top 1 bits (of 4) from port B of cell alu.$procmux$86_CMP0 ($eq).
+Removed top 2 bits (of 4) from port B of cell alu.$procmux$87_CMP0 ($eq).
+Removed top 2 bits (of 4) from port B of cell alu.$procmux$88_CMP0 ($eq).
+Removed top 3 bits (of 4) from port B of cell alu.$procmux$89_CMP0 ($eq).
+Removed top 1 bits (of 7) from port B of cell decoder.$eq$rtl/decoder.sv:161$34 ($eq).
+Removed top 2 bits (of 3) from port B of cell decoder.$eq$rtl/decoder.sv:187$37 ($eq).
+Removed top 1 bits (of 3) from port B of cell decoder.$eq$rtl/decoder.sv:194$38 ($eq).
+Removed top 2 bits (of 3) from mux cell decoder.$procmux$352 ($mux).
+Removed top 3 bits (of 4) from mux cell decoder.$procmux$362 ($mux).
+Removed top 1 bits (of 3) from mux cell decoder.$procmux$372 ($mux).
+Removed top 2 bits (of 3) from mux cell decoder.$procmux$448 ($mux).
+Removed top 1 bits (of 2) from mux cell decoder.$procmux$787 ($mux).
+Removed top 1 bits (of 4) from mux cell decoder.$procmux$877 ($mux).
+Removed top 1 bits (of 4) from mux cell decoder.$procmux$940 ($mux).
+Removed top 1 bits (of 4) from mux cell decoder.$procmux$956 ($mux).
+Removed top 2 bits (of 7) from port B of cell decoder.$procmux$1008_CMP0 ($eq).
+Removed top 1 bits (of 3) from port B of cell decoder.$procmux$1020_CMP0 ($eq).
+Removed top 1 bits (of 10) from port B of cell decoder.$procmux$1096_CMP0 ($eq).
+Removed top 7 bits (of 10) from port B of cell decoder.$procmux$1097_CMP0 ($eq).
+Removed top 9 bits (of 10) from port B of cell decoder.$procmux$1098_CMP0 ($eq).
+Removed top 8 bits (of 10) from port B of cell decoder.$procmux$1099_CMP0 ($eq).
+Removed top 7 bits (of 10) from port B of cell decoder.$procmux$1100_CMP0 ($eq).
+Removed top 8 bits (of 10) from port B of cell decoder.$procmux$1101_CMP0 ($eq).
+Removed top 7 bits (of 10) from port B of cell decoder.$procmux$1102_CMP0 ($eq).
+Removed top 7 bits (of 10) from port B of cell decoder.$procmux$1103_CMP0 ($eq).
+Removed top 1 bits (of 10) from port B of cell decoder.$procmux$1104_CMP0 ($eq).
+Removed top 1 bits (of 7) from port B of cell decoder.$procmux$1106_CMP0 ($eq).
+Removed top 2 bits (of 7) from port B of cell decoder.$procmux$1134_CMP0 ($eq).
+Removed top 1 bits (of 7) from port B of cell decoder.$procmux$1135_CMP0 ($eq).
+Removed top 5 bits (of 7) from port B of cell decoder.$procmux$1136_CMP0 ($eq).
+Removed top 1 bits (of 7) from port B of cell decoder.$procmux$1143_CMP0 ($eq).
+Removed top 2 bits (of 3) from wire decoder.$11\imm_type[2:0].
+Removed top 2 bits (of 3) from wire decoder.$12\imm_type[2:0].
+Removed top 1 bits (of 3) from wire decoder.$14\imm_type[2:0].
+Removed top 1 bits (of 2) from wire decoder.$2\result_src[1:0].
+Removed top 1 bits (of 4) from wire decoder.$4\alu_op[3:0].
+Removed top 1 bits (of 4) from wire decoder.$5\alu_op[3:0].
+Removed top 1 bits (of 4) from wire decoder.$6\alu_op[3:0].
+Removed top 1 bits (of 3) from port B of cell immediate_generator.$procmux$94_CMP0 ($eq).
+Removed top 1 bits (of 3) from port B of cell immediate_generator.$procmux$95_CMP0 ($eq).
+Removed top 2 bits (of 3) from port B of cell immediate_generator.$procmux$96_CMP0 ($eq).
+Removed top 29 bits (of 32) from port B of cell pc.$add$rtl/pc.sv:15$30 ($add).
+Removed top 1 bits (of 2) from port B of cell rv32i_core.$eq$rtl/rv32i_core.sv:153$16 ($eq).
+Removed top 29 bits (of 32) from port B of cell rv32i_core.$add$rtl/rv32i_core.sv:188$27 ($add).
+Removed top 1 bits (of 3) from port B of cell rv32i_core.$procmux$1210_CMP0 ($eq).
+Removed top 2 bits (of 3) from port B of cell rv32i_core.$procmux$1211_CMP0 ($eq).
+Removed top 1 bits (of 2) from port B of cell rv32i_core.$procmux$1220_CMP0 ($eq).
+Removed top 1 bits (of 3) from port B of cell rv32i_core.$procmux$1233_CMP0 ($eq).
+Removed top 1 bits (of 3) from port B of cell rv32i_core.$procmux$1234_CMP0 ($eq).
+Removed top 2 bits (of 3) from port B of cell rv32i_core.$procmux$1235_CMP0 ($eq).
+Removed top 1 bits (of 2) from port B of cell rv32i_core.$procmux$1332_CMP0 ($eq).
+
+7.10. Executing PEEPOPT pass (run peephole optimizers).
+
+7.11. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+Removed 0 unused cells and 7 unused wires.
+<suppressed ~1 debug messages>
+
+7.12. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module alu:
+  creating $macc model for $add$rtl/alu.sv:21$69 ($add).
+  creating $macc model for $sub$rtl/alu.sv:22$70 ($sub).
+  creating $alu model for $macc $sub$rtl/alu.sv:22$70.
+  creating $alu model for $macc $add$rtl/alu.sv:21$69.
+  creating $alu model for $lt$rtl/alu.sv:30$77 ($lt): new $alu
+  creating $alu model for $lt$rtl/alu.sv:32$78 ($lt): merged with $sub$rtl/alu.sv:22$70.
+  creating $alu cell for $lt$rtl/alu.sv:30$77: $auto$alumacc.cc:485:replace_alu$1362
+  creating $alu cell for $add$rtl/alu.sv:21$69: $auto$alumacc.cc:485:replace_alu$1369
+  creating $alu cell for $sub$rtl/alu.sv:22$70, $lt$rtl/alu.sv:32$78: $auto$alumacc.cc:485:replace_alu$1372
+  created 3 $alu and 0 $macc cells.
+Extracting $alu and $macc cells in module decoder:
+  created 0 $alu and 0 $macc cells.
+Extracting $alu and $macc cells in module immediate_generator:
+  created 0 $alu and 0 $macc cells.
+Extracting $alu and $macc cells in module pc:
+  creating $macc model for $add$rtl/pc.sv:15$30 ($add).
+  creating $alu model for $macc $add$rtl/pc.sv:15$30.
+  creating $alu cell for $add$rtl/pc.sv:15$30: $auto$alumacc.cc:485:replace_alu$1377
+  created 1 $alu and 0 $macc cells.
+Extracting $alu and $macc cells in module register_file:
+  created 0 $alu and 0 $macc cells.
+Extracting $alu and $macc cells in module rv32i_core:
+  creating $macc model for $add$rtl/rv32i_core.sv:156$21 ($add).
+  creating $macc model for $add$rtl/rv32i_core.sv:188$27 ($add).
+  creating $alu model for $macc $add$rtl/rv32i_core.sv:188$27.
+  creating $alu model for $macc $add$rtl/rv32i_core.sv:156$21.
+  creating $alu model for $lt$rtl/rv32i_core.sv:137$10 ($lt): new $alu
+  creating $alu model for $lt$rtl/rv32i_core.sv:138$11 ($lt): new $alu
+  creating $alu model for $eq$rtl/rv32i_core.sv:136$9 ($eq): merged with $lt$rtl/rv32i_core.sv:138$11.
+  creating $alu cell for $lt$rtl/rv32i_core.sv:138$11, $eq$rtl/rv32i_core.sv:136$9: $auto$alumacc.cc:485:replace_alu$1382
+  creating $alu cell for $lt$rtl/rv32i_core.sv:137$10: $auto$alumacc.cc:485:replace_alu$1393
+  creating $alu cell for $add$rtl/rv32i_core.sv:156$21: $auto$alumacc.cc:485:replace_alu$1406
+  creating $alu cell for $add$rtl/rv32i_core.sv:188$27: $auto$alumacc.cc:485:replace_alu$1409
+  created 4 $alu and 0 $macc cells.
+
+7.13. Executing SHARE pass (SAT-based resource sharing).
+Found 3 cells in module alu that may be considered for resource sharing.
+  Analyzing resource sharing options for $sshr$rtl/alu.sv:28$76 ($sshr):
+    Found 1 activation_patterns using ctrl signal $procmux$83_CMP.
+    No candidates found.
+  Analyzing resource sharing options for $shr$rtl/alu.sv:27$75 ($shr):
+    Found 1 activation_patterns using ctrl signal $procmux$84_CMP.
+    No candidates found.
+  Analyzing resource sharing options for $shl$rtl/alu.sv:26$74 ($shl):
+    Found 1 activation_patterns using ctrl signal $procmux$85_CMP.
+    No candidates found.
+Found 2 cells in module register_file that may be considered for resource sharing.
+  Analyzing resource sharing options for $memrd$\registers$rtl/register_file.sv:15$56 ($memrd):
+    Found 1 activation_patterns using ctrl signal $eq$rtl/register_file.sv:15$55_Y.
+    Found 1 candidates: $memrd$\registers$rtl/register_file.sv:14$53
+    Analyzing resource sharing with $memrd$\registers$rtl/register_file.sv:14$53 ($memrd):
+      Found 1 activation_patterns using ctrl signal $eq$rtl/register_file.sv:14$52_Y.
+      Activation pattern for cell $memrd$\registers$rtl/register_file.sv:15$56: $eq$rtl/register_file.sv:15$55_Y = 1'0
+      Activation pattern for cell $memrd$\registers$rtl/register_file.sv:14$53: $eq$rtl/register_file.sv:14$52_Y = 1'0
+      Size of SAT problem: 0 cells, 27 variables, 51 clauses
+      According to the SAT solver this pair of cells can not be shared.
+      Model from SAT solver: { $eq$rtl/register_file.sv:15$55_Y $eq$rtl/register_file.sv:14$52_Y } = 2'00
+  Analyzing resource sharing options for $memrd$\registers$rtl/register_file.sv:14$53 ($memrd):
+    Found 1 activation_patterns using ctrl signal $eq$rtl/register_file.sv:14$52_Y.
+    No candidates found.
+
+7.14. Executing OPT pass (performing simple optimizations).
+
+7.14.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module decoder.
+Optimizing module immediate_generator.
+Optimizing module pc.
+Optimizing module register_file.
+Optimizing module rv32i_core.
+<suppressed ~2 debug messages>
+
+7.14.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\decoder'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\pc'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+Removed a total of 0 cells.
+
+7.14.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \decoder..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \pc..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \rv32i_core..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~35 debug messages>
+
+7.14.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \decoder.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \pc.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \rv32i_core.
+Performed a total of 0 changes.
+
+7.14.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\decoder'.
+<suppressed ~15 debug messages>
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\pc'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+Removed a total of 5 cells.
+
+7.14.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+7.14.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+Removed 0 unused cells and 12 unused wires.
+<suppressed ~3 debug messages>
+
+7.14.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module decoder.
+Optimizing module immediate_generator.
+Optimizing module pc.
+Optimizing module register_file.
+Optimizing module rv32i_core.
+
+7.14.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+7.14.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \decoder..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \pc..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \rv32i_core..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~35 debug messages>
+
+7.14.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \decoder.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \pc.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \rv32i_core.
+Performed a total of 0 changes.
+
+7.14.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\decoder'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\pc'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+Removed a total of 0 cells.
+
+7.14.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+7.14.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+
+7.14.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module decoder.
+Optimizing module immediate_generator.
+Optimizing module pc.
+Optimizing module register_file.
+Optimizing module rv32i_core.
+
+7.14.16. Finished OPT passes. (There is nothing left to do.)
+
+7.15. Executing MEMORY pass.
+
+7.15.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+7.15.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+7.15.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+  Analyzing register_file.registers write port 0.
+
+7.15.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+7.15.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+Checking read port `\registers'[0] in module `\register_file': no output FF found.
+Checking read port `\registers'[1] in module `\register_file': no output FF found.
+Checking read port address `\registers'[0] in module `\register_file': no address FF found.
+Checking read port address `\registers'[1] in module `\register_file': no address FF found.
+
+7.15.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+
+7.15.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+Consolidating read ports of memory register_file.registers by address:
+
+7.15.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+7.15.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+
+7.15.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+7.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+
+7.17. Executing OPT pass (performing simple optimizations).
+
+7.17.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module decoder.
+<suppressed ~18 debug messages>
+Optimizing module immediate_generator.
+Optimizing module pc.
+<suppressed ~1 debug messages>
+Optimizing module register_file.
+<suppressed ~3 debug messages>
+Optimizing module rv32i_core.
+<suppressed ~6 debug messages>
+
+7.17.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\decoder'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\pc'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+Removed a total of 0 cells.
+
+7.17.3. Executing OPT_DFF pass (perform DFF optimizations).
+Adding EN signal on $auto$ff.cc:266:slice$1353 ($sdff) from module pc (D = \next_pc [1:0], Q = \current_pc [1:0]).
+
+7.17.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+Removed 3 unused cells and 11 unused wires.
+<suppressed ~6 debug messages>
+
+7.17.5. Rerunning OPT passes. (Removed registers in this run.)
+
+7.17.6. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module decoder.
+Optimizing module immediate_generator.
+Optimizing module pc.
+<suppressed ~1 debug messages>
+Optimizing module register_file.
+Optimizing module rv32i_core.
+
+7.17.7. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\decoder'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\pc'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+Removed a total of 0 cells.
+
+7.17.8. Executing OPT_DFF pass (perform DFF optimizations).
+
+7.17.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+7.17.10. Finished fast OPT passes.
+
+7.18. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+Mapping memory \registers in module \register_file:
+  created 32 $dff cells and 0 static cells of width 32.
+  read interface: 0 $dff and 62 $mux cells.
+  write interface: 32 write mux blocks.
+
+7.19. Executing OPT pass (performing simple optimizations).
+
+7.19.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module decoder.
+Optimizing module immediate_generator.
+Optimizing module pc.
+Optimizing module register_file.
+<suppressed ~10 debug messages>
+Optimizing module rv32i_core.
+
+7.19.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\decoder'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\pc'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+Removed a total of 0 cells.
+
+7.19.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \decoder..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \pc..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \rv32i_core..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~55 debug messages>
+
+7.19.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \decoder.
+    Consolidated identical input bits for $mux cell $procmux$109:
+      Old ports: A=2'00, B=2'10, Y=$14\imm_type[2:0]
+      New ports: A=1'0, B=1'1, Y=$14\imm_type[2:0] [1]
+      New connections: $14\imm_type[2:0] [0] = 1'0
+    New ctrl vector for $pmux cell $procmux$1163: { $procmux$1143_CMP $procmux$1142_CMP $auto$opt_reduce.cc:134:opt_pmux$1344 $procmux$1133_CMP }
+    Consolidated identical input bits for $mux cell $procmux$125:
+      Old ports: A=2'00, B=2'11, Y=$7\result_src[1:0]
+      New ports: A=1'0, B=1'1, Y=$7\result_src[1:0] [0]
+      New connections: $7\result_src[1:0] [1] = $7\result_src[1:0] [0]
+    Consolidated identical input bits for $mux cell $procmux$312:
+      Old ports: A={ 2'00 $11\alu_src[0:0] }, B=3'010, Y=$3\branch_type[2:0]
+      New ports: A={ 1'0 $11\alu_src[0:0] }, B=2'10, Y=$3\branch_type[2:0] [1:0]
+      New connections: $3\branch_type[2:0] [2] = 1'0
+    Consolidated identical input bits for $mux cell $procmux$322:
+      Old ports: A={ 3'000 $11\alu_src[0:0] }, B=4'0001, Y=$16\alu_op[3:0]
+      New ports: A=$11\alu_src[0:0], B=1'1, Y=$16\alu_op[3:0] [0]
+      New connections: $16\alu_op[3:0] [3:1] = 3'000
+    Consolidated identical input bits for $mux cell $procmux$332:
+      Old ports: A={ 1'0 $14\imm_type[2:0] }, B=3'010, Y=$15\imm_type[2:0]
+      New ports: A=$14\imm_type[2:0], B=2'10, Y=$15\imm_type[2:0] [1:0]
+      New connections: $15\imm_type[2:0] [2] = 1'0
+    Consolidated identical input bits for $mux cell $procmux$404:
+      Old ports: A={ 2'00 $12\alu_src[0:0] }, B=3'001, Y=$13\imm_type[2:0]
+      New ports: A=$12\alu_src[0:0], B=1'1, Y=$13\imm_type[2:0] [0]
+      New connections: $13\imm_type[2:0] [2:1] = 2'00
+    Consolidated identical input bits for $mux cell $procmux$729:
+      Old ports: A={ 1'0 $11\alu_src[0:0] }, B=2'01, Y=$3\result_src[1:0]
+      New ports: A=$11\alu_src[0:0], B=1'1, Y=$3\result_src[1:0] [0]
+      New connections: $3\result_src[1:0] [1] = 1'0
+    Consolidated identical input bits for $mux cell $procmux$877:
+      Old ports: A=3'000, B=3'110, Y=$6\alu_op[3:0]
+      New ports: A=1'0, B=1'1, Y=$6\alu_op[3:0] [1]
+      New connections: { $6\alu_op[3:0] [2] $6\alu_op[3:0] [0] } = { $6\alu_op[3:0] [1] 1'0 }
+    Consolidated identical input bits for $mux cell $procmux$956:
+      Old ports: A=3'000, B=3'101, Y=$4\alu_op[3:0]
+      New ports: A=1'0, B=1'1, Y=$4\alu_op[3:0] [0]
+      New connections: $4\alu_op[3:0] [2:1] = { $4\alu_op[3:0] [0] 1'0 }
+  Optimizing cells in module \decoder.
+    Consolidated identical input bits for $mux cell $procmux$272:
+      Old ports: A=$3\branch_type[2:0], B=3'011, Y=$4\branch_type[2:0]
+      New ports: A=$3\branch_type[2:0] [1:0], B=2'11, Y=$4\branch_type[2:0] [1:0]
+      New connections: $4\branch_type[2:0] [2] = 1'0
+    Consolidated identical input bits for $mux cell $procmux$282:
+      Old ports: A=$16\alu_op[3:0], B=4'0001, Y=$17\alu_op[3:0]
+      New ports: A=$16\alu_op[3:0] [0], B=1'1, Y=$17\alu_op[3:0] [0]
+      New connections: $17\alu_op[3:0] [3:1] = 3'000
+    Consolidated identical input bits for $mux cell $procmux$292:
+      Old ports: A=$15\imm_type[2:0], B=3'010, Y=$16\imm_type[2:0]
+      New ports: A=$15\imm_type[2:0] [1:0], B=2'10, Y=$16\imm_type[2:0] [1:0]
+      New connections: $16\imm_type[2:0] [2] = 1'0
+    Consolidated identical input bits for $mux cell $procmux$332:
+      Old ports: A=$14\imm_type[2:0], B=2'10, Y=$15\imm_type[2:0] [1:0]
+      New ports: A=$14\imm_type[2:0] [1], B=1'1, Y=$15\imm_type[2:0] [1]
+      New connections: $15\imm_type[2:0] [0] = 1'0
+    Consolidated identical input bits for $mux cell $procmux$669:
+      Old ports: A=$3\result_src[1:0], B=2'01, Y=$4\result_src[1:0]
+      New ports: A=$3\result_src[1:0] [0], B=1'1, Y=$4\result_src[1:0] [0]
+      New connections: $4\result_src[1:0] [1] = 1'0
+    Consolidated identical input bits for $mux cell $procmux$940:
+      Old ports: A=$6\alu_op[3:0], B=3'111, Y=$5\alu_op[3:0]
+      New ports: A={ $6\alu_op[3:0] [1] 1'0 }, B=2'11, Y=$5\alu_op[3:0] [1:0]
+      New connections: $5\alu_op[3:0] [2] = $5\alu_op[3:0] [1]
+  Optimizing cells in module \decoder.
+    Consolidated identical input bits for $mux cell $procmux$242:
+      Old ports: A=$17\alu_op[3:0], B=4'0001, Y=$18\alu_op[3:0]
+      New ports: A=$17\alu_op[3:0] [0], B=1'1, Y=$18\alu_op[3:0] [0]
+      New connections: $18\alu_op[3:0] [3:1] = 3'000
+    Consolidated identical input bits for $mux cell $procmux$252:
+      Old ports: A=$16\imm_type[2:0], B=3'010, Y=$17\imm_type[2:0]
+      New ports: A=$16\imm_type[2:0] [1:0], B=2'10, Y=$17\imm_type[2:0] [1:0]
+      New connections: $17\imm_type[2:0] [2] = 1'0
+    Consolidated identical input bits for $mux cell $procmux$292:
+      Old ports: A=$15\imm_type[2:0] [1:0], B=2'10, Y=$16\imm_type[2:0] [1:0]
+      New ports: A=$15\imm_type[2:0] [1], B=1'1, Y=$16\imm_type[2:0] [1]
+      New connections: $16\imm_type[2:0] [0] = 1'0
+    Consolidated identical input bits for $mux cell $procmux$609:
+      Old ports: A=$4\result_src[1:0], B=2'01, Y=$5\result_src[1:0]
+      New ports: A=$4\result_src[1:0] [0], B=1'1, Y=$5\result_src[1:0] [0]
+      New connections: $5\result_src[1:0] [1] = 1'0
+  Optimizing cells in module \decoder.
+    Consolidated identical input bits for $mux cell $procmux$202:
+      Old ports: A=$18\alu_op[3:0], B=4'0001, Y=$19\alu_op[3:0]
+      New ports: A=$18\alu_op[3:0] [0], B=1'1, Y=$19\alu_op[3:0] [0]
+      New connections: $19\alu_op[3:0] [3:1] = 3'000
+    Consolidated identical input bits for $mux cell $procmux$212:
+      Old ports: A=$17\imm_type[2:0], B=3'010, Y=$18\imm_type[2:0]
+      New ports: A=$17\imm_type[2:0] [1:0], B=2'10, Y=$18\imm_type[2:0] [1:0]
+      New connections: $18\imm_type[2:0] [2] = 1'0
+    Consolidated identical input bits for $mux cell $procmux$252:
+      Old ports: A=$16\imm_type[2:0] [1:0], B=2'10, Y=$17\imm_type[2:0] [1:0]
+      New ports: A=$16\imm_type[2:0] [1], B=1'1, Y=$17\imm_type[2:0] [1]
+      New connections: $17\imm_type[2:0] [0] = 1'0
+    Consolidated identical input bits for $mux cell $procmux$549:
+      Old ports: A=$5\result_src[1:0], B=2'01, Y=$6\result_src[1:0]
+      New ports: A=$5\result_src[1:0] [0], B=1'1, Y=$6\result_src[1:0] [0]
+      New connections: $6\result_src[1:0] [1] = 1'0
+  Optimizing cells in module \decoder.
+    Consolidated identical input bits for $mux cell $procmux$162:
+      Old ports: A=$19\alu_op[3:0], B=4'0001, Y=$20\alu_op[3:0]
+      New ports: A=$19\alu_op[3:0] [0], B=1'1, Y=$20\alu_op[3:0] [0]
+      New connections: $20\alu_op[3:0] [3:1] = 3'000
+    Consolidated identical input bits for $mux cell $procmux$172:
+      Old ports: A=$18\imm_type[2:0], B=3'010, Y=$19\imm_type[2:0]
+      New ports: A=$18\imm_type[2:0] [1:0], B=2'10, Y=$19\imm_type[2:0] [1:0]
+      New connections: $19\imm_type[2:0] [2] = 1'0
+    Consolidated identical input bits for $mux cell $procmux$212:
+      Old ports: A=$17\imm_type[2:0] [1:0], B=2'10, Y=$18\imm_type[2:0] [1:0]
+      New ports: A=$17\imm_type[2:0] [1], B=1'1, Y=$18\imm_type[2:0] [1]
+      New connections: $18\imm_type[2:0] [0] = 1'0
+  Optimizing cells in module \decoder.
+    Consolidated identical input bits for $mux cell $procmux$172:
+      Old ports: A=$18\imm_type[2:0] [1:0], B=2'10, Y=$19\imm_type[2:0] [1:0]
+      New ports: A=$18\imm_type[2:0] [1], B=1'1, Y=$19\imm_type[2:0] [1]
+      New connections: $19\imm_type[2:0] [0] = 1'0
+  Optimizing cells in module \decoder.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \pc.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \rv32i_core.
+    Consolidated identical input bits for $mux cell $procmux$1244:
+      Old ports: A=4'0000, B=4'1111, Y=$5\data_write_strb[3:0]
+      New ports: A=1'0, B=1'1, Y=$5\data_write_strb[3:0] [0]
+      New connections: $5\data_write_strb[3:0] [3:1] = { $5\data_write_strb[3:0] [0] $5\data_write_strb[3:0] [0] $5\data_write_strb[3:0] [0] }
+    Consolidated identical input bits for $pmux cell $procmux$1263:
+      Old ports: A=4'0000, B=8'00111100, Y=$4\data_write_strb[3:0]
+      New ports: A=2'00, B=4'0110, Y={ $4\data_write_strb[3:0] [2] $4\data_write_strb[3:0] [0] }
+      New connections: { $4\data_write_strb[3:0] [3] $4\data_write_strb[3:0] [1] } = { $4\data_write_strb[3:0] [2] $4\data_write_strb[3:0] [0] }
+  Optimizing cells in module \rv32i_core.
+Performed a total of 30 changes.
+
+7.19.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\decoder'.
+<suppressed ~9 debug messages>
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\pc'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+Removed a total of 3 cells.
+
+7.19.6. Executing OPT_SHARE pass.
+
+7.19.7. Executing OPT_DFF pass (perform DFF optimizations).
+
+7.19.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+Removed 0 unused cells and 104 unused wires.
+<suppressed ~2 debug messages>
+
+7.19.9. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module decoder.
+<suppressed ~16 debug messages>
+Optimizing module immediate_generator.
+Optimizing module pc.
+Optimizing module register_file.
+Optimizing module rv32i_core.
+<suppressed ~1 debug messages>
+
+7.19.10. Rerunning OPT passes. (Maybe there is more to do..)
+
+7.19.11. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \decoder..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \pc..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \rv32i_core..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~54 debug messages>
+
+7.19.12. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \decoder.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \pc.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \rv32i_core.
+Performed a total of 0 changes.
+
+7.19.13. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\decoder'.
+<suppressed ~42 debug messages>
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\pc'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+Removed a total of 14 cells.
+
+7.19.14. Executing OPT_SHARE pass.
+
+7.19.15. Executing OPT_DFF pass (perform DFF optimizations).
+Adding EN signal on $memory\registers[9]$1438 ($dff) from module register_file (D = \rd_data, Q = \registers[9]).
+Adding EN signal on $memory\registers[8]$1436 ($dff) from module register_file (D = \rd_data, Q = \registers[8]).
+Adding EN signal on $memory\registers[7]$1434 ($dff) from module register_file (D = \rd_data, Q = \registers[7]).
+Adding EN signal on $memory\registers[6]$1432 ($dff) from module register_file (D = \rd_data, Q = \registers[6]).
+Adding EN signal on $memory\registers[5]$1430 ($dff) from module register_file (D = \rd_data, Q = \registers[5]).
+Adding EN signal on $memory\registers[4]$1428 ($dff) from module register_file (D = \rd_data, Q = \registers[4]).
+Adding EN signal on $memory\registers[3]$1426 ($dff) from module register_file (D = \rd_data, Q = \registers[3]).
+Adding EN signal on $memory\registers[31]$1482 ($dff) from module register_file (D = \rd_data, Q = \registers[31]).
+Adding EN signal on $memory\registers[30]$1480 ($dff) from module register_file (D = \rd_data, Q = \registers[30]).
+Adding EN signal on $memory\registers[2]$1424 ($dff) from module register_file (D = \rd_data, Q = \registers[2]).
+Adding EN signal on $memory\registers[29]$1478 ($dff) from module register_file (D = \rd_data, Q = \registers[29]).
+Adding EN signal on $memory\registers[28]$1476 ($dff) from module register_file (D = \rd_data, Q = \registers[28]).
+Adding EN signal on $memory\registers[27]$1474 ($dff) from module register_file (D = \rd_data, Q = \registers[27]).
+Adding EN signal on $memory\registers[26]$1472 ($dff) from module register_file (D = \rd_data, Q = \registers[26]).
+Adding EN signal on $memory\registers[25]$1470 ($dff) from module register_file (D = \rd_data, Q = \registers[25]).
+Adding EN signal on $memory\registers[24]$1468 ($dff) from module register_file (D = \rd_data, Q = \registers[24]).
+Adding EN signal on $memory\registers[23]$1466 ($dff) from module register_file (D = \rd_data, Q = \registers[23]).
+Adding EN signal on $memory\registers[22]$1464 ($dff) from module register_file (D = \rd_data, Q = \registers[22]).
+Adding EN signal on $memory\registers[21]$1462 ($dff) from module register_file (D = \rd_data, Q = \registers[21]).
+Adding EN signal on $memory\registers[20]$1460 ($dff) from module register_file (D = \rd_data, Q = \registers[20]).
+Adding EN signal on $memory\registers[1]$1422 ($dff) from module register_file (D = \rd_data, Q = \registers[1]).
+Adding EN signal on $memory\registers[19]$1458 ($dff) from module register_file (D = \rd_data, Q = \registers[19]).
+Adding EN signal on $memory\registers[18]$1456 ($dff) from module register_file (D = \rd_data, Q = \registers[18]).
+Adding EN signal on $memory\registers[17]$1454 ($dff) from module register_file (D = \rd_data, Q = \registers[17]).
+Adding EN signal on $memory\registers[16]$1452 ($dff) from module register_file (D = \rd_data, Q = \registers[16]).
+Adding EN signal on $memory\registers[15]$1450 ($dff) from module register_file (D = \rd_data, Q = \registers[15]).
+Adding EN signal on $memory\registers[14]$1448 ($dff) from module register_file (D = \rd_data, Q = \registers[14]).
+Adding EN signal on $memory\registers[13]$1446 ($dff) from module register_file (D = \rd_data, Q = \registers[13]).
+Adding EN signal on $memory\registers[12]$1444 ($dff) from module register_file (D = \rd_data, Q = \registers[12]).
+Adding EN signal on $memory\registers[11]$1442 ($dff) from module register_file (D = \rd_data, Q = \registers[11]).
+Adding EN signal on $memory\registers[10]$1440 ($dff) from module register_file (D = \rd_data, Q = \registers[10]).
+Adding EN signal on $memory\registers[0]$1420 ($dff) from module register_file (D = \rd_data, Q = \registers[0]).
+
+7.19.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+Removed 32 unused cells and 49 unused wires.
+<suppressed ~35 debug messages>
+
+7.19.17. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module decoder.
+Optimizing module immediate_generator.
+Optimizing module pc.
+Optimizing module register_file.
+Optimizing module rv32i_core.
+
+7.19.18. Rerunning OPT passes. (Maybe there is more to do..)
+
+7.19.19. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \decoder..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \pc..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \rv32i_core..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~22 debug messages>
+
+7.19.20. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \alu.
+  Optimizing cells in module \decoder.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \pc.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \rv32i_core.
+Performed a total of 0 changes.
+
+7.19.21. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+Finding identical cells in module `\decoder'.
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\pc'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+Removed a total of 0 cells.
+
+7.19.22. Executing OPT_SHARE pass.
+
+7.19.23. Executing OPT_DFF pass (perform DFF optimizations).
+
+7.19.24. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+
+7.19.25. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+Optimizing module decoder.
+Optimizing module immediate_generator.
+Optimizing module pc.
+Optimizing module register_file.
+Optimizing module rv32i_core.
+
+7.19.26. Finished OPT passes. (There is nothing left to do.)
+
+7.20. Executing TECHMAP pass (map to technology primitives).
+
+7.20.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/usr/bin/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `\$__div_mod_u'.
+Generating RTLIL representation for module `\$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `\$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Successfully finished Verilog frontend.
+
+7.20.2. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $mux.
+Using extmapper simplemap for cells of type $logic_not.
+Using extmapper simplemap for cells of type $logic_and.
+Using template $paramod$2653f68ddb8eab7b1907b4a20767b72a824a7a36\_90_alu for cells of type $alu.
+Using template $paramod$fbc7873bff55778c0b3173955b7e4bce1d9d6834\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $not.
+Using extmapper simplemap for cells of type $eq.
+Using extmapper simplemap for cells of type $or.
+Using template $paramod$44a13d10af618e7fbe7b9aad2f6151ffcee1e2fa\_90_alu for cells of type $alu.
+Using template $paramod$0d149ffe75563ef6fcc1a3dddc59d00af28651a7\_90_pmux for cells of type $pmux.
+Using template $paramod$645fe0cc96ae5edb83bff90cc2c78f4a20ca3e3c\_90_pmux for cells of type $pmux.
+Using template $paramod$59b03ae2620a41577de8da5f5c97b2919e82362b\_90_pmux for cells of type $pmux.
+Using template $paramod$eaeb96106163dbf82031649d189817109fe07c69\_90_pmux for cells of type $pmux.
+Using extmapper simplemap for cells of type $and.
+Using template $paramod$521ce43182eecb9f60c72393a788160d2c356bf5\_90_pmux for cells of type $pmux.
+Using extmapper simplemap for cells of type $reduce_and.
+Using template $paramod$8fabc56b80a569262acfc42757a02ca0b8e91278\_90_pmux for cells of type $pmux.
+Using extmapper simplemap for cells of type $xor.
+Using template $paramod$c2e415ef15bc3ccd2723772353a6b450d3d76206\_90_pmux for cells of type $pmux.
+Using template $paramod$54d740639e1393b22262823179ff783ea9f17a35\_90_pmux for cells of type $pmux.
+Using extmapper simplemap for cells of type $pos.
+Using extmapper simplemap for cells of type $reduce_or.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000100000 for cells of type $lcu.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000011110 for cells of type $lcu.
+Using extmapper simplemap for cells of type $dffe.
+Using extmapper simplemap for cells of type $reduce_bool.
+Using extmapper simplemap for cells of type $sdffe.
+Using extmapper simplemap for cells of type $sdff.
+Using template $paramod$33afdd83bf3811dac2de7a968d39eea5718691bc\_90_pmux for cells of type $pmux.
+Using template $paramod$c5c783b17ab1d780abfad8cfe6563a0a7b47a3b0\_90_pmux for cells of type $pmux.
+Using template $paramod$4d45682f6d5f8751d24fc75184ef72226da353f7\_90_pmux for cells of type $pmux.
+Using template $paramod$2407ada40cc3dda6c6015be2b49b748cddb5a800\_90_pmux for cells of type $pmux.
+Using template $paramod$d31bf4d7d72e59528d18fbd4f322e9d608532043\_90_pmux for cells of type $pmux.
+Using template $paramod$068ad458e7761d78e5eed8238508872e7b0aef95\_90_pmux for cells of type $pmux.
+Using template $paramod$constmap:4621fcf06a436d1e2a4080e2ed9866a7d07a6e07$paramod$335cfd09f1afa8139c4aafcbbe5f361887b79c5e\_90_shift_ops_shr_shl_sshl_sshr for cells of type $shl.
+Using template $paramod$constmap:4621fcf06a436d1e2a4080e2ed9866a7d07a6e07$paramod$feecc7a0dbd012970970f2858f15e786e251f677\_90_shift_ops_shr_shl_sshl_sshr for cells of type $shr.
+Using template $paramod$constmap:4621fcf06a436d1e2a4080e2ed9866a7d07a6e07$paramod$e765c459d3029c22a22a27989e94858fd9ebfa9c\_90_shift_ops_shr_shl_sshl_sshr for cells of type $sshr.
+Using template $paramod$104d3d1e82b09b030a785dad8a5e608a6d4401f7\_90_pmux for cells of type $pmux.
+No more expansions possible.
+<suppressed ~3731 debug messages>
+
+7.21. Executing OPT pass (performing simple optimizations).
+
+7.21.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+<suppressed ~266 debug messages>
+Optimizing module decoder.
+<suppressed ~332 debug messages>
+Optimizing module immediate_generator.
+<suppressed ~40 debug messages>
+Optimizing module pc.
+<suppressed ~167 debug messages>
+Optimizing module register_file.
+<suppressed ~64 debug messages>
+Optimizing module rv32i_core.
+<suppressed ~689 debug messages>
+
+7.21.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+<suppressed ~1476 debug messages>
+Finding identical cells in module `\decoder'.
+<suppressed ~534 debug messages>
+Finding identical cells in module `\immediate_generator'.
+<suppressed ~276 debug messages>
+Finding identical cells in module `\pc'.
+<suppressed ~3 debug messages>
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+<suppressed ~1245 debug messages>
+Removed a total of 1178 cells.
+
+7.21.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+7.21.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+Removed 200 unused cells and 2138 unused wires.
+<suppressed ~206 debug messages>
+
+7.21.5. Finished fast OPT passes.
+
+7.22. Executing ABC pass (technology mapping using ABC).
+
+7.22.1. Extracting gate netlist of module `\alu' to `<abc-temp-dir>/input.blif'..
+Extracted 1453 gates and 1522 wires to a netlist network with 68 inputs and 32 outputs.
+
+7.22.1.1. Executing ABC.
+Running ABC command: "<yosys-exe-dir>/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+7.22.1.2. Re-integrating ABC results.
+ABC RESULTS:               AND cells:       58
+ABC RESULTS:               NOT cells:       30
+ABC RESULTS:             ORNOT cells:       64
+ABC RESULTS:               NOR cells:       30
+ABC RESULTS:              NAND cells:       63
+ABC RESULTS:               MUX cells:      310
+ABC RESULTS:              XNOR cells:       33
+ABC RESULTS:               XOR cells:       63
+ABC RESULTS:                OR cells:      235
+ABC RESULTS:            ANDNOT cells:      547
+ABC RESULTS:        internal signals:     1422
+ABC RESULTS:           input signals:       68
+ABC RESULTS:          output signals:       32
+Removing temp directory.
+
+7.22.2. Extracting gate netlist of module `\decoder' to `<abc-temp-dir>/input.blif'..
+Extracted 252 gates and 271 wires to a netlist network with 17 inputs and 19 outputs.
+
+7.22.2.1. Executing ABC.
+Running ABC command: "<yosys-exe-dir>/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+7.22.2.2. Re-integrating ABC results.
+ABC RESULTS:              NAND cells:        5
+ABC RESULTS:               NOT cells:        4
+ABC RESULTS:               MUX cells:        2
+ABC RESULTS:               AND cells:        6
+ABC RESULTS:               NOR cells:       18
+ABC RESULTS:             ORNOT cells:       20
+ABC RESULTS:                OR cells:       87
+ABC RESULTS:            ANDNOT cells:       70
+ABC RESULTS:        internal signals:      235
+ABC RESULTS:           input signals:       17
+ABC RESULTS:          output signals:       19
+Removing temp directory.
+
+7.22.3. Extracting gate netlist of module `\immediate_generator' to `<abc-temp-dir>/input.blif'..
+Extracted 224 gates and 253 wires to a netlist network with 28 inputs and 32 outputs.
+
+7.22.3.1. Executing ABC.
+Running ABC command: "<yosys-exe-dir>/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+7.22.3.2. Re-integrating ABC results.
+ABC RESULTS:              NAND cells:        3
+ABC RESULTS:             ORNOT cells:       16
+ABC RESULTS:               AND cells:        2
+ABC RESULTS:                OR cells:       59
+ABC RESULTS:            ANDNOT cells:      136
+ABC RESULTS:        internal signals:      193
+ABC RESULTS:           input signals:       28
+ABC RESULTS:          output signals:       32
+Removing temp directory.
+
+7.22.4. Extracting gate netlist of module `\pc' to `<abc-temp-dir>/input.blif'..
+Extracted 111 gates and 175 wires to a netlist network with 63 inputs and 32 outputs.
+
+7.22.4.1. Executing ABC.
+Running ABC command: "<yosys-exe-dir>/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+7.22.4.2. Re-integrating ABC results.
+ABC RESULTS:               AND cells:        2
+ABC RESULTS:               NOT cells:        1
+ABC RESULTS:              NAND cells:       14
+ABC RESULTS:                OR cells:       21
+ABC RESULTS:              XNOR cells:       14
+ABC RESULTS:            ANDNOT cells:       14
+ABC RESULTS:               XOR cells:       15
+ABC RESULTS:               MUX cells:       30
+ABC RESULTS:        internal signals:       80
+ABC RESULTS:           input signals:       63
+ABC RESULTS:          output signals:       32
+Removing temp directory.
+
+7.22.5. Extracting gate netlist of module `\register_file' to `<abc-temp-dir>/input.blif'..
+Extracted 2146 gates and 3187 wires to a netlist network with 1040 inputs and 96 outputs.
+
+7.22.5.1. Executing ABC.
+Running ABC command: "<yosys-exe-dir>/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+7.22.5.2. Re-integrating ABC results.
+ABC RESULTS:               MUX cells:     1984
+ABC RESULTS:               NOR cells:        2
+ABC RESULTS:               AND cells:        1
+ABC RESULTS:              NAND cells:        2
+ABC RESULTS:               NOT cells:        9
+ABC RESULTS:             ORNOT cells:        4
+ABC RESULTS:                OR cells:       48
+ABC RESULTS:            ANDNOT cells:       99
+ABC RESULTS:        internal signals:     2051
+ABC RESULTS:           input signals:     1040
+ABC RESULTS:          output signals:       96
+Removing temp directory.
+
+7.22.6. Extracting gate netlist of module `\rv32i_core' to `<abc-temp-dir>/input.blif'..
+Extracted 1586 gates and 1795 wires to a netlist network with 208 inputs and 167 outputs.
+
+7.22.6.1. Executing ABC.
+Running ABC command: "<yosys-exe-dir>/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+7.22.6.2. Re-integrating ABC results.
+ABC RESULTS:               XOR cells:       63
+ABC RESULTS:              NAND cells:      111
+ABC RESULTS:             ORNOT cells:       64
+ABC RESULTS:               NOT cells:       28
+ABC RESULTS:              XNOR cells:       62
+ABC RESULTS:               NOR cells:       38
+ABC RESULTS:               AND cells:       41
+ABC RESULTS:               MUX cells:      139
+ABC RESULTS:            ANDNOT cells:      599
+ABC RESULTS:                OR cells:      362
+ABC RESULTS:        internal signals:     1420
+ABC RESULTS:           input signals:      208
+ABC RESULTS:          output signals:      167
+Removing temp directory.
+
+7.23. Executing OPT pass (performing simple optimizations).
+
+7.23.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module alu.
+<suppressed ~120 debug messages>
+Optimizing module decoder.
+<suppressed ~1 debug messages>
+Optimizing module immediate_generator.
+Optimizing module pc.
+Optimizing module register_file.
+<suppressed ~960 debug messages>
+Optimizing module rv32i_core.
+
+7.23.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\alu'.
+<suppressed ~3 debug messages>
+Finding identical cells in module `\decoder'.
+<suppressed ~18 debug messages>
+Finding identical cells in module `\immediate_generator'.
+Finding identical cells in module `\pc'.
+Finding identical cells in module `\register_file'.
+Finding identical cells in module `\rv32i_core'.
+<suppressed ~78 debug messages>
+Removed a total of 33 cells.
+
+7.23.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+7.23.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \alu..
+Finding unused cells or wires in module \decoder..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \pc..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \rv32i_core..
+Removed 9 unused cells and 2983 unused wires.
+<suppressed ~22 debug messages>
+
+7.23.5. Finished fast OPT passes.
+
+7.24. Executing HIERARCHY pass (managing design hierarchy).
+
+7.24.1. Analyzing design hierarchy..
+Top module:  \rv32i_core
+Used module:     \alu
+Used module:     \decoder
+Used module:     \immediate_generator
+Used module:     \pc
+Used module:     \register_file
+
+7.24.2. Analyzing design hierarchy..
+Top module:  \rv32i_core
+Used module:     \alu
+Used module:     \decoder
+Used module:     \immediate_generator
+Used module:     \pc
+Used module:     \register_file
+Removed 0 unused modules.
+
+7.25. Printing statistics.
+
+=== alu ===
+
+   Number of wires:               1401
+   Number of wire bits:           1497
+   Number of public wires:           4
+   Number of public wire bits:     100
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               1429
+     $_ANDNOT_                     547
+     $_AND_                         58
+     $_MUX_                        310
+     $_NAND_                        63
+     $_NOR_                         30
+     $_NOT_                         27
+     $_ORNOT_                       64
+     $_OR_                         235
+     $_XNOR_                        32
+     $_XOR_                         63
+
+=== decoder ===
+
+   Number of wires:                200
+   Number of wire bits:            223
+   Number of public wires:          13
+   Number of public wire bits:      36
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                206
+     $_ANDNOT_                      67
+     $_AND_                          6
+     $_MUX_                          2
+     $_NAND_                         5
+     $_NOR_                         18
+     $_NOT_                          4
+     $_ORNOT_                       19
+     $_OR_                          85
+
+=== immediate_generator ===
+
+   Number of wires:                187
+   Number of wire bits:            251
+   Number of public wires:           3
+   Number of public wire bits:      67
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                216
+     $_ANDNOT_                     136
+     $_AND_                          2
+     $_NAND_                         3
+     $_ORNOT_                       16
+     $_OR_                          59
+
+=== pc ===
+
+   Number of wires:                 85
+   Number of wire bits:            178
+   Number of public wires:           6
+   Number of public wire bits:      99
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                143
+     $_ANDNOT_                      14
+     $_AND_                          2
+     $_MUX_                         30
+     $_NAND_                        14
+     $_NOT_                          1
+     $_OR_                          21
+     $_SDFFE_PP0P_                   2
+     $_SDFF_PP0_                    30
+     $_XNOR_                        14
+     $_XOR_                         15
+
+=== register_file ===
+
+   Number of wires:               2119
+   Number of wire bits:           3216
+   Number of public wires:          40
+   Number of public wire bits:    1137
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               3167
+     $_ANDNOT_                      99
+     $_AND_                          1
+     $_DFFE_PP_                   1024
+     $_MUX_                       1984
+     $_NAND_                         2
+     $_NOR_                          2
+     $_NOT_                          3
+     $_ORNOT_                        4
+     $_OR_                          48
+
+=== rv32i_core ===
+
+   Number of wires:               1350
+   Number of wire bits:           1822
+   Number of public wires:          36
+   Number of public wire bits:     508
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               1486
+     $_ANDNOT_                     599
+     $_AND_                         41
+     $_MUX_                        139
+     $_NAND_                       103
+     $_NOR_                         37
+     $_NOT_                         28
+     $_ORNOT_                       63
+     $_OR_                         346
+     $_XNOR_                        62
+     $_XOR_                         63
+     alu                             1
+     decoder                         1
+     immediate_generator             1
+     pc                              1
+     register_file                   1
+
+=== design hierarchy ===
+
+   rv32i_core                        1
+     alu                             1
+     decoder                         1
+     immediate_generator             1
+     pc                              1
+     register_file                   1
+
+   Number of wires:               5342
+   Number of wire bits:           7187
+   Number of public wires:         102
+   Number of public wire bits:    1947
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               6642
+     $_ANDNOT_                    1462
+     $_AND_                        110
+     $_DFFE_PP_                   1024
+     $_MUX_                       2465
+     $_NAND_                       190
+     $_NOR_                         87
+     $_NOT_                         63
+     $_ORNOT_                      166
+     $_OR_                         794
+     $_SDFFE_PP0P_                   2
+     $_SDFF_PP0_                    30
+     $_XNOR_                       108
+     $_XOR_                        141
+
+7.26. Executing CHECK pass (checking for obvious problems).
+Checking module alu...
+Checking module decoder...
+Checking module immediate_generator...
+Checking module pc...
+Checking module register_file...
+Checking module rv32i_core...
+Found and reported 0 problems.
+
+8. Executing CHECK pass (checking for obvious problems).
+Checking module alu...
+Checking module decoder...
+Checking module immediate_generator...
+Checking module pc...
+Checking module register_file...
+Checking module rv32i_core...
+Found and reported 0 problems.
+
+9. Printing statistics.
+
+=== alu ===
+
+   Number of wires:               1401
+   Number of wire bits:           1497
+   Number of public wires:           4
+   Number of public wire bits:     100
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               1429
+     $_ANDNOT_                     547
+     $_AND_                         58
+     $_MUX_                        310
+     $_NAND_                        63
+     $_NOR_                         30
+     $_NOT_                         27
+     $_ORNOT_                       64
+     $_OR_                         235
+     $_XNOR_                        32
+     $_XOR_                         63
+
+=== decoder ===
+
+   Number of wires:                200
+   Number of wire bits:            223
+   Number of public wires:          13
+   Number of public wire bits:      36
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                206
+     $_ANDNOT_                      67
+     $_AND_                          6
+     $_MUX_                          2
+     $_NAND_                         5
+     $_NOR_                         18
+     $_NOT_                          4
+     $_ORNOT_                       19
+     $_OR_                          85
+
+=== immediate_generator ===
+
+   Number of wires:                187
+   Number of wire bits:            251
+   Number of public wires:           3
+   Number of public wire bits:      67
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                216
+     $_ANDNOT_                     136
+     $_AND_                          2
+     $_NAND_                         3
+     $_ORNOT_                       16
+     $_OR_                          59
+
+=== pc ===
+
+   Number of wires:                 85
+   Number of wire bits:            178
+   Number of public wires:           6
+   Number of public wire bits:      99
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                143
+     $_ANDNOT_                      14
+     $_AND_                          2
+     $_MUX_                         30
+     $_NAND_                        14
+     $_NOT_                          1
+     $_OR_                          21
+     $_SDFFE_PP0P_                   2
+     $_SDFF_PP0_                    30
+     $_XNOR_                        14
+     $_XOR_                         15
+
+=== register_file ===
+
+   Number of wires:               2119
+   Number of wire bits:           3216
+   Number of public wires:          40
+   Number of public wire bits:    1137
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               3167
+     $_ANDNOT_                      99
+     $_AND_                          1
+     $_DFFE_PP_                   1024
+     $_MUX_                       1984
+     $_NAND_                         2
+     $_NOR_                          2
+     $_NOT_                          3
+     $_ORNOT_                        4
+     $_OR_                          48
+
+=== rv32i_core ===
+
+   Number of wires:               1350
+   Number of wire bits:           1822
+   Number of public wires:          36
+   Number of public wire bits:     508
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               1486
+     $_ANDNOT_                     599
+     $_AND_                         41
+     $_MUX_                        139
+     $_NAND_                       103
+     $_NOR_                         37
+     $_NOT_                         28
+     $_ORNOT_                       63
+     $_OR_                         346
+     $_XNOR_                        62
+     $_XOR_                         63
+     alu                             1
+     decoder                         1
+     immediate_generator             1
+     pc                              1
+     register_file                   1
+
+=== design hierarchy ===
+
+   rv32i_core                        1
+     alu                             1
+     decoder                         1
+     immediate_generator             1
+     pc                              1
+     register_file                   1
+
+   Number of wires:               5342
+   Number of wire bits:           7187
+   Number of public wires:         102
+   Number of public wire bits:    1947
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               6642
+     $_ANDNOT_                    1462
+     $_AND_                        110
+     $_DFFE_PP_                   1024
+     $_MUX_                       2465
+     $_NAND_                       190
+     $_NOR_                         87
+     $_NOT_                         63
+     $_ORNOT_                      166
+     $_OR_                         794
+     $_SDFFE_PP0P_                   2
+     $_SDFF_PP0_                    30
+     $_XNOR_                       108
+     $_XOR_                        141
+
+10. Executing Verilog backend.
+
+10.1. Executing BMUXMAP pass.
+
+10.2. Executing DEMUXMAP pass.
+Dumping module `\alu'.
+Dumping module `\decoder'.
+Dumping module `\immediate_generator'.
+Dumping module `\pc'.
+Dumping module `\register_file'.
+Dumping module `\rv32i_core'.

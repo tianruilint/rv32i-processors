@@ -1,0 +1,287 @@
+{
+  "started_utc": "2026-10-06T10:29:42.884955+00:00",
+  "source_sha256": {
+    "rtl/alu.sv": "ad6c7b8c358f425a0e3b92ea1e2820261894c1973e0a0d85b962eb007c5c1c2b",
+    "rtl/decoder.sv": "7e1e3bdd5d92973fedbca944a604d401d1bf124756bcd3ea8febf19471c7f9fa",
+    "rtl/full_adder.sv": "54b72210b4e9e4b4ecf50406a959a64e52e071c19b1804516402f2016aef0fdf",
+    "rtl/immediate_generator.sv": "5c84e1fc178a91f5094569a80b1d94c95e79d76b2e17e429b677f503c16382b5",
+    "rtl/pc.sv": "bd3081accad58760286b4ce8ba602524f5937f20dcb49fba1d6662ecaa0f347e",
+    "rtl/pipeline_ex.sv": "8700cdad19f84580da32757c701f604215ceb1b921827c1053efb092751dd59d",
+    "rtl/pipeline_ex_mem.sv": "d75a51197ea8212db759813079677d00e66e5c7decf0c3f3081333d3f11b220a",
+    "rtl/pipeline_frontend.sv": "cd0e81b16913c9ab7d25158fa6797047b19c7b79b287037d75209d4600aa68c7",
+    "rtl/pipeline_hazard.sv": "032db874706c02e355c3666edb2ce311dedad5687ec6f070445f074f8b580ac4",
+    "rtl/pipeline_id.sv": "c97f5506e78167d1748168c768ec07fb73ba3cc4356c4493eba0777329ceaed9",
+    "rtl/pipeline_id_ex.sv": "af83b4e8038c3e853ba3d16b91d2304abef52e23c117ae20c0590c1efcb822e8",
+    "rtl/pipeline_mem.sv": "339085a5be37b71590e6b5e3608f7a8bc8d45242d64a3aa9a98cc488a4a4454b",
+    "rtl/pipeline_mem_wb.sv": "95fb27b2bbc86480921867f120b42ae15e779ae975aac161960e8be6513ef60a",
+    "rtl/register_file.sv": "ba5242df32d1ae5b21b5175406773d529a737a31bc24c2275d367efbaf2f833d",
+    "rtl/rv32i_core.sv": "214625b6ebec6ee746ecac9dbf4f7d7e457a4ceb8e26976fe8175996d3f7314d",
+    "rtl/rv32i_pipeline_core.sv": "031a710fdfc28b509ded8a7d9111dec309dd570d8fa6592eb7701230a223572a",
+    "tb/test_alu.py": "fb8804e5df31807a2031b575f46e7a297049128db234f6281699a0d7e809ccb9",
+    "tb/test_benchmarks_extended.py": "58c502e163c025c74e1bf40f908d9b7b6cbf38c7fb61623ee986513af30312d8",
+    "tb/test_beq.py": "739dafbd61d2c77af6a1ac0bc06e1d957f9de2cc1e9813d84da18cb63c51c2e6",
+    "tb/test_core.py": "4cee66d0f6f90e68ffbec40f5273011163576412a64a3726c2c9ce46542aede4",
+    "tb/test_decoder.py": "c0e7b41e4106b908f31715ccf0bd25a142521e86cfe5e4121e9ba60942e5b987",
+    "tb/test_full_adder.py": "25ee8e3d3b77da9ab9c030136ee740380a392b72d820a10c166471ae339b66aa",
+    "tb/test_immediate_generator.py": "c580016e6a9f5f8648e920ef9612d1366c13cbffc4ce49a0453b5f9004cd818e",
+    "tb/test_isa_reference.py": "cff559235b2e7fbcd2f9a9416dca8a21159deb786ff4d91f7ce1427394c3a294",
+    "tb/test_lw_sw.py": "50331c4bea71c88ebb7653caed354bed762b40eca9184835c3df564386388dcc",
+    "tb/test_pc.py": "9e3fcfe81f3215595886a7c2ec57d3a694cba1a59678da9f822eca1bd1639d08",
+    "tb/test_pipeline_core.py": "7e77dea69e36a59d7ae99d07e6fb72b95844f575045721e6a1719b9f6f7976eb",
+    "tb/test_pipeline_ex.py": "b8b9a99d77d18ec5415659d18360cd3136703cb79014b8d5cf113445502b06fc",
+    "tb/test_pipeline_ex_mem.py": "f34cb9198e0ba8d4f31c86a3697a83a87c86f0cd37500ebd88e73837fdead8f3",
+    "tb/test_pipeline_frontend.py": "5cd799fb3b64563839b8b44621fa055e3e2c661b8fd4c61c8e2eaaa215311f8b",
+    "tb/test_pipeline_hazard.py": "98d3e9dd0a0f76542906c265ade5cf58988408556b1dc374354af391b69a79bd",
+    "tb/test_pipeline_id.py": "9c4dffc09f47ef287b5970622f6686eb94822500789ed385d634ffbfd9ee9d59",
+    "tb/test_pipeline_id_ex.py": "c831e03de4bbdb4d5e72b9b7fdf7a1af554272b34810bf0abe26d91e8ef836f7",
+    "tb/test_pipeline_mem.py": "29e0fa3fc811d4359d4c3b8ad8d235d39baf8f767611f8ea47dcddf2686c059c",
+    "tb/test_pipeline_mem_wb.py": "dafb4efa6b0005f9fcd313100ff6ea5f92d9caf101fd632c178805ceff4802db",
+    "tb/test_program.py": "fa1a3dfbca0576ee38a3512a1206dc4aa4a704eb6f2b691f87dd198d9d12967b",
+    "tb/test_register_file.py": "ba7c0f0810903b58eead6ae2e505fd7c1a247ac15c5895dc23cc2cd630d0f64b",
+    "tb/test_single_cycle_benchmark.py": "5457a01ef5ef4c5127677bd5b5c27a6286513fc9e43ec640c3e4e93192de46ef",
+    "scripts/record_run.py": "069a9da2adcebf446ed7ee167ff2d103a7d8cd64d57a20b259dc71ec19951924",
+    "scripts/run_benchmarks.py": "25f2b2614db2d1527221caaa3cd1f0972e47efeecb0798fb1d3c88a58f62d227",
+    "scripts/run_regression.py": "b8c9cb3c25399d83d7dfdb640e6eda658b01bc342d6ed7936fee3f966e1d5a20",
+    "timing/constraints.sdc": "3e09fbe365983e4d0059788855171f2943fe1302489e8c2a58fae4e900231fe7",
+    "timing/pipeline_constraints.sdc": "31c7774c29cde4213b478ddb047596d57c489ae1adfe2b64d98c08dbf2d0b694",
+    "timing/run_pipeline_sta.tcl": "2d893e1cad5d36afa4d16910025e93bdddde7f8586fd85429588960c3bb4b34a",
+    "timing/run_sta.tcl": "08750266344a6d9fcc1b71a59e5ebaeca5f8117515f0c94ef582db1b2dfd2a54",
+    "Makefile": "5de0458cc215ece4940b34e110baa7453a5f9177ab7f5c8ec9833cbc05f9bdb6",
+    "requirements.txt": "d63c1a0929f9432f0b05c77ac7fb156d3a9145f8cbaba591f874be2aeedd60c3"
+  },
+  "seed": 20261006,
+  "commands": [
+    {
+      "name": "lint",
+      "command": [
+        "make",
+        "lint-core",
+        "lint-pipeline"
+      ],
+      "started_utc": "2026-10-06T10:29:42.884983+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.275,
+      "ended_utc": "2026-10-06T10:29:43.160444+00:00"
+    },
+    {
+      "name": "regression",
+      "command": [
+        "make",
+        "regression",
+        "SEED=20261006"
+      ],
+      "started_utc": "2026-10-06T10:29:43.160568+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 201.481,
+      "ended_utc": "2026-10-06T10:33:04.641294+00:00"
+    },
+    {
+      "name": "isa-reference",
+      "command": [
+        "make",
+        "test-isa-reference"
+      ],
+      "started_utc": "2026-10-06T10:33:04.644933+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 31.947,
+      "ended_utc": "2026-10-06T10:33:36.592148+00:00"
+    },
+    {
+      "name": "benchmarks",
+      "command": [
+        "make",
+        "benchmark",
+        "SEED=20261006"
+      ],
+      "started_utc": "2026-10-06T10:33:36.592991+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 1.977,
+      "ended_utc": "2026-10-06T10:33:38.569788+00:00"
+    },
+    {
+      "name": "wb-id-unique-initialization",
+      "command": [
+        "make",
+        "-B",
+        "test-pipeline-id",
+        "COMPILE_ARGS=--Wall -Wno-fatal --x-initial unique --x-assign unique",
+        "SIM_ARGS=+verilator+seed+20261006"
+      ],
+      "started_utc": "2026-10-06T10:33:38.570714+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 11.821,
+      "ended_utc": "2026-10-06T10:33:50.391792+00:00"
+    },
+    {
+      "name": "single-cycle-generic",
+      "command": [
+        "yosys",
+        "-Q",
+        "-T",
+        "-p",
+        "read_verilog -sv rtl/rv32i_core.sv rtl/pc.sv rtl/decoder.sv rtl/register_file.sv rtl/immediate_generator.sv rtl/alu.sv; synth -top rv32i_core; check -assert; stat; write_verilog -noattr build/synthesis/rv32i_core.v"
+      ],
+      "started_utc": "2026-10-06T10:33:50.392121+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 2.075,
+      "ended_utc": "2026-10-06T10:33:52.466887+00:00"
+    },
+    {
+      "name": "pipeline-generic",
+      "command": [
+        "yosys",
+        "-Q",
+        "-T",
+        "-p",
+        "read_verilog -sv rtl/rv32i_pipeline_core.sv rtl/pipeline_frontend.sv rtl/pipeline_id.sv rtl/pipeline_id_ex.sv rtl/pipeline_ex.sv rtl/pipeline_ex_mem.sv rtl/pipeline_hazard.sv rtl/pipeline_mem.sv rtl/pipeline_mem_wb.sv rtl/decoder.sv rtl/immediate_generator.sv rtl/register_file.sv rtl/alu.sv; synth -top rv32i_pipeline_core -flatten; check -assert; stat; write_verilog -noattr build/synthesis/rv32i_pipeline_core.v"
+      ],
+      "started_utc": "2026-10-06T10:33:52.466938+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 3.067,
+      "ended_utc": "2026-10-06T10:33:55.533758+00:00"
+    },
+    {
+      "name": "single-cycle-mapped",
+      "command": [
+        "yosys",
+        "-Q",
+        "-T",
+        "-p",
+        "read_liberty -lib -ignore_miss_func build/timing/NangateOpenCellLibrary_typical.lib; read_verilog -sv rtl/rv32i_core.sv rtl/pc.sv rtl/decoder.sv rtl/register_file.sv rtl/immediate_generator.sv rtl/alu.sv; hierarchy -check -top rv32i_core; synth -top rv32i_core -flatten; dfflibmap -liberty build/timing/NangateOpenCellLibrary_typical.lib; abc -liberty build/timing/NangateOpenCellLibrary_typical.lib; clean; check -assert; stat -liberty build/timing/NangateOpenCellLibrary_typical.lib; write_verilog -noattr -noexpr -nodec build/timing/rv32i_core_nangate45.v"
+      ],
+      "started_utc": "2026-10-06T10:33:55.533817+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 4.344,
+      "ended_utc": "2026-10-06T10:33:59.877600+00:00"
+    },
+    {
+      "name": "pipeline-mapped",
+      "command": [
+        "yosys",
+        "-Q",
+        "-T",
+        "-p",
+        "read_liberty -lib -ignore_miss_func build/timing/NangateOpenCellLibrary_typical.lib; read_verilog -sv rtl/rv32i_pipeline_core.sv rtl/pipeline_frontend.sv rtl/pipeline_id.sv rtl/pipeline_id_ex.sv rtl/pipeline_ex.sv rtl/pipeline_ex_mem.sv rtl/pipeline_hazard.sv rtl/pipeline_mem.sv rtl/pipeline_mem_wb.sv rtl/decoder.sv rtl/immediate_generator.sv rtl/register_file.sv rtl/alu.sv; hierarchy -check -top rv32i_pipeline_core; synth -top rv32i_pipeline_core -flatten; dfflibmap -liberty build/timing/NangateOpenCellLibrary_typical.lib; abc -liberty build/timing/NangateOpenCellLibrary_typical.lib; clean; check -assert; stat -liberty build/timing/NangateOpenCellLibrary_typical.lib; write_verilog -noattr -noexpr -nodec build/timing/rv32i_pipeline_core_nangate45.v"
+      ],
+      "started_utc": "2026-10-06T10:33:59.877669+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 5.341,
+      "ended_utc": "2026-10-06T10:34:05.218761+00:00"
+    },
+    {
+      "name": "single-cycle-sta",
+      "command": [
+        "sta",
+        "-no_init",
+        "-no_splash",
+        "-exit",
+        "timing/run_sta.tcl"
+      ],
+      "started_utc": "2026-10-06T10:34:05.218822+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.522,
+      "ended_utc": "2026-10-06T10:34:05.740604+00:00"
+    },
+    {
+      "name": "pipeline-sta",
+      "command": [
+        "sta",
+        "-no_init",
+        "-no_splash",
+        "-exit",
+        "timing/run_pipeline_sta.tcl"
+      ],
+      "started_utc": "2026-10-06T10:34:05.741012+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.686,
+      "ended_utc": "2026-10-06T10:34:06.427439+00:00"
+    }
+  ],
+  "library_sha256": "8d540a4d4cf6d09d27c87ad067857a9c0c2eeb023ab7a56e058cd3113db4e9b1",
+  "tools": {
+    "verilator": "Verilator 5.050 2026-07-01 rev v5.050",
+    "yosys": "Yosys 0.33 (git sha1 2584903a060)",
+    "opensta": "2.6.0",
+    "python": "Python 3.12.3",
+    "cocotb": "2.0.1"
+  },
+  "regression": {
+    "targets": 17,
+    "cases": 74,
+    "passed": 74,
+    "failed": 0,
+    "skipped": 0
+  },
+  "additional_reference_cases": 4,
+  "source_unchanged_during_run": true,
+  "ended_utc": "2026-10-06T10:34:06.632681+00:00",
+  "files": {
+    "reports/verification/20261006T102942Z/benchmarks/pipeline.log": "0ca0d847cd4f0dffaccfedad2c1efbb00291e05a5e468dc4f780030ca4524ee2",
+    "reports/verification/20261006T102942Z/benchmarks/pipeline.xml": "ff542ef7fcc5a361742f7fab34078fa9742a4d7126e105d24647901b8f730148",
+    "reports/verification/20261006T102942Z/benchmarks/results/pipeline_branch_loop_256.json": "e074f9640dd899d4e91be82c1acbf853e7cd4e111bc4a3f1c58e426102eca3ac",
+    "reports/verification/20261006T102942Z/benchmarks/results/pipeline_dependent_512.json": "e97153514a85268479f36f87e524f8b72d83edcc7e0a433555880d0ebd59dc9b",
+    "reports/verification/20261006T102942Z/benchmarks/results/pipeline_independent_512.json": "998152998eb409f737d8d88d683768f88fc51f27b730e83e8ef32be33d705788",
+    "reports/verification/20261006T102942Z/benchmarks/results/pipeline_load_use_128.json": "7c02ae454841f5578837cf9ec33903cf41366e0352f567d75ca5da1364578c03",
+    "reports/verification/20261006T102942Z/benchmarks/results/single_cycle_branch_loop_256.json": "360afa33936a96ac6040b26087a7d24023798559d25294db73b798477f267413",
+    "reports/verification/20261006T102942Z/benchmarks/results/single_cycle_dependent_512.json": "20dabd9518776030ae6ab15b4cc7f3bc82f1c798bc50dcbe4cefd24645911b99",
+    "reports/verification/20261006T102942Z/benchmarks/results/single_cycle_independent_512.json": "410025ea2c749701c6fd7e230677a0021ed4cd3c58e64acaf2f1804ba87f40f0",
+    "reports/verification/20261006T102942Z/benchmarks/results/single_cycle_load_use_128.json": "1ba1600cdb460bca186c4ec30108228e1c7b511182aaa094008d29ba43aaf429",
+    "reports/verification/20261006T102942Z/benchmarks/single_cycle.log": "5e4fc40d31695fb4020a320eb623762b7a80a617286a00c4bd6ce7fd8f2b5faa",
+    "reports/verification/20261006T102942Z/benchmarks/single_cycle.xml": "4c66207a27fb8659d73ad32c6b9418c6d8371fd98d1313ca984f86996826f1fe",
+    "reports/verification/20261006T102942Z/benchmarks/summary.json": "5b1b80fa691e2ad1e8f71a310ba1a7d78e024d7feb2a7c468439ab5f375ff6d0",
+    "reports/verification/20261006T102942Z/benchmarks.log": "472e7f844e5fc404ee43c6780b7651842f3a3b51471ffab17e494a2cdf30ac11",
+    "reports/verification/20261006T102942Z/isa-reference/pipeline.xml": "0d8a77cdc43433bf9cf7f63bfcb4dcd8f01c5374c618a5eafa8b7cf5367e85d7",
+    "reports/verification/20261006T102942Z/isa-reference/pipeline_fence.json": "5e077fa32ddd7a9908518e7e7e49be8e3ad28599a53fb29313df765e9a366e88",
+    "reports/verification/20261006T102942Z/isa-reference/pipeline_random.json": "13198dcb5c586d73203e0fdd1c87e9921d78af78d93349144b64925dd81361b5",
+    "reports/verification/20261006T102942Z/isa-reference/single.xml": "c7e981a547c1ee2d194bd65595c0a87a8f1fe7746cba6a90572b5b32fa086d71",
+    "reports/verification/20261006T102942Z/isa-reference/single_fence.json": "5175be0cb84cbba953bcf2f29effad267cc83edeec34e17fb67af229e6dc42da",
+    "reports/verification/20261006T102942Z/isa-reference/single_random.json": "f33ef2b5840471cb8f72b868ace5f38d2714af2b6a2137a399544265cf9f6f13",
+    "reports/verification/20261006T102942Z/isa-reference.log": "0d8cfd90bbd1e87febbcfe69ffa97d3033ce1e69588ccc10ed874653334a04a3",
+    "reports/verification/20261006T102942Z/lint.log": "12e318165e76548e116b4b4a1fe4146ec4ab2384cda11da069f21b27105094f4",
+    "reports/verification/20261006T102942Z/pipeline-generic.log": "962cec242a13c87faa3860ab770f6ba088ae60550cb798a99da38302518c09cf",
+    "reports/verification/20261006T102942Z/pipeline-mapped.log": "741b86f8e3c3ef721f820a87c9575592c36f0b823c5016b8c0f420962a0e7a40",
+    "reports/verification/20261006T102942Z/pipeline-sta.log": "84d77624dd986247e88f7a1c85808033f377e327bb0cbb5d494b1e3134cb090e",
+    "reports/verification/20261006T102942Z/regression-reports/alu.xml": "98aacd19747830e2c4ab7343685b18f3dae5b2f15aaa62164be5db195918014a",
+    "reports/verification/20261006T102942Z/regression-reports/core.xml": "1deb3af1b5943d72444c932a232bef9d7f150892e08832674fd91148a5fac089",
+    "reports/verification/20261006T102942Z/regression-reports/decoder.xml": "aa666c72accb916629a6e42b1c6e1bcb9e55b1f1b7104024c0cb9fd80ce92d87",
+    "reports/verification/20261006T102942Z/regression-reports/full_adder.xml": "8781984bef84398e27c84767a9ec92f81274e0fcf52da0da10f777a325c302c9",
+    "reports/verification/20261006T102942Z/regression-reports/immediate_generator.xml": "d3ea0f9a1853a97684b641b702742bf5fd98bccd0f15a27c5c071062b42e3d34",
+    "reports/verification/20261006T102942Z/regression-reports/pc.xml": "0254e96957c071eff69d5a900041e2bb26056efc0867f3bed6a09490211ad9a4",
+    "reports/verification/20261006T102942Z/regression-reports/pipeline_core.xml": "5e2affb1d73d9aee1d56960291ac7363f5c5eebb12edafb3b84d6cf40f5506b9",
+    "reports/verification/20261006T102942Z/regression-reports/pipeline_ex.xml": "779010480e3b84f87d888501a8cf36c292556cf295528a4b783459ce6a3bd64a",
+    "reports/verification/20261006T102942Z/regression-reports/pipeline_ex_mem.xml": "71be2b8b2e4fc44ac2f8180f765167f8ce79ccd36077e6737d5ff4f0f44d1f4e",
+    "reports/verification/20261006T102942Z/regression-reports/pipeline_frontend.xml": "03812ce267849a99efc88ddc93de84a554fa6abf8dfa4f7a68112dd397434401",
+    "reports/verification/20261006T102942Z/regression-reports/pipeline_hazard.xml": "fba371a774584a683158723f8a43651e119b949c063fdd8818518dc4d2f80d17",
+    "reports/verification/20261006T102942Z/regression-reports/pipeline_id.xml": "c29b50a2517d16a1819016d5d1f16e4b322c639a637e04db1767b66b99128779",
+    "reports/verification/20261006T102942Z/regression-reports/pipeline_id_ex.xml": "fa713eb52fd168dc88e0b642a1fbc3466ac9287bd191f54ab190b22cb08b4c63",
+    "reports/verification/20261006T102942Z/regression-reports/pipeline_mem.xml": "98b1da359dc5d0283d538269cb06ad9208ad945927ccc267e4f2674c213eae31",
+    "reports/verification/20261006T102942Z/regression-reports/pipeline_mem_wb.xml": "fd16ab27570bd31a4a61350b656711c50633ed3a8d000e8eec0c840382c4638f",
+    "reports/verification/20261006T102942Z/regression-reports/register_file.xml": "fe83d780580946048fa6fea7f327ea0e3de94093dc7259c1b0ddc4d5bc41c67c",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test-alu.log": "fd6b145c3bbc4240675004c63b7312228ab68d8528434796d5a6a519381dc511",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test-core.log": "86c58968db55d47038ddddb2b664bc8d56f7ffb7b956c6f0ea61bea41333da14",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test-decoder.log": "67327f3002bed64bdacd85310c9884fcc4a79b5c0111bdb44103e0db54033c99",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test-immediate-generator.log": "e7bdcf50eb71885e13a420092be1edff31baa252b02aa0fcf8e472ab11328fbb",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test-pc.log": "033ee9a61ee9bd6194be7061fa7e5113b987ea7bbdb169f69ec893742ba566d9",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test-pipeline-core.log": "f3cbc9c9c18148b69cfbe6e036e65c0bea2f3309261c899d8841075b97e7800c",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test-pipeline-ex-mem.log": "97279435146f5e4eedfec7dc9b6d3edb9e10fb215eb8f5b3ad0ae392e907f4a8",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test-pipeline-ex.log": "028b00e9faaddd9238c7f113dc3860569421c6015fb0957681b2e366d84f01a7",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test-pipeline-frontend.log": "f1bb55b41ac8fce1a644779f95066e2f28e536c2b953f14794902d7d7a1de072",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test-pipeline-hazard.log": "6af302263759dd02fd8d06dd81ab9544512f42aa77b044a93df06f9f4f29878d",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test-pipeline-id-ex.log": "9a09099e3cf8e41bd371ff12765898ecb1af0bb3e048a77bf4e1d462424f46e9",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test-pipeline-id.log": "9b0d8c0d3e18834d14dbdf024015f5302be97ec269a6752e91e983871b0f3022",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test-pipeline-mem-wb.log": "3f26c9b8e538f7ea4ea566d4a30bf298126ab096def500646a98c56565ecc857",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test-pipeline-mem.log": "94322c57fdabb94cf1a8d16472c976876164684034781312ad28782831ff997a",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test-register-file.log": "cffadfdcb7606bc2f81812f653413d839d0af3e5eaaaeddb7b413dc1c064732a",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test-single-cycle-benchmark.log": "5384350fc6660c6645a0057ea5e1a523fb531060dc2a3e897824785a4364c441",
+    "reports/verification/20261006T102942Z/regression-reports/regression/test.log": "3efa8c7e756f8d4d03046b37a2c7c72f1d9505999e10fcc217f5fdfb6d98ebe8",
+    "reports/verification/20261006T102942Z/regression-reports/single_cycle_benchmark.xml": "f1697a5d2e450c19c14ce34cb8970aaac3ac5534f2112aacaea3aa69d1d8da9b",
+    "reports/verification/20261006T102942Z/regression.log": "b4a45431eb90e2ac483fc9046e7540ef95064edc7ed82ce02ff71eb46e47f9b8",
+    "reports/verification/20261006T102942Z/single-cycle-generic.log": "88af17209c32481afd0b34a9ba65ec9691c9b66e508aa20faa04b3650e407be1",
+    "reports/verification/20261006T102942Z/single-cycle-mapped.log": "810a4427dd88634b8971c2304be71513758fc1cd9e7909af81ef560a08f40c46",
+    "reports/verification/20261006T102942Z/single-cycle-sta.log": "dd19bade0766cf860f88e0df1fada864998b87edb28ae29a3774faaf904acbbe",
+    "reports/verification/20261006T102942Z/wb-id-unique-initialization.log": "6dc8369abf2ade21cdd638557314dd5fe1aa4aae642eca2372f841e2731b6e45",
+    "reports/verification/20261006T102942Z/wb-id-unique-initialization.xml": "89e72929b87b288c087b12706c1946148fe0e8902f988484d5c1037e6fbb61aa",
+    "reports/timing/core_setup_nangate45_typ_10ns.txt": "dd19bade0766cf860f88e0df1fada864998b87edb28ae29a3774faaf904acbbe",
+    "reports/timing/pipeline_setup_nangate45_typ_10ns.txt": "84d77624dd986247e88f7a1c85808033f377e327bb0cbb5d494b1e3134cb090e"
+  }
+}

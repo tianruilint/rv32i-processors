@@ -1,0 +1,66 @@
+make[1]: Entering directory '/home/terrylin/work/rv32i-single-cycle'
+mkdir -p /home/terrylin/work/rv32i-single-cycle/build/verilator-pipeline_core
+/usr/local/bin/verilator -cc --exe -Mdir /home/terrylin/work/rv32i-single-cycle/build/verilator-pipeline_core --top-module rv32i_pipeline_core --Wall -Wno-fatal --timescale 1ns/1ps --vpi --public-flat-rw --prefix Vtop -o Vtop -LDFLAGS "-Wl,-rpath,/home/terrylin/work/rv32i-single-cycle/.venv/lib/python3.12/site-packages/cocotb/libs -L/home/terrylin/work/rv32i-single-cycle/.venv/lib/python3.12/site-packages/cocotb/libs -lcocotbvpi_verilator"  /home/terrylin/work/rv32i-single-cycle/rtl/rv32i_pipeline_core.sv /home/terrylin/work/rv32i-single-cycle/rtl/pipeline_frontend.sv /home/terrylin/work/rv32i-single-cycle/rtl/pipeline_id.sv /home/terrylin/work/rv32i-single-cycle/rtl/pipeline_id_ex.sv /home/terrylin/work/rv32i-single-cycle/rtl/pipeline_ex.sv /home/terrylin/work/rv32i-single-cycle/rtl/pipeline_ex_mem.sv /home/terrylin/work/rv32i-single-cycle/rtl/pipeline_hazard.sv /home/terrylin/work/rv32i-single-cycle/rtl/pipeline_mem.sv /home/terrylin/work/rv32i-single-cycle/rtl/pipeline_mem_wb.sv /home/terrylin/work/rv32i-single-cycle/rtl/decoder.sv /home/terrylin/work/rv32i-single-cycle/rtl/immediate_generator.sv /home/terrylin/work/rv32i-single-cycle/rtl/register_file.sv /home/terrylin/work/rv32i-single-cycle/rtl/alu.sv /home/terrylin/work/rv32i-single-cycle/.venv/lib/python3.12/site-packages/cocotb/share/lib/verilator/verilator.cpp
+- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev v5.050
+- Verilator: Built from 0.630 MB sources in 14 modules, into 0.428 MB in 7 C++ files needing 0.000 MB
+- Verilator: Walltime 0.049 s (elab=0.003, cvt=0.035, bld=0.000); cpu 0.049 s on 1 threads; allocated 25.965 MB
+make -C /home/terrylin/work/rv32i-single-cycle/build/verilator-pipeline_core  -f Vtop.mk
+g++  -I.  -MMD -I/usr/local/share/verilator/include -I/usr/local/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=1 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-int-in-bool-context -Wno-shadow -Wno-sign-compare -Wno-subobject-linkage -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable      -Os  -c -o verilator.o /home/terrylin/work/rv32i-single-cycle/.venv/lib/python3.12/site-packages/cocotb/share/lib/verilator/verilator.cpp
+g++ -Os  -I.  -MMD -I/usr/local/share/verilator/include -I/usr/local/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=1 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-int-in-bool-context -Wno-shadow -Wno-sign-compare -Wno-subobject-linkage -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable      -c -o verilated.o /usr/local/share/verilator/include/verilated.cpp
+g++ -Os  -I.  -MMD -I/usr/local/share/verilator/include -I/usr/local/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=1 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-int-in-bool-context -Wno-shadow -Wno-sign-compare -Wno-subobject-linkage -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable      -c -o verilated_dpi.o /usr/local/share/verilator/include/verilated_dpi.cpp
+g++ -Os  -I.  -MMD -I/usr/local/share/verilator/include -I/usr/local/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=1 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-int-in-bool-context -Wno-shadow -Wno-sign-compare -Wno-subobject-linkage -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable      -c -o verilated_vpi.o /usr/local/share/verilator/include/verilated_vpi.cpp
+g++ -Os  -I.  -MMD -I/usr/local/share/verilator/include -I/usr/local/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=1 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-int-in-bool-context -Wno-shadow -Wno-sign-compare -Wno-subobject-linkage -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable      -c -o verilated_threads.o /usr/local/share/verilator/include/verilated_threads.cpp
+python3 /usr/local/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vtop.cpp Vtop___024root__0.cpp Vtop__Dpi.cpp Vtop__ConstPool__0__Slow.cpp Vtop___024root__Slow.cpp Vtop___024root__0__Slow.cpp Vtop__Syms__Slow.cpp > Vtop__ALL.cpp
+g++ -Os  -I.  -MMD -I/usr/local/share/verilator/include -I/usr/local/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=1 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-int-in-bool-context -Wno-shadow -Wno-sign-compare -Wno-subobject-linkage -Wno-tautological-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable      -c -o Vtop__ALL.o Vtop__ALL.cpp
+g++    -rdynamic verilator.o verilated.o verilated_dpi.o verilated_vpi.o verilated_threads.o Vtop__ALL.a   -Wl,-rpath,/home/terrylin/work/rv32i-single-cycle/.venv/lib/python3.12/site-packages/cocotb/libs -L/home/terrylin/work/rv32i-single-cycle/.venv/lib/python3.12/site-packages/cocotb/libs -lcocotbvpi_verilator  -pthread -lpthread -latomic -ldl   -o Vtop
+rm Vtop__ALL.verilator_deplist.tmp
+rm -f /home/terrylin/work/rv32i-single-cycle/build/reports/pipeline_core.xml
+COCOTB_TEST_MODULES=test_pipeline_core COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=rv32i_pipeline_core TOPLEVEL_LANG=verilog \
+         /home/terrylin/work/rv32i-single-cycle/build/verilator-pipeline_core/Vtop     
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.12.4 interpreter at /home/terrylin/work/rv32i-single-cycle/.venv/bin/python3
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Verilator version 5.050 2026-07-01
+     0.00ns INFO     cocotb                             Seeding Python random module with supplied seed 20261006
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /home/terrylin/work/rv32i-single-cycle/.venv/lib/python3.12/site-packages/cocotb
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_pipeline_core.test_forwarding_and_pc4 (1/10)
+    49.00ns INFO     cocotb.rv32i_pipeline_core         BENCHMARK pipeline alu_forwarding cycles=12 retired=8 cpi=1.5000
+    49.00ns INFO     cocotb.regression                  test_pipeline_core.test_forwarding_and_pc4 passed
+    49.00ns INFO     cocotb.regression                  running test_pipeline_core.test_load_store_and_subword_hazards (2/10)
+   114.00ns INFO     cocotb.rv32i_pipeline_core         BENCHMARK pipeline memory_hazards cycles=16 retired=10 cpi=1.6000
+   114.00ns INFO     cocotb.regression                  test_pipeline_core.test_load_store_and_subword_hazards passed
+   114.00ns INFO     cocotb.regression                  running test_pipeline_core.test_taken_branch_flushes_store_and_register_write (3/10)
+   163.00ns INFO     cocotb.regression                  test_pipeline_core.test_taken_branch_flushes_store_and_register_write passed
+   163.00ns INFO     cocotb.regression                  running test_pipeline_core.test_jal_jalr_links_and_flush (4/10)
+   216.00ns INFO     cocotb.regression                  test_pipeline_core.test_jal_jalr_links_and_flush passed
+   216.00ns INFO     cocotb.regression                  running test_pipeline_core.test_loop_program_and_cpi (5/10)
+   357.00ns INFO     cocotb.rv32i_pipeline_core         BENCHMARK pipeline loop_sum5 cycles=35 retired=22 cpi=1.5909
+   357.00ns INFO     cocotb.regression                  test_pipeline_core.test_loop_program_and_cpi passed
+   357.00ns INFO     cocotb.regression                  running test_pipeline_core.test_signed_unsigned_and_shifts (6/10)
+   434.00ns INFO     cocotb.regression                  test_pipeline_core.test_signed_unsigned_and_shifts passed
+   434.00ns INFO     cocotb.regression                  running test_pipeline_core.test_load_to_branch_stall_and_wrong_path_store (7/10)
+   491.01ns INFO     cocotb.regression                  test_pipeline_core.test_load_to_branch_stall_and_wrong_path_store passed
+   491.01ns INFO     cocotb.regression                  running test_pipeline_core.test_reset_clears_inflight_store (8/10)
+   501.01ns INFO     cocotb.regression                  test_pipeline_core.test_reset_clears_inflight_store passed
+   501.01ns INFO     cocotb.regression                  running test_pipeline_core.test_subword_sign_extension_and_half_store (9/10)
+   570.01ns INFO     cocotb.regression                  test_pipeline_core.test_subword_sign_extension_and_half_store passed
+   570.01ns INFO     cocotb.regression                  running test_pipeline_core.test_remaining_alu_and_branch_types (10/10)
+   695.01ns INFO     cocotb.regression                  test_pipeline_core.test_remaining_alu_and_branch_types passed
+   695.01ns INFO     cocotb.regression                  *******************************************************************************************************************************
+                                                        ** TEST                                                                   STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        *******************************************************************************************************************************
+                                                        ** test_pipeline_core.test_forwarding_and_pc4                              PASS          49.00           0.00      32820.33  **
+                                                        ** test_pipeline_core.test_load_store_and_subword_hazards                  PASS          65.00           0.00      58479.14  **
+                                                        ** test_pipeline_core.test_taken_branch_flushes_store_and_register_write   PASS          49.00           0.00      53271.36  **
+                                                        ** test_pipeline_core.test_jal_jalr_links_and_flush                        PASS          53.00           0.00      31309.59  **
+                                                        ** test_pipeline_core.test_loop_program_and_cpi                            PASS         141.00           0.00      55545.87  **
+                                                        ** test_pipeline_core.test_signed_unsigned_and_shifts                      PASS          77.00           0.00      62637.98  **
+                                                        ** test_pipeline_core.test_load_to_branch_stall_and_wrong_path_store       PASS          57.00           0.00      59575.21  **
+                                                        ** test_pipeline_core.test_reset_clears_inflight_store                     PASS          10.00           0.00      62230.03  **
+                                                        ** test_pipeline_core.test_subword_sign_extension_and_half_store           PASS          69.00           0.00      44016.27  **
+                                                        ** test_pipeline_core.test_remaining_alu_and_branch_types                  PASS         125.00           0.00      55930.02  **
+                                                        *******************************************************************************************************************************
+                                                        ** TESTS=10 PASS=10 FAIL=0 SKIP=0                                                       695.01           0.02      35106.63  **
+                                                        *******************************************************************************************************************************
+- :0: Verilog $finish
+make[1]: Leaving directory '/home/terrylin/work/rv32i-single-cycle'

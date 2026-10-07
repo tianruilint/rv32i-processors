@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="20261006" />
+    <testcase name="test_capture_flush_bubble_reset" classname="test_pipeline_id_ex" file="/home/terrylin/work/rv32i-single-cycle/tb/test_pipeline_id_ex.py" lineno="20" time="0.0008432865142822266" sim_time_ns="14.0" ratio_time="16601.71218546791" />
+  </testsuite>
+</testsuites>
