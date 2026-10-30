@@ -77,6 +77,40 @@ The worst max-slew violators are the register-address flops (e.g. the rs1
 address bit above) that fan out across the 32-entry register-file read mux;
 these still need buffering or upsizing, so the slack is not quoted as an Fmax.
 
+## Physical implementation
+
+The pipeline core is taken from RTL to GDS with OpenROAD-flow-scripts on
+Nangate45 (synthesis, floorplan, placement, CTS, routing), using the same SDC
+with only the clock period swept. After placement repair the pre-layout
+max-slew violations above are gone, routing is DRC-clean at every clock, and
+each routed netlist is formally equivalent to synthesis.
+
+| Clock | WNS / TNS (ns) | Max-slew viol. | Std-cell area (µm²) | Power |
+| ---: | ---: | ---: | ---: | ---: |
+| 10.0 ns (100 MHz) | +8.174 / 0 | 0 | 20,304 | 2.47 mW |
+| 2.0 ns (500 MHz) | +0.348 / 0 | 0 | 20,312 | 10.85 mW |
+| **1.6 ns (625 MHz)** | **+0.080 / 0** | 0 | 20,403 | 13.43 mW |
+| 1.4 ns (714 MHz) | −0.006 / −0.020 | 0 | 20,577 | 15.26 mW |
+| 1.2 ns (833 MHz) | −0.176 / −14.647 | 0 | 22,677 | 18.38 mW |
+
+The fastest closing clock is 1.6 ns. Up to 1.4 ns the limiter is the
+EX-stage branch decision: MEM/WB forwarding → branch compare → pipeline flush
+clearing the ID/EX register; at 1.6 and 1.2 ns
+the worst path is a combinational `reset` → `data_write_data` feed-through
+created by reset-gating the store data in `pipeline_mem.sv`.
+
+| Cell placement (1.6 ns) | Clock tree (1.6 ns) |
+| :---: | :---: |
+| ![Placed standard cells and I/O pins at 1.6 ns](docs/pnr/final_placement_1p6ns.webp) | ![Routed clock tree at 1.6 ns](docs/pnr/final_clocks_1p6ns.webp) |
+
+Left: placed standard cells with the I/O pins on the die edge; at 40 % core
+utilisation the placer clusters the logic and leaves the corners mostly
+empty. Right: the clock net (`clk` enters on the left edge) routed through
+the CTS buffers to every flop.
+
+The full sweep, remaining max-cap violators, limiting-path analysis, images
+and reproduction steps are in [pnr/README.md](pnr/README.md).
+
 ## Supported instructions
 
 - Arithmetic/logic: ADD, ADDI, SUB, AND, ANDI, OR, ORI, XOR, XORI
@@ -93,8 +127,9 @@ these still need buffering or upsizing, so the slack is not quoted as an Fmax.
   exceptions/traps and interrupts.
 - External zero-wait memory models; naturally aligned halfword/word accesses
   and four-byte-aligned instruction addresses.
-- STA is typical-corner, core-only, and pre-layout, with unresolved electrical
-  constraints; no achievable Fmax or physical signoff is claimed.
+- Pre-layout STA is typical-corner and core-only. The OpenROAD post-route
+  results are single-corner (typical) on the educational Nangate45 library
+  with assumed I/O budgets; they are not a physical signoff.
 
 The [specification](docs/specification.md) defines the complete interface
 contract. Detailed [verification limits](docs/verification.md#verification-limits)
@@ -110,10 +145,12 @@ and [timing limits](docs/synthesis.md#interpretation) accompany the results.
 | [Verification](docs/verification.md) | Tests, benchmarks, sampling, and reproduction |
 | [Synthesis and timing](docs/synthesis.md) | Tools, library identity, constraints, and reports |
 | [Debugging notes](docs/debugging_notes.md) | Symptoms, root causes, fixes, and verification |
+| [Physical implementation](pnr/README.md) | OpenROAD flow, clock sweep, limiting paths, and reproduction |
 
 Source is under `rtl/`, tests under `tb/`, and timing constraints/scripts
 under `timing/`. Generated test results and waveforms stay under ignored
-`build/`; `reports/timing/` contains the two saved STA analysis reports.
+`build/`; `reports/timing/` contains the two saved STA analysis reports,
+and `pnr/` with `reports/pnr/` holds the OpenROAD config and saved results.
 
 ## Quick start
 
