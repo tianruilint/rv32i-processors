@@ -1,0 +1,21 @@
+make[1]: Entering directory '/mnt/d/projects/_clean/rv32i-single-cycle'
+rm -f /mnt/d/projects/_clean/rv32i-single-cycle/build/reports/decoder.xml
+COCOTB_TEST_MODULES=test_decoder COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=decoder TOPLEVEL_LANG=verilog \
+         /mnt/d/projects/_clean/rv32i-single-cycle/build/verilator-decoder/Vtop     
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.12.4 interpreter at /mnt/d/projects/_clean/rv32i-single-cycle/.venv/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Verilator version 5.050 2026-07-01
+     0.00ns INFO     cocotb                             Seeding Python random module with supplied seed 20261006
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /mnt/d/projects/_clean/rv32i-single-cycle/.venv/lib/python3.12/site-packages/cocotb
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_decoder.test_decoder (1/1)
+    42.00ns INFO     cocotb.regression                  test_decoder.test_decoder passed
+    42.00ns INFO     cocotb.regression                  **************************************************************************************
+                                                        ** TEST                          STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        **************************************************************************************
+                                                        ** test_decoder.test_decoder      PASS          42.00           0.00      29802.19  **
+                                                        **************************************************************************************
+                                                        ** TESTS=1 PASS=1 FAIL=0 SKIP=0                 42.00           0.01       3644.81  **
+                                                        **************************************************************************************
+- :0: Verilog $finish
+make[1]: Leaving directory '/mnt/d/projects/_clean/rv32i-single-cycle'

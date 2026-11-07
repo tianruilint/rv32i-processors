@@ -20,9 +20,9 @@ See the [datapath diagrams](docs/datapath.md) and
 
 ## Verification
 
-Latest full regression, matched benchmarks, synthesis and STA rerun:
-**2026-10-06**. The
-[dated run manifest](reports/verification/20261006T102942Z/manifest.json)
+Latest full regression, reference checks, coverage, matched benchmarks,
+synthesis and STA rerun: **2026-11-07**. The
+[dated run manifest](reports/verification/20261107T121922Z/manifest.json)
 records source hashes, tool versions, commands and raw outputs.
 
 `make regression` runs **74 cocotb cases across 17 Verilator targets**:
@@ -63,11 +63,11 @@ core-only and pre-layout at a 10 ns ideal clock (0.1 ns setup uncertainty,
 
 | Metric | Single-cycle | Pipeline |
 | --- | ---: | ---: |
-| Worst setup slack | +5.202 ns | +6.181 ns |
+| Worst setup slack | +5.202 ns | +6.182 ns |
 | Critical arrival / required | 4.198 / 9.400 ns | 3.676 / 9.857 ns |
-| Mapped cells | 6,267 | 9,556 |
-| Liberty cell-area sum | 12,737.410 | 17,515.302 |
-| Max-slew violating report rows | 49 | 1,576 |
+| Mapped cells | 6,267 | 9,565 |
+| Liberty cell-area sum | 12,737.410 | 17,551.212 |
+| Max-slew violating report rows | 49 | 1,580 |
 | Max-capacitance violating report rows | 91 | 84 |
 
 Critical paths: instruction input `instr[21]` through decode, register read
@@ -101,14 +101,15 @@ write/branch/jump controls, and reset gates only `data_write_en`; at 1.4 ns WNS
 went from −0.006 to +0.005 ns and at 1.2 ns TNS from −14.647 to −0.125 ns.
 The 1.2 ns limiter is now forwarding → 32-bit ALU → EX/MEM.
 
-| Cell placement (1.6 ns, first sweep) | Clock tree (1.6 ns, first sweep) |
+| Cell placement (1.4 ns) | Worst setup path (1.4 ns) |
 | :---: | :---: |
-| ![Placed standard cells and I/O pins at 1.6 ns](docs/pnr/final_placement_1p6ns.webp) | ![Routed clock tree at 1.6 ns](docs/pnr/final_clocks_1p6ns.webp) |
+| ![Placed standard cells and I/O pins at 1.4 ns](docs/pnr/final_placement_1p4ns.webp) | ![Worst setup path at 1.4 ns](docs/pnr/final_worst_path_1p4ns.webp) |
 
 Left: placed standard cells with the I/O pins on the die edge; at 40 % core
-utilisation the placer clusters the logic and leaves the corners mostly
-empty. Right: the clock net (`clk` enters on the left edge) routed through
-the CTS buffers to every flop.
+utilisation the placer leaves the upper-left corner mostly empty. Right: the
+worst setup path at 1.4 ns (red) runs between flops inside the core; in the
+first sweep it ran from the `reset` pin across the die to a `data_write_data`
+output pin.
 
 The full sweep, remaining max-cap violators, limiting-path analysis, images
 and reproduction steps are in [pnr/README.md](pnr/README.md).

@@ -1,0 +1,32 @@
+{
+  "core": "single",
+  "name": "high_pc",
+  "programs": 1,
+  "retired": 12,
+  "stores": 0,
+  "instruction_counts": {
+    "addi": 6,
+    "auipc": 1,
+    "beq": 1,
+    "jal": 1,
+    "jalr": 2,
+    "lui": 1
+  },
+  "scope": "Naturally aligned zero-wait memory; no exceptions, CSRs, interrupts, caches or MMIO; custom interpreter, not an external ISS compliance suite.",
+  "results": [
+    {
+      "case": "high_address_pc",
+      "retired": 12,
+      "stores": 0,
+      "cycles": 12,
+      "instructions": {
+        "lui": 1,
+        "addi": 6,
+        "jalr": 2,
+        "auipc": 1,
+        "beq": 1,
+        "jal": 1
+      }
+    }
+  ]
+}

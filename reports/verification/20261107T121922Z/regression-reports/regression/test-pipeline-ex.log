@@ -1,0 +1,57 @@
+make[1]: Entering directory '/mnt/d/projects/_clean/rv32i-single-cycle'
+rm -f /mnt/d/projects/_clean/rv32i-single-cycle/build/reports/pipeline_ex.xml
+COCOTB_TEST_MODULES=test_pipeline_ex COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=pipeline_ex TOPLEVEL_LANG=verilog \
+         /mnt/d/projects/_clean/rv32i-single-cycle/build/verilator-pipeline_ex/Vtop     
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.12.4 interpreter at /mnt/d/projects/_clean/rv32i-single-cycle/.venv/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Verilator version 5.050 2026-07-01
+     0.00ns INFO     cocotb                             Seeding Python random module with supplied seed 20261006
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /mnt/d/projects/_clean/rv32i-single-cycle/.venv/lib/python3.12/site-packages/cocotb
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_pipeline_ex.test_addi (1/13)
+     1.00ns INFO     cocotb.regression                  test_pipeline_ex.test_addi passed
+     1.00ns INFO     cocotb.regression                  running test_pipeline_ex.test_add_reg (2/13)
+     2.00ns INFO     cocotb.regression                  test_pipeline_ex.test_add_reg passed
+     2.00ns INFO     cocotb.regression                  running test_pipeline_ex.test_auipc (3/13)
+     3.00ns INFO     cocotb.regression                  test_pipeline_ex.test_auipc passed
+     3.00ns INFO     cocotb.regression                  running test_pipeline_ex.test_ex_mem_priority_over_mem_wb (4/13)
+     4.00ns INFO     cocotb.regression                  test_pipeline_ex.test_ex_mem_priority_over_mem_wb passed
+     4.00ns INFO     cocotb.regression                  running test_pipeline_ex.test_mem_wb_when_ex_mem_not_match (5/13)
+     5.00ns INFO     cocotb.regression                  test_pipeline_ex.test_mem_wb_when_ex_mem_not_match passed
+     5.00ns INFO     cocotb.regression                  running test_pipeline_ex.test_load_address_not_forwarded_from_ex_mem (6/13)
+     6.00ns INFO     cocotb.regression                  test_pipeline_ex.test_load_address_not_forwarded_from_ex_mem passed
+     6.00ns INFO     cocotb.regression                  running test_pipeline_ex.test_store_data_uses_forwarded_rs2 (7/13)
+     7.01ns INFO     cocotb.regression                  test_pipeline_ex.test_store_data_uses_forwarded_rs2 passed
+     7.01ns INFO     cocotb.regression                  running test_pipeline_ex.test_store_data_uses_forwarded_rs2_from_ex_mem (8/13)
+     8.01ns INFO     cocotb.regression                  test_pipeline_ex.test_store_data_uses_forwarded_rs2_from_ex_mem passed
+     8.01ns INFO     cocotb.regression                  running test_pipeline_ex.test_invalid_clears_write_enables_and_redirect (9/13)
+     9.01ns INFO     cocotb.regression                  test_pipeline_ex.test_invalid_clears_write_enables_and_redirect passed
+     9.01ns INFO     cocotb.regression                  running test_pipeline_ex.test_jal_redirect (10/13)
+    10.01ns INFO     cocotb.regression                  test_pipeline_ex.test_jal_redirect passed
+    10.01ns INFO     cocotb.regression                  running test_pipeline_ex.test_jalr_redirect_clears_lsb (11/13)
+    11.01ns INFO     cocotb.regression                  test_pipeline_ex.test_jalr_redirect_clears_lsb passed
+    11.01ns INFO     cocotb.regression                  running test_pipeline_ex.test_branch_beq_taken (12/13)
+    12.01ns INFO     cocotb.regression                  test_pipeline_ex.test_branch_beq_taken passed
+    12.01ns INFO     cocotb.regression                  running test_pipeline_ex.test_branch_bltu_not_taken_when_rs1_larger (13/13)
+    13.01ns INFO     cocotb.regression                  test_pipeline_ex.test_branch_bltu_not_taken_when_rs1_larger passed
+    13.01ns INFO     cocotb.regression                  *************************************************************************************************************************
+                                                        ** TEST                                                             STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        *************************************************************************************************************************
+                                                        ** test_pipeline_ex.test_addi                                        PASS           1.00           0.00       1599.66  **
+                                                        ** test_pipeline_ex.test_add_reg                                     PASS           1.00           0.00       5482.75  **
+                                                        ** test_pipeline_ex.test_auipc                                       PASS           1.00           0.00       3374.34  **
+                                                        ** test_pipeline_ex.test_ex_mem_priority_over_mem_wb                 PASS           1.00           0.00       5096.36  **
+                                                        ** test_pipeline_ex.test_mem_wb_when_ex_mem_not_match                PASS           1.00           0.00       6269.51  **
+                                                        ** test_pipeline_ex.test_load_address_not_forwarded_from_ex_mem      PASS           1.00           0.00       5915.80  **
+                                                        ** test_pipeline_ex.test_store_data_uses_forwarded_rs2               PASS           1.00           0.00       3751.61  **
+                                                        ** test_pipeline_ex.test_store_data_uses_forwarded_rs2_from_ex_mem   PASS           1.00           0.00       6288.31  **
+                                                        ** test_pipeline_ex.test_invalid_clears_write_enables_and_redirect   PASS           1.00           0.00       2639.59  **
+                                                        ** test_pipeline_ex.test_jal_redirect                                PASS           1.00           0.00       6710.89  **
+                                                        ** test_pipeline_ex.test_jalr_redirect_clears_lsb                    PASS           1.00           0.00       6000.43  **
+                                                        ** test_pipeline_ex.test_branch_beq_taken                            PASS           1.00           0.00       5833.52  **
+                                                        ** test_pipeline_ex.test_branch_bltu_not_taken_when_rs1_larger       PASS           1.00           0.00       5461.33  **
+                                                        *************************************************************************************************************************
+                                                        ** TESTS=13 PASS=13 FAIL=0 SKIP=0                                                  13.01           0.04        321.89  **
+                                                        *************************************************************************************************************************
+- :0: Verilog $finish
+make[1]: Leaving directory '/mnt/d/projects/_clean/rv32i-single-cycle'

@@ -1,0 +1,69 @@
+make[1]: Entering directory '/mnt/d/projects/_clean/rv32i-single-cycle'
+rm -f /mnt/d/projects/_clean/rv32i-single-cycle/build/reports/core.xml
+COCOTB_TEST_MODULES=test_core,test_lw_sw,test_beq,test_program COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=rv32i_core TOPLEVEL_LANG=verilog \
+         /mnt/d/projects/_clean/rv32i-single-cycle/build/verilator-core/Vtop     
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.12.4 interpreter at /mnt/d/projects/_clean/rv32i-single-cycle/.venv/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Verilator version 5.050 2026-07-01
+     0.00ns INFO     cocotb                             Seeding Python random module with supplied seed 20261006
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /mnt/d/projects/_clean/rv32i-single-cycle/.venv/lib/python3.12/site-packages/cocotb
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_core.test_arithmetic_chain (1/17)
+   131.00ns INFO     cocotb.regression                  test_core.test_arithmetic_chain passed
+   131.00ns INFO     cocotb.regression                  running test_core.test_reset_blocks_register_write (2/17)
+   162.00ns INFO     cocotb.regression                  test_core.test_reset_blocks_register_write passed
+   162.00ns INFO     cocotb.regression                  running test_core.test_xor_sltu_instrs (3/17)
+   253.00ns INFO     cocotb.regression                  test_core.test_xor_sltu_instrs passed
+   253.00ns INFO     cocotb.regression                  running test_core.test_shift_instrs (4/17)
+   394.00ns INFO     cocotb.regression                  test_core.test_shift_instrs passed
+   394.00ns INFO     cocotb.regression                  running test_core.test_upper_immediate_instrs (5/17)
+   425.00ns INFO     cocotb.regression                  test_core.test_upper_immediate_instrs passed
+   425.00ns INFO     cocotb.regression                  running test_core.test_jal_jalr_control_flow (6/17)
+   496.00ns INFO     cocotb.regression                  test_core.test_jal_jalr_control_flow passed
+   496.00ns INFO     cocotb.regression                  running test_core.test_jal_negative_offset (7/17)
+   537.01ns INFO     cocotb.regression                  test_core.test_jal_negative_offset passed
+   537.01ns INFO     cocotb.regression                  running test_lw_sw.test_lw_sw (8/17)
+   588.01ns INFO     cocotb.regression                  test_lw_sw.test_lw_sw passed
+   588.01ns INFO     cocotb.regression                  running test_lw_sw.test_subword_load_store (9/17)
+   679.01ns INFO     cocotb.regression                  test_lw_sw.test_subword_load_store passed
+   679.01ns INFO     cocotb.regression                  running test_lw_sw.test_subword_lane_boundaries (10/17)
+   800.01ns INFO     cocotb.regression                  test_lw_sw.test_subword_lane_boundaries passed
+   800.01ns INFO     cocotb.regression                  running test_beq.test_beq (11/17)
+   871.01ns INFO     cocotb.regression                  test_beq.test_beq passed
+   871.01ns INFO     cocotb.regression                  running test_beq.test_bne (12/17)
+   932.01ns INFO     cocotb.regression                  test_beq.test_bne passed
+   932.01ns INFO     cocotb.regression                  running test_beq.test_blt_bge (13/17)
+  1023.01ns INFO     cocotb.regression                  test_beq.test_blt_bge passed
+  1023.01ns INFO     cocotb.regression                  running test_beq.test_bltu_bgeu (14/17)
+  1114.01ns INFO     cocotb.regression                  test_beq.test_bltu_bgeu passed
+  1114.01ns INFO     cocotb.regression                  running test_program.test_program (15/17)
+  1155.01ns INFO     cocotb.regression                  test_program.test_program passed
+  1155.01ns INFO     cocotb.regression                  running test_program.test_program2 (16/17)
+  1216.02ns INFO     cocotb.regression                  test_program.test_program2 passed
+  1216.02ns INFO     cocotb.regression                  running test_program.test_program2_initial_one (17/17)
+  1317.02ns INFO     cocotb.regression                  test_program.test_program2_initial_one passed
+  1317.02ns INFO     cocotb.regression                  ****************************************************************************************************
+                                                        ** TEST                                        STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        ****************************************************************************************************
+                                                        ** test_core.test_arithmetic_chain              PASS         131.00           0.00     146599.21  **
+                                                        ** test_core.test_reset_blocks_register_write   PASS          31.00           0.00     117349.66  **
+                                                        ** test_core.test_xor_sltu_instrs               PASS          91.00           0.00     260178.37  **
+                                                        ** test_core.test_shift_instrs                  PASS         141.00           0.00     343835.39  **
+                                                        ** test_core.test_upper_immediate_instrs        PASS          31.00           0.00     103357.25  **
+                                                        ** test_core.test_jal_jalr_control_flow         PASS          71.00           0.00     195275.79  **
+                                                        ** test_core.test_jal_negative_offset           PASS          41.00           0.00     150451.85  **
+                                                        ** test_lw_sw.test_lw_sw                        PASS          51.00           0.00     137473.97  **
+                                                        ** test_lw_sw.test_subword_load_store           PASS          91.00           0.00     183942.97  **
+                                                        ** test_lw_sw.test_subword_lane_boundaries      PASS         121.00           0.00     199571.68  **
+                                                        ** test_beq.test_beq                            PASS          71.00           0.00     208686.46  **
+                                                        ** test_beq.test_bne                            PASS          61.00           0.00     221901.60  **
+                                                        ** test_beq.test_blt_bge                        PASS          91.00           0.00     233444.44  **
+                                                        ** test_beq.test_bltu_bgeu                      PASS          91.00           0.00     240202.43  **
+                                                        ** test_program.test_program                    PASS          41.00           0.00     166957.73  **
+                                                        ** test_program.test_program2                   PASS          61.00           0.00     133117.87  **
+                                                        ** test_program.test_program2_initial_one       PASS         101.00           0.00     150863.50  **
+                                                        ****************************************************************************************************
+                                                        ** TESTS=17 PASS=17 FAIL=0 SKIP=0                           1317.02           0.11      12372.48  **
+                                                        ****************************************************************************************************
+- :0: Verilog $finish
+make[1]: Leaving directory '/mnt/d/projects/_clean/rv32i-single-cycle'

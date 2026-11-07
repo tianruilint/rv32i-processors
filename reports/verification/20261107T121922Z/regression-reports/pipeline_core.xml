@@ -1,0 +1,15 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="20261006" />
+    <testcase name="test_forwarding_and_pc4" classname="test_pipeline_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_core.py" lineno="95" time="0.0017769336700439453" sim_time_ns="49.0" ratio_time="27575.59318395277" />
+    <testcase name="test_load_store_and_subword_hazards" classname="test_pipeline_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_core.py" lineno="117" time="0.0016508102416992188" sim_time_ns="65.0" ratio_time="39374.604274985555" />
+    <testcase name="test_taken_branch_flushes_store_and_register_write" classname="test_pipeline_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_core.py" lineno="139" time="0.0008172988891601562" sim_time_ns="49.000000000000014" ratio_time="59953.58693115521" />
+    <testcase name="test_jal_jalr_links_and_flush" classname="test_pipeline_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_core.py" lineno="158" time="0.0006711483001708984" sim_time_ns="53.0" ratio_time="78969.13392539964" />
+    <testcase name="test_loop_program_and_cpi" classname="test_pipeline_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_core.py" lineno="178" time="0.0025587081909179688" sim_time_ns="141.00000000000003" ratio_time="55105.9321654864" />
+    <testcase name="test_signed_unsigned_and_shifts" classname="test_pipeline_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_core.py" lineno="201" time="0.0010840892791748047" sim_time_ns="77.0" ratio_time="71027.36045744446" />
+    <testcase name="test_load_to_branch_stall_and_wrong_path_store" classname="test_pipeline_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_core.py" lineno="224" time="0.0007357597351074219" sim_time_ns="57.0" ratio_time="77470.94232015555" />
+    <testcase name="test_reset_clears_inflight_store" classname="test_pipeline_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_core.py" lineno="245" time="0.00017023086547851562" sim_time_ns="10.0" ratio_time="58743.75350140056" />
+    <testcase name="test_subword_sign_extension_and_half_store" classname="test_pipeline_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_core.py" lineno="276" time="0.0008902549743652344" sim_time_ns="69.00000000000006" ratio_time="77505.88537761121" />
+    <testcase name="test_remaining_alu_and_branch_types" classname="test_pipeline_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_core.py" lineno="300" time="0.0018658638000488281" sim_time_ns="125.0" ratio_time="66993.09992333248" />
+  </testsuite>
+</testsuites>

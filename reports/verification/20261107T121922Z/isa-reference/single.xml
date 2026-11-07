@@ -1,0 +1,8 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1794054063" />
+    <testcase name="independent_machine_code_programs" classname="test_isa_reference" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_isa_reference.py" lineno="245" time="2.8058202266693115" sim_time_ns="94156.0" ratio_time="33557.38871116815" />
+    <testcase name="high_address_pc" classname="test_isa_reference" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_isa_reference.py" lineno="254" time="0.010062694549560547" sim_time_ns="49.0" ratio_time="4869.471070463915" />
+    <testcase name="fence_in_strongly_ordered_memory_model" classname="test_isa_reference" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_isa_reference.py" lineno="262" time="0.06528472900390625" sim_time_ns="4109.0" ratio_time="62939.68072922753" />
+  </testsuite>
+</testsuites>

@@ -1,4 +1,3 @@
-Failed to load tclreadline.tcl
  time 1ns
  capacitance 1fF
  resistance 1kohm
@@ -8,11 +7,12 @@ Failed to load tclreadline.tcl
  distance 1um
 Constraint setup checks passed.
 === WORST SETUP SLACK ===
-worst slack 5.202
+worst slack max 5.202
 === SETUP WNS AND TNS ===
-wns 0.00
-tns 0.00
+wns max 0.00
+tns max 0.00
 === FIVE WORST SETUP PATHS ===
+Warning 503: run_sta.tcl line 1, report_checks -group_count is deprecated. Use -group_path_count instead.
 Startpoint                           Endpoint                                Slack
 ---------------------------------------------------------------------------------
 instr[21] (input)                    data_write_data[10] (output)            5.202
@@ -22,6 +22,7 @@ instr[21] (input)                    data_write_data[13] (output)            5.2
 instr[21] (input)                    data_write_data[14] (output)            5.202
 
 === WORST PATH DETAIL ===
+Warning 503: run_sta.tcl line 1, report_checks -group_count is deprecated. Use -group_path_count instead.
 Startpoint: instr[21] (input port clocked by core_clk)
 Endpoint: data_write_data[10] (output port clocked by core_clk)
 Path Group: core_clk
@@ -138,6 +139,7 @@ Path Type: max
 
 
 === PATHS ENDING AT CORE REGISTERS ===
+Warning 503: run_sta.tcl line 1, report_checks -group_count is deprecated. Use -group_path_count instead.
 Startpoint                           Endpoint                                Slack
 ---------------------------------------------------------------------------------
 instr[21] (input)                    _11437_/D (DFF_X1)                      5.264
@@ -147,6 +149,7 @@ instr[21] (input)                    _11470_/D (DFF_X1)                      5.2
 instr[21] (input)                    _11501_/D (DFF_X1)                      5.264
 
 === REGISTER TO REGISTER ===
+Warning 503: run_sta.tcl line 1, report_checks -group_count is deprecated. Use -group_path_count instead.
 Startpoint                           Endpoint                                Slack
 ---------------------------------------------------------------------------------
 _12112_/Q (DFF_X1)                   _11437_/D (DFF_X1)                      6.536
@@ -154,6 +157,7 @@ _12112_/Q (DFF_X1)                   _11438_/D (DFF_X1)                      6.5
 _12112_/Q (DFF_X1)                   _11469_/D (DFF_X1)                      6.536
 
 === LOAD INPUT TO CORE REGISTERS ===
+Warning 503: run_sta.tcl line 1, report_checks -group_count is deprecated. Use -group_path_count instead.
 Startpoint                           Endpoint                                Slack
 ---------------------------------------------------------------------------------
 data_read_data[15] (input)           _11437_/D (DFF_X1)                      8.841
@@ -220,94 +224,180 @@ max capacitance
 Pin                                     Limit      Cap    Slack
 ---------------------------------------------------------------
 _06206_/ZN                             60.730  370.200 -309.470 (VIOLATED)
+
 _06205_/ZN                             60.730  185.905 -125.175 (VIOLATED)
+
 _06203_/ZN                             60.730  185.886 -125.156 (VIOLATED)
+
 _08487_/ZN                             26.703  119.247  -92.544 (VIOLATED)
+
 _08643_/ZN                             26.054  108.697  -82.643 (VIOLATED)
+
 _08410_/ZN                             26.054  107.476  -81.421 (VIOLATED)
+
 _06239_/ZN                             26.703   91.510  -64.807 (VIOLATED)
+
 _08642_/ZN                             25.330   89.503  -64.173 (VIOLATED)
+
 _06204_/ZN                             60.730  124.448  -63.718 (VIOLATED)
+
 _10711_/ZN                             16.022   68.489  -52.468 (VIOLATED)
+
 _09702_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _09978_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10012_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10046_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10080_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10113_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10146_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10180_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10213_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10247_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10280_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10313_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10346_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10380_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10413_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10446_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10479_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10512_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10545_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _10973_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _11006_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _11039_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _11072_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _11105_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _11138_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _11171_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _11204_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _11237_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _11270_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _11311_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _11344_/ZN                             16.022   61.438  -45.416 (VIOLATED)
+
 _06392_/ZN                             16.022   56.872  -40.850 (VIOLATED)
+
 _08336_/ZN                             26.054   66.034  -39.980 (VIOLATED)
+
 _08335_/ZN                             25.330   56.282  -30.952 (VIOLATED)
+
 _08409_/ZN                             25.330   54.501  -29.172 (VIOLATED)
+
 _09699_/ZN                             25.559   53.673  -28.115 (VIOLATED)
+
 _09705_/ZN                             16.022   42.654  -26.632 (VIOLATED)
+
 _08834_/ZN                             14.496   31.858  -17.362 (VIOLATED)
+
 _06313_/ZN                             56.000   72.164  -16.165 (VIOLATED)
+
 _06388_/ZN                             26.703   37.302  -10.599 (VIOLATED)
+
 _06306_/ZN                             16.022   25.921   -9.899 (VIOLATED)
+
 _09821_/ZN                             20.065   29.288   -9.223 (VIOLATED)
+
 _06307_/ZN                             60.577   68.148   -7.571 (VIOLATED)
+
 _09726_/ZN                             22.163   29.288   -7.125 (VIOLATED)
+
 _09838_/ZN                             22.163   29.288   -7.125 (VIOLATED)
+
 _09847_/ZN                             22.163   29.288   -7.125 (VIOLATED)
+
 _09854_/ZN                             22.163   29.288   -7.125 (VIOLATED)
+
 _09956_/ZN                             22.163   29.288   -7.125 (VIOLATED)
+
 _09961_/ZN                             22.163   29.288   -7.125 (VIOLATED)
+
 _08561_/ZN                             59.357   63.893   -4.536 (VIOLATED)
+
 _06201_/ZN                             60.730   64.600   -3.870 (VIOLATED)
+
 _09970_/ZN                             25.559   29.288   -3.730 (VIOLATED)
+
 _09714_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09738_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09752_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09766_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09779_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09794_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09804_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09815_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09831_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09864_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09871_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09880_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09885_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09893_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09898_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09905_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09910_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09918_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09923_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09931_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09936_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09944_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09949_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _09975_/ZN                             26.054   29.288   -3.234 (VIOLATED)
+
 _08815_/ZN                             26.703   28.461   -1.758 (VIOLATED)
+
 _06397_/ZN                             11.482   12.652   -1.170 (VIOLATED)
+
 _08823_/ZN                             26.703   27.834   -1.131 (VIOLATED)
-_08821_/ZN                             26.703   27.545   -0.842 (VIOLATED)
-_06390_/ZN                             16.022   16.562   -0.540 (VIOLATED)
 

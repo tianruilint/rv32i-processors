@@ -1,0 +1,27 @@
+make[1]: Entering directory '/mnt/d/projects/_clean/rv32i-single-cycle'
+rm -f /mnt/d/projects/_clean/rv32i-single-cycle/build/reports/pc.xml
+COCOTB_TEST_MODULES=test_pc COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=pc TOPLEVEL_LANG=verilog \
+         /mnt/d/projects/_clean/rv32i-single-cycle/build/verilator-pc/Vtop     
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.12.4 interpreter at /mnt/d/projects/_clean/rv32i-single-cycle/.venv/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Verilator version 5.050 2026-07-01
+     0.00ns INFO     cocotb                             Seeding Python random module with supplied seed 20261006
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /mnt/d/projects/_clean/rv32i-single-cycle/.venv/lib/python3.12/site-packages/cocotb
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_pc.test_reset_and_sequential_increment (1/3)
+    21.00ns INFO     cocotb.regression                  test_pc.test_reset_and_sequential_increment passed
+    21.00ns INFO     cocotb.regression                  running test_pc.test_target_selection_and_reset_priority (2/3)
+    52.00ns INFO     cocotb.regression                  test_pc.test_target_selection_and_reset_priority passed
+    52.00ns INFO     cocotb.regression                  running test_pc.test_pc_wraparound (3/3)
+    83.00ns INFO     cocotb.regression                  test_pc.test_pc_wraparound passed
+    83.00ns INFO     cocotb.regression                  **********************************************************************************************************
+                                                        ** TEST                                              STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        **********************************************************************************************************
+                                                        ** test_pc.test_reset_and_sequential_increment        PASS          21.00           0.00      62028.44  **
+                                                        ** test_pc.test_target_selection_and_reset_priority   PASS          31.00           0.00     184955.08  **
+                                                        ** test_pc.test_pc_wraparound                         PASS          31.00           0.00     224565.50  **
+                                                        **********************************************************************************************************
+                                                        ** TESTS=3 PASS=3 FAIL=0 SKIP=0                                     83.00           0.01      10150.02  **
+                                                        **********************************************************************************************************
+- :0: Verilog $finish
+make[1]: Leaving directory '/mnt/d/projects/_clean/rv32i-single-cycle'

@@ -1,0 +1,51 @@
+make[1]: Entering directory '/mnt/d/projects/_clean/rv32i-single-cycle'
+rm -f /mnt/d/projects/_clean/rv32i-single-cycle/build/reports/pipeline_core.xml
+COCOTB_TEST_MODULES=test_pipeline_core COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=rv32i_pipeline_core TOPLEVEL_LANG=verilog \
+         /mnt/d/projects/_clean/rv32i-single-cycle/build/verilator-pipeline_core/Vtop     
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.12.4 interpreter at /mnt/d/projects/_clean/rv32i-single-cycle/.venv/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Verilator version 5.050 2026-07-01
+     0.00ns INFO     cocotb                             Seeding Python random module with supplied seed 20261006
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /mnt/d/projects/_clean/rv32i-single-cycle/.venv/lib/python3.12/site-packages/cocotb
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_pipeline_core.test_forwarding_and_pc4 (1/10)
+    49.00ns INFO     cocotb.rv32i_pipeline_core         BENCHMARK pipeline alu_forwarding cycles=12 retired=8 cpi=1.5000
+    49.00ns INFO     cocotb.regression                  test_pipeline_core.test_forwarding_and_pc4 passed
+    49.00ns INFO     cocotb.regression                  running test_pipeline_core.test_load_store_and_subword_hazards (2/10)
+   114.00ns INFO     cocotb.rv32i_pipeline_core         BENCHMARK pipeline memory_hazards cycles=16 retired=10 cpi=1.6000
+   114.00ns INFO     cocotb.regression                  test_pipeline_core.test_load_store_and_subword_hazards passed
+   114.00ns INFO     cocotb.regression                  running test_pipeline_core.test_taken_branch_flushes_store_and_register_write (3/10)
+   163.00ns INFO     cocotb.regression                  test_pipeline_core.test_taken_branch_flushes_store_and_register_write passed
+   163.00ns INFO     cocotb.regression                  running test_pipeline_core.test_jal_jalr_links_and_flush (4/10)
+   216.00ns INFO     cocotb.regression                  test_pipeline_core.test_jal_jalr_links_and_flush passed
+   216.00ns INFO     cocotb.regression                  running test_pipeline_core.test_loop_program_and_cpi (5/10)
+   357.00ns INFO     cocotb.rv32i_pipeline_core         BENCHMARK pipeline loop_sum5 cycles=35 retired=22 cpi=1.5909
+   357.00ns INFO     cocotb.regression                  test_pipeline_core.test_loop_program_and_cpi passed
+   357.00ns INFO     cocotb.regression                  running test_pipeline_core.test_signed_unsigned_and_shifts (6/10)
+   434.00ns INFO     cocotb.regression                  test_pipeline_core.test_signed_unsigned_and_shifts passed
+   434.00ns INFO     cocotb.regression                  running test_pipeline_core.test_load_to_branch_stall_and_wrong_path_store (7/10)
+   491.01ns INFO     cocotb.regression                  test_pipeline_core.test_load_to_branch_stall_and_wrong_path_store passed
+   491.01ns INFO     cocotb.regression                  running test_pipeline_core.test_reset_clears_inflight_store (8/10)
+   501.01ns INFO     cocotb.regression                  test_pipeline_core.test_reset_clears_inflight_store passed
+   501.01ns INFO     cocotb.regression                  running test_pipeline_core.test_subword_sign_extension_and_half_store (9/10)
+   570.01ns INFO     cocotb.regression                  test_pipeline_core.test_subword_sign_extension_and_half_store passed
+   570.01ns INFO     cocotb.regression                  running test_pipeline_core.test_remaining_alu_and_branch_types (10/10)
+   695.01ns INFO     cocotb.regression                  test_pipeline_core.test_remaining_alu_and_branch_types passed
+   695.01ns INFO     cocotb.regression                  *******************************************************************************************************************************
+                                                        ** TEST                                                                   STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        *******************************************************************************************************************************
+                                                        ** test_pipeline_core.test_forwarding_and_pc4                              PASS          49.00           0.00      27575.59  **
+                                                        ** test_pipeline_core.test_load_store_and_subword_hazards                  PASS          65.00           0.00      39374.60  **
+                                                        ** test_pipeline_core.test_taken_branch_flushes_store_and_register_write   PASS          49.00           0.00      59953.59  **
+                                                        ** test_pipeline_core.test_jal_jalr_links_and_flush                        PASS          53.00           0.00      78969.13  **
+                                                        ** test_pipeline_core.test_loop_program_and_cpi                            PASS         141.00           0.00      55105.93  **
+                                                        ** test_pipeline_core.test_signed_unsigned_and_shifts                      PASS          77.00           0.00      71027.36  **
+                                                        ** test_pipeline_core.test_load_to_branch_stall_and_wrong_path_store       PASS          57.00           0.00      77470.94  **
+                                                        ** test_pipeline_core.test_reset_clears_inflight_store                     PASS          10.00           0.00      58743.75  **
+                                                        ** test_pipeline_core.test_subword_sign_extension_and_half_store           PASS          69.00           0.00      77505.89  **
+                                                        ** test_pipeline_core.test_remaining_alu_and_branch_types                  PASS         125.00           0.00      66993.10  **
+                                                        *******************************************************************************************************************************
+                                                        ** TESTS=10 PASS=10 FAIL=0 SKIP=0                                                       695.01           0.04      16220.57  **
+                                                        *******************************************************************************************************************************
+- :0: Verilog $finish
+make[1]: Leaving directory '/mnt/d/projects/_clean/rv32i-single-cycle'

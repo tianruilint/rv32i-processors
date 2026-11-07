@@ -1,0 +1,56 @@
+rm -f /mnt/d/projects/_clean/rv32i-single-cycle/build/isa-reference/single.xml
+COCOTB_TEST_MODULES=test_isa_reference COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=rv32i_core TOPLEVEL_LANG=verilog \
+         /mnt/d/projects/_clean/rv32i-single-cycle/build/verilator-isa-single/Vtop     
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.12.4 interpreter at /mnt/d/projects/_clean/rv32i-single-cycle/.venv/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Verilator version 5.050 2026-07-01
+     0.00ns INFO     cocotb                             Seeding Python random module with 1794054063
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /mnt/d/projects/_clean/rv32i-single-cycle/.venv/lib/python3.12/site-packages/cocotb
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_isa_reference.independent_machine_code_programs (1/3)
+ 94156.00ns INFO     cocotb.rv32i_core                  INDEPENDENT_ISA single programs=64 retired=23523 stores=1627 instruction_kinds=37
+ 94156.00ns INFO     cocotb.regression                  test_isa_reference.independent_machine_code_programs passed
+ 94156.00ns INFO     cocotb.regression                  running test_isa_reference.high_address_pc (2/3)
+ 94205.00ns INFO     cocotb.rv32i_core                  INDEPENDENT_ISA single programs=1 retired=12 stores=0 instruction_kinds=6
+ 94205.00ns INFO     cocotb.regression                  test_isa_reference.high_address_pc passed
+ 94205.00ns INFO     cocotb.regression                  running test_isa_reference.fence_in_strongly_ordered_memory_model (3/3)
+ 98314.00ns INFO     cocotb.rv32i_core                  INDEPENDENT_ISA single programs=1 retired=1027 stores=256 instruction_kinds=4
+ 98314.00ns INFO     cocotb.regression                  test_isa_reference.fence_in_strongly_ordered_memory_model passed
+ 98314.00ns INFO     cocotb.regression                  *******************************************************************************************************************
+                                                        ** TEST                                                       STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        *******************************************************************************************************************
+                                                        ** test_isa_reference.independent_machine_code_programs        PASS       94156.00           2.81      33557.39  **
+                                                        ** test_isa_reference.high_address_pc                          PASS          49.00           0.01       4869.47  **
+                                                        ** test_isa_reference.fence_in_strongly_ordered_memory_model   PASS        4109.00           0.07      62939.68  **
+                                                        *******************************************************************************************************************
+                                                        ** TESTS=3 PASS=3 FAIL=0 SKIP=0                                           98314.00           2.90      33877.52  **
+                                                        *******************************************************************************************************************
+- :0: Verilog $finish
+rm -f /mnt/d/projects/_clean/rv32i-single-cycle/build/isa-reference/pipeline.xml
+COCOTB_TEST_MODULES=test_isa_reference COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=rv32i_pipeline_core TOPLEVEL_LANG=verilog \
+         /mnt/d/projects/_clean/rv32i-single-cycle/build/verilator-isa-pipeline/Vtop     
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.12.4 interpreter at /mnt/d/projects/_clean/rv32i-single-cycle/.venv/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Verilator version 5.050 2026-07-01
+     0.00ns INFO     cocotb                             Seeding Python random module with 1794054069
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /mnt/d/projects/_clean/rv32i-single-cycle/.venv/lib/python3.12/site-packages/cocotb
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_isa_reference.independent_machine_code_programs (1/3)
+129392.00ns INFO     cocotb.rv32i_pipeline_core         INDEPENDENT_ISA pipeline programs=64 retired=23523 stores=1627 instruction_kinds=37
+129392.00ns INFO     cocotb.regression                  test_isa_reference.independent_machine_code_programs passed
+129392.00ns INFO     cocotb.regression                  running test_isa_reference.high_address_pc (2/3)
+129489.00ns INFO     cocotb.rv32i_pipeline_core         INDEPENDENT_ISA pipeline programs=1 retired=12 stores=0 instruction_kinds=6
+129489.00ns INFO     cocotb.regression                  test_isa_reference.high_address_pc passed
+129489.00ns INFO     cocotb.regression                  running test_isa_reference.fence_in_strongly_ordered_memory_model (3/3)
+134638.00ns INFO     cocotb.rv32i_pipeline_core         INDEPENDENT_ISA pipeline programs=1 retired=1027 stores=256 instruction_kinds=4
+134638.00ns INFO     cocotb.regression                  test_isa_reference.fence_in_strongly_ordered_memory_model passed
+134638.00ns INFO     cocotb.regression                  *******************************************************************************************************************
+                                                        ** TEST                                                       STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        *******************************************************************************************************************
+                                                        ** test_isa_reference.independent_machine_code_programs        PASS      129392.00           3.20      40373.87  **
+                                                        ** test_isa_reference.high_address_pc                          PASS          97.00           0.01      11934.86  **
+                                                        ** test_isa_reference.fence_in_strongly_ordered_memory_model   PASS        5149.00           0.08      61805.39  **
+                                                        *******************************************************************************************************************
+                                                        ** TESTS=3 PASS=3 FAIL=0 SKIP=0                                          134638.00           3.31      40639.42  **
+                                                        *******************************************************************************************************************
+- :0: Verilog $finish

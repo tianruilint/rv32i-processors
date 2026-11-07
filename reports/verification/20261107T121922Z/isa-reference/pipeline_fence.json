@@ -1,0 +1,28 @@
+{
+  "core": "pipeline",
+  "name": "fence",
+  "programs": 1,
+  "retired": 1027,
+  "stores": 256,
+  "instruction_counts": {
+    "addi": 259,
+    "fence": 256,
+    "lw": 256,
+    "sw": 256
+  },
+  "scope": "Naturally aligned zero-wait memory; no exceptions, CSRs, interrupts, caches or MMIO; custom interpreter, not an external ISS compliance suite.",
+  "results": [
+    {
+      "case": "fence_all_predecessor_successor_masks",
+      "retired": 1027,
+      "stores": 256,
+      "cycles": 1287,
+      "instructions": {
+        "addi": 259,
+        "sw": 256,
+        "fence": 256,
+        "lw": 256
+      }
+    }
+  ]
+}

@@ -1,0 +1,282 @@
+Per-instance (Verilator):
+Coverage Summary:
+  line      : 81.9% (  295/  360)
+  toggle    : 64.1% (12040/18780)
+  branch    : 88.2% (  261/  296)
+  expr      : 98.5% (  255/  259)
+  fsm_state : 0.0% (    0/    0)
+  fsm_arc   : 0.0% (    0/    0)
+Hierarchy Coverage Summary:
+  alu
+    line      : 91.7% ( 11/ 12)
+    toggle    : 100.0% (200/200)
+  decoder
+    line      : 81.2% (26/32)
+    toggle    : 97.2% (70/72)
+    branch    : 100.0% (34/34)
+  full_adder
+    toggle    : 90.0% ( 9/10)
+  immediate_generator
+    line      : 100.0% (  7/  7)
+    toggle    : 89.6% (120/134)
+  pc
+    line      : 100.0% (  2/  2)
+    toggle    : 79.3% (157/198)
+    branch    : 100.0% (  4/  4)
+  pipeline_ex
+    line      : 48.1% (  13/  27)
+    toggle    : 59.0% ( 840/1424)
+    branch    : 94.4% (  17/  18)
+    expr      : 94.6% (  35/  37)
+  pipeline_ex.u_alu
+    line      : 25.0% (  3/ 12)
+    toggle    : 70.0% (140/200)
+  pipeline_ex_mem
+    line      : 100.0% (  1/  1)
+    toggle    : 93.7% (532/568)
+    branch    : 100.0% (  2/  2)
+    expr      : 100.0% (  3/  3)
+  pipeline_frontend
+    line      : 100.0% (  2/  2)
+    toggle    : 27.5% (179/652)
+    branch    : 100.0% (  6/  6)
+    expr      : 100.0% (  4/  4)
+  pipeline_hazard
+    toggle    : 55.6% (30/54)
+    expr      : 85.7% (12/14)
+  pipeline_id
+    line      : 54.0% (  27/  50)
+    toggle    : 35.0% ( 536/1530)
+    branch    : 56.5% (  26/  46)
+    expr      : 100.0% (  21/  21)
+  pipeline_id.u_decoder
+    line      : 34.4% (11/32)
+    toggle    : 66.7% (48/72)
+    branch    : 41.2% (14/34)
+  pipeline_id.u_immediate_generator
+    line      : 85.7% (  6/  7)
+    toggle    : 55.2% ( 74/134)
+  pipeline_id.u_register_file
+    line      : 100.0% (  1/  1)
+    toggle    : 33.6% ( 76/226)
+    branch    : 100.0% (  6/  6)
+    expr      : 100.0% (  7/  7)
+  pipeline_id_ex
+    line      : 100.0% (  2/  2)
+    toggle    : 13.1% (104/796)
+    branch    : 100.0% (  4/  4)
+    expr      : 100.0% (  5/  5)
+  pipeline_mem
+    line      : 83.3% ( 10/ 12)
+    toggle    : 35.5% (287/808)
+    branch    : 87.5% ( 14/ 16)
+    expr      : 100.0% ( 22/ 22)
+  pipeline_mem_wb
+    line      : 100.0% (  1/  1)
+    toggle    : 10.0% ( 68/680)
+    branch    : 100.0% (  2/  2)
+    expr      : 100.0% (  3/  3)
+  register_file
+    line      : 100.0% (  1/  1)
+    toggle    : 50.4% (114/226)
+    branch    : 100.0% (  6/  6)
+    expr      : 100.0% (  7/  7)
+  rv32i_core
+    line      : 89.3% (  92/ 103)
+    toggle    : 90.9% (1788/1966)
+    branch    : 93.1% (  54/  58)
+    expr      : 100.0% (  28/  28)
+  rv32i_core.u_alu
+    line      : 91.7% ( 11/ 12)
+    toggle    : 100.0% (200/200)
+  rv32i_core.u_decoder
+    line      : 93.8% (30/32)
+    toggle    : 100.0% (72/72)
+    branch    : 91.2% (31/34)
+  rv32i_core.u_immediate_generator
+    line      : 85.7% (  6/  7)
+    toggle    : 100.0% (134/134)
+  rv32i_core.u_pc
+    line      : 100.0% (  2/  2)
+    toggle    : 69.7% (138/198)
+    branch    : 100.0% (  4/  4)
+  rv32i_core.u_register_file
+    line      : 100.0% (  1/  1)
+    toggle    : 100.0% (226/226)
+    branch    : 100.0% (  6/  6)
+    expr      : 100.0% (  7/  7)
+  rv32i_pipeline_core
+    line      : 92.6% ( 100/ 108)
+    toggle    : 74.0% (7006/9462)
+    branch    : 92.0% (  92/ 100)
+    expr      : 100.0% ( 115/ 115)
+  rv32i_pipeline_core.u_ex
+    line      : 92.6% (  25/  27)
+    toggle    : 84.7% (1206/1424)
+    branch    : 100.0% (  18/  18)
+    expr      : 100.0% (  37/  37)
+  rv32i_pipeline_core.u_ex.u_alu
+    line      : 91.7% ( 11/ 12)
+    toggle    : 100.0% (200/200)
+  rv32i_pipeline_core.u_ex_mem
+    line      : 100.0% (  1/  1)
+    toggle    : 81.0% (460/568)
+    branch    : 100.0% (  2/  2)
+    expr      : 100.0% (  3/  3)
+  rv32i_pipeline_core.u_frontend
+    line      : 100.0% (  2/  2)
+    toggle    : 41.1% (268/652)
+    branch    : 100.0% (  6/  6)
+    expr      : 100.0% (  4/  4)
+  rv32i_pipeline_core.u_hazard
+    toggle    : 96.3% (52/54)
+    expr      : 100.0% (14/14)
+  rv32i_pipeline_core.u_id
+    line      : 94.0% (  47/  50)
+    toggle    : 85.2% (1304/1530)
+    branch    : 93.5% (  43/  46)
+    expr      : 100.0% (  21/  21)
+  rv32i_pipeline_core.u_id.u_decoder
+    line      : 93.8% (30/32)
+    toggle    : 100.0% (72/72)
+    branch    : 91.2% (31/34)
+  rv32i_pipeline_core.u_id.u_immediate_generator
+    line      : 85.7% (  6/  7)
+    toggle    : 98.5% (132/134)
+  rv32i_pipeline_core.u_id.u_register_file
+    line      : 100.0% (  1/  1)
+    toggle    : 99.1% (224/226)
+    branch    : 100.0% (  6/  6)
+    expr      : 100.0% (  7/  7)
+  rv32i_pipeline_core.u_id_ex
+    line      : 100.0% (  2/  2)
+    toggle    : 72.4% (576/796)
+    branch    : 100.0% (  4/  4)
+    expr      : 100.0% (  5/  5)
+  rv32i_pipeline_core.u_mem
+    line      : 83.3% ( 10/ 12)
+    toggle    : 83.4% (674/808)
+    branch    : 68.8% ( 11/ 16)
+    expr      : 100.0% ( 22/ 22)
+  rv32i_pipeline_core.u_mem_wb
+    line      : 100.0% (  1/  1)
+    toggle    : 68.2% (464/680)
+    branch    : 100.0% (  2/  2)
+    expr      : 100.0% (  3/  3)
+Design Unit Coverage Summary:
+  alu
+    line      : 75.0% ( 36/ 48)
+    toggle    : 92.5% (740/800)
+  decoder
+    line      : 75.8% ( 97/128)
+    toggle    : 91.0% (262/288)
+    branch    : 80.9% (110/136)
+  full_adder
+    toggle    : 90.0% ( 9/10)
+  immediate_generator
+    line      : 89.3% ( 25/ 28)
+    toggle    : 85.8% (460/536)
+  pc
+    line      : 100.0% (  4/  4)
+    toggle    : 74.5% (295/396)
+    branch    : 100.0% (  8/  8)
+  pipeline_ex
+    line      : 80.0% (  24/  30)
+    toggle    : 69.7% (1706/2448)
+    branch    : 97.2% (  35/  36)
+    expr      : 97.3% (  72/  74)
+  pipeline_ex_mem
+    line      : 100.0% (   2/   2)
+    toggle    : 87.3% ( 992/1136)
+    branch    : 100.0% (   4/   4)
+    expr      : 100.0% (   6/   6)
+  pipeline_frontend
+    line      : 100.0% (   4/   4)
+    toggle    : 34.3% ( 447/1304)
+    branch    : 100.0% (  12/  12)
+    expr      : 100.0% (   8/   8)
+  pipeline_hazard
+    toggle    : 75.9% ( 82/108)
+    expr      : 92.9% ( 26/ 28)
+  pipeline_id
+    line      : 95.0% (  19/  20)
+    toggle    : 55.3% (1214/2196)
+    branch    : 100.0% (  12/  12)
+    expr      : 100.0% (  28/  28)
+  pipeline_id_ex
+    line      : 100.0% (   4/   4)
+    toggle    : 42.7% ( 680/1592)
+    branch    : 100.0% (   8/   8)
+    expr      : 100.0% (  10/  10)
+  pipeline_mem
+    line      : 83.3% (  20/  24)
+    toggle    : 59.5% ( 961/1616)
+    branch    : 78.1% (  25/  32)
+    expr      : 100.0% (  44/  44)
+  pipeline_mem_wb
+    line      : 100.0% (   2/   2)
+    toggle    : 39.1% ( 532/1360)
+    branch    : 100.0% (   4/   4)
+    expr      : 100.0% (   6/   6)
+  register_file
+    line      : 100.0% (  4/  4)
+    toggle    : 70.8% (640/904)
+    branch    : 100.0% ( 24/ 24)
+    expr      : 100.0% ( 28/ 28)
+  rv32i_core
+    line      : 85.7% (  42/  49)
+    toggle    : 89.6% (1018/1136)
+    branch    : 92.9% (  13/  14)
+    expr      : 100.0% (  21/  21)
+  rv32i_pipeline_core
+    line      : 92.3% (  12/  13)
+    toggle    : 67.9% (2002/2950)
+    branch    : 100.0% (   6/   6)
+    expr      : 100.0% (   6/   6)
+
+By design unit, instances merged:
+  file                                       line              branch                expr              toggle
+  alu.sv                            92.9% (13/14)                   -                   -    100.0% (200/200)
+  decoder.sv                      99.1% (113/114)    100.0% (110/110)                   -      100.0% (72/72)
+  full_adder.sv                                 -                   -                   -        90.0% (9/10)
+  immediate_generator.sv             100.0% (8/8)                   -                   -    100.0% (134/134)
+  pc.sv                              100.0% (2/2)        100.0% (8/8)                   -     96.0% (190/198)
+  pipeline_ex.sv                    96.4% (27/28)      100.0% (25/25)      100.0% (37/37)   82.9% (1015/1224)
+  pipeline_ex_mem.sv                 100.0% (1/1)      100.0% (23/23)        100.0% (3/3)     95.1% (540/568)
+  pipeline_frontend.sv               100.0% (4/4)      100.0% (17/17)        100.0% (4/4)     41.9% (273/652)
+  pipeline_hazard.sv                            -                   -      100.0% (14/14)       96.3% (52/54)
+  pipeline_id.sv                   100.0% (45/45)      100.0% (29/29)      100.0% (14/14)    79.8% (876/1098)
+  pipeline_id_ex.sv                  100.0% (2/2)      100.0% (48/48)        100.0% (5/5)     72.4% (576/796)
+  pipeline_mem.sv                   88.2% (15/17)       90.9% (20/22)      100.0% (22/22)     85.9% (694/808)
+  pipeline_mem_wb.sv                 100.0% (1/1)      100.0% (21/21)        100.0% (3/3)     68.2% (464/680)
+  register_file.sv                   100.0% (1/1)        100.0% (7/7)        100.0% (7/7)    100.0% (226/226)
+  rv32i_core.sv                     83.1% (64/77)       81.0% (17/21)      100.0% (21/21)   89.6% (1018/1136)
+  rv32i_pipeline_core.sv            93.3% (14/15)      100.0% (13/13)        100.0% (6/6)   67.9% (2002/2950)
+  TOTAL                           94.2% (310/329)     98.3% (338/344)    100.0% (136/136)   77.2% (8341/10806)
+
+Uncovered line/branch/expr points (instances merged):
+  alu.sv:34 line case
+  decoder.sv:175 line case
+  pipeline_ex.sv:133 line case
+  pipeline_mem.sv:42 branch else
+  pipeline_mem.sv:44 branch else
+  pipeline_mem.sv:45 line case
+  pipeline_mem.sv:69 line case
+  rv32i_core.sv:119 branch else
+  rv32i_core.sv:123 branch else
+  rv32i_core.sv:124 branch else
+  rv32i_core.sv:125 branch else
+  rv32i_core.sv:65 line case
+  rv32i_core.sv:94 line case
+  rv32i_core.sv:95 line case
+  rv32i_core.sv:96 line case
+  rv32i_core.sv:111 line case
+  rv32i_core.sv:112 line case
+  rv32i_core.sv:113 line case
+  rv32i_core.sv:129 line case
+  rv32i_core.sv:130 line case
+  rv32i_core.sv:131 line case
+  rv32i_core.sv:150 line case
+  rv32i_core.sv:160 line case
+  rv32i_core.sv:169 line case
+  rv32i_pipeline_core.sv:196 line case

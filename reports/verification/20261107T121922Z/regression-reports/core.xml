@@ -1,0 +1,22 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="20261006" />
+    <testcase name="test_arithmetic_chain" classname="test_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_core.py" lineno="6" time="0.0008935928344726562" sim_time_ns="131.0" ratio_time="146599.2059765208" />
+    <testcase name="test_reset_blocks_register_write" classname="test_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_core.py" lineno="146" time="0.00026416778564453125" sim_time_ns="31.0" ratio_time="117349.66064981949" />
+    <testcase name="test_xor_sltu_instrs" classname="test_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_core.py" lineno="182" time="0.0003497600555419922" sim_time_ns="91.0" ratio_time="260178.366734833" />
+    <testcase name="test_shift_instrs" classname="test_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_core.py" lineno="278" time="0.0004100799560546875" sim_time_ns="141.0" ratio_time="343835.38604651164" />
+    <testcase name="test_upper_immediate_instrs" classname="test_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_core.py" lineno="426" time="0.0002999305725097656" sim_time_ns="31.0" ratio_time="103357.25278219396" />
+    <testcase name="test_jal_jalr_control_flow" classname="test_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_core.py" lineno="472" time="0.0003635883331298828" sim_time_ns="71.0" ratio_time="195275.79278688526" />
+    <testcase name="test_jal_negative_offset" classname="test_core" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_core.py" lineno="533" time="0.00027251243591308594" sim_time_ns="41.0" ratio_time="150451.84951881014" />
+    <testcase name="test_lw_sw" classname="test_lw_sw" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_lw_sw.py" lineno="23" time="0.00037097930908203125" sim_time_ns="51.0" ratio_time="137473.97429305912" />
+    <testcase name="test_subword_load_store" classname="test_lw_sw" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_lw_sw.py" lineno="109" time="0.0004947185516357422" sim_time_ns="91.0" ratio_time="183942.97060240965" />
+    <testcase name="test_subword_lane_boundaries" classname="test_lw_sw" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_lw_sw.py" lineno="260" time="0.0006062984466552734" sim_time_ns="121.0" ratio_time="199571.68069209595" />
+    <testcase name="test_beq" classname="test_beq" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_beq.py" lineno="6" time="0.0003402233123779297" sim_time_ns="71.0" ratio_time="208686.46391030133" />
+    <testcase name="test_bne" classname="test_beq" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_beq.py" lineno="79" time="0.00027489662170410156" sim_time_ns="61.0" ratio_time="221901.59930615785" />
+    <testcase name="test_blt_bge" classname="test_beq" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_beq.py" lineno="140" time="0.0003898143768310547" sim_time_ns="91.0" ratio_time="233444.44281345565" />
+    <testcase name="test_bltu_bgeu" classname="test_beq" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_beq.py" lineno="220" time="0.0003788471221923828" sim_time_ns="90.99999999999989" ratio_time="240202.4317180614" />
+    <testcase name="test_program" classname="test_program" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_program.py" lineno="7" time="0.0002455711364746094" sim_time_ns="41.0" ratio_time="166957.73203883495" />
+    <testcase name="test_program2" classname="test_program" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_program.py" lineno="44" time="0.0004582405090332031" sim_time_ns="61.0" ratio_time="133117.86888657647" />
+    <testcase name="test_program2_initial_one" classname="test_program" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_program.py" lineno="115" time="0.0006694793701171875" sim_time_ns="101.0" ratio_time="150863.49857549858" />
+  </testsuite>
+</testsuites>

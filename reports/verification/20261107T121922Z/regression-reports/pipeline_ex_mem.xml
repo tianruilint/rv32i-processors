@@ -1,0 +1,10 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="20261006" />
+    <testcase name="test_reset" classname="test_pipeline_ex_mem" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_ex_mem.py" lineno="40" time="0.0006251335144042969" sim_time_ns="11.0" ratio_time="17596.24103737605" />
+    <testcase name="test_capture_valid" classname="test_pipeline_ex_mem" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_ex_mem.py" lineno="53" time="0.00040459632873535156" sim_time_ns="21.0" ratio_time="51903.58515026517" />
+    <testcase name="test_invalid_clears_output" classname="test_pipeline_ex_mem" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_ex_mem.py" lineno="83" time="0.0002827644348144531" sim_time_ns="31.0" ratio_time="109631.89207419899" />
+    <testcase name="test_hold_when_valid" classname="test_pipeline_ex_mem" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_ex_mem.py" lineno="120" time="0.00025391578674316406" sim_time_ns="31.0" ratio_time="122087.7220657277" />
+    <testcase name="test_reset_priority_over_valid" classname="test_pipeline_ex_mem" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_ex_mem.py" lineno="165" time="0.0002646446228027344" sim_time_ns="31.0" ratio_time="117138.21981981982" />
+  </testsuite>
+</testsuites>

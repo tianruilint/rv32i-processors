@@ -1,0 +1,22 @@
+{
+  "workload": "load_use_128",
+  "core": "pipeline",
+  "cycles": 391,
+  "retired": 259,
+  "cpi": 1.5096525096525097,
+  "ipc": 0.6624040920716112,
+  "stalls": 128,
+  "redirects": 0,
+  "program_sha256": "694c59917a9d0193369e05a171186b17a47a89c257ffb54ffdabae4951eed681",
+  "retirement_trace_sha256": "c76c00f2ad2d8090550545fc24ae76362cd67b6112139aa8ec7d54479b689c3e",
+  "checked_registers": {
+    "0": 0,
+    "1": 7,
+    "2": 896,
+    "3": 256,
+    "31": 1
+  },
+  "no_store_checked_each_cycle": true,
+  "memory_contract": "zero-wait aligned-word input",
+  "measurement_window": "first active edge through terminal instruction commit; reset excluded"
+}

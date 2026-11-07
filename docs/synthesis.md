@@ -2,10 +2,10 @@
 
 ## Tools and inputs
 
-Latest analysis: 2026-10-06 on WSL Ubuntu 24.04.
+Latest analysis: 2026-11-07 on WSL Ubuntu 24.04, after the flush/reset RTL change.
 Lint, both generic synthesis flows, both
 Nangate45 mappings and both OpenSTA analyses were run again.
-The [run manifest](../reports/verification/20261006T102942Z/manifest.json)
+The [run manifest](../reports/verification/20261107T121922Z/manifest.json)
 binds commands, tools, input hashes and raw output logs to this run.
 
 | Input | Version or identity |
@@ -13,7 +13,7 @@ binds commands, tools, input hashes and raw output logs to this run.
 | RTL tops | `rv32i_core`, `rv32i_pipeline_core` |
 | Lint | Verilator 5.050 |
 | Synthesis | Yosys 0.33, revision `2584903a060` |
-| STA | OpenSTA 2.6.0 |
+| STA | OpenSTA 3.1.0 |
 | Library | Nangate45 typical, pinned OpenROAD-flow-scripts revision below |
 
 The instruction and data memories are external to both synthesized cores.
@@ -46,7 +46,7 @@ yosys -Q -T -l build/synthesis/pipeline_generic.log -p "read_verilog -sv $pipeli
 | Core | Generic flow | Cells | Structural-check problems |
 | --- | --- | ---: | ---: |
 | Single-cycle | Hierarchical | 6,642 | 0 |
-| Pipeline | Flattened | 8,626 | 0 |
+| Pipeline | Flattened | 8,576 | 0 |
 
 The generic flows differ in hierarchy handling, so their counts are
 structural observations rather than a controlled area comparison. Both lower
@@ -74,8 +74,8 @@ yosys -Q -T -q -l build/timing/pipeline_yosys_map.log -p "read_liberty -lib -ign
 
 | Metric | Single-cycle | Pipeline |
 | --- | ---: | ---: |
-| Mapped library cells | 6,267 | 9,556 |
-| Liberty cell-area sum | 12,737.410 | 17,515.302 |
+| Mapped library cells | 6,267 | 9,565 |
+| Liberty cell-area sum | 12,737.410 | 17,551.212 |
 | `check -assert` problems | 0 | 0 |
 
 Both mappings use the same flattened flow and library. The pipeline includes
@@ -106,7 +106,10 @@ The pipeline SDC additionally constrains its retirement and counter output
 ports. The input/output budgets are illustrative pin constraints; they are
 not measured instruction- or data-memory access times.
 
-The recorded OpenSTA executable came from the
+The recorded OpenSTA 3.1.0 executable was built with Bazel from the OpenSTA
+sources bundled in the OpenROAD-flow-scripts checkout used for the physical
+flow (`bazelisk build -c opt //src/sta:opensta` in `tools/OpenROAD`). The
+2026-10-06 run used the OpenSTA 2.6.0 binary from the
 [OpenROAD 2024-12-14 Ubuntu 22.04 package](https://github.com/Precision-Innovations/OpenROAD/releases/tag/2024-12-14).
 For an OpenSTA installation available as `sta`:
 
@@ -117,22 +120,22 @@ sta -no_init -no_splash -exit timing/run_pipeline_sta.tcl > build/timing/pipelin
 
 ## Complete recorded results
 
-Both complete reports below were regenerated on 2026-10-06:
+Both complete reports below were regenerated on 2026-11-07:
 
 | Metric | Single-cycle | Pipeline |
 | --- | ---: | ---: |
-| Worst setup slack at 10 ns | +5.202 ns | +6.181 ns |
+| Worst setup slack at 10 ns | +5.202 ns | +6.182 ns |
 | Setup WNS / TNS | 0 / 0 ns | 0 / 0 ns |
-| Max-slew violating report rows | 49 | 1,576 |
-| Max-capacitance violating report rows | 91 | 84 |
+| Max-slew violating report rows | 49 | 1,580 |
+| Max-capacitance violating report rows | 89 | 94 |
 
 `report_wns` reports the worst **negative** setup slack, clamped to zero
 when the worst slack is positive. Thus WNS=0 coexists with the positive
-+5.202/+6.181 ns worst-slack values. TNS sums negative endpoint slack,
++5.202/+6.182 ns worst-slack values. TNS sums negative endpoint slack,
 not positive margins or every enumerated path. The saved scripts use the
 default max/setup analysis for these commands; no hold-closure result is
-implied. This was also checked against the installed 2.6.0 Tcl procedure
-bodies. See the [OpenSTA reporting implementation](https://github.com/The-OpenROAD-Project/OpenSTA/blob/master/search/Search.tcl).
+implied. This was checked against the 2.6.0 Tcl procedure bodies used for the
+first run. See the [OpenSTA reporting implementation](https://github.com/The-OpenROAD-Project/OpenSTA/blob/master/search/Search.tcl).
 
 Violation counts are obtained by counting `(VIOLATED)` report rows within
 the `max slew` and `max capacitance` sections. They are not counts of
@@ -145,14 +148,14 @@ Saved STA analysis output:
 
 The single-cycle worst reported path is `instr[21]` to
 `data_write_data[10]`, with 4.198 ns arrival and 9.400 ns required time.
-The pipeline worst path is `_17783_/Q` to `_18710_/D`, with 3.676 ns
-arrival and 9.857 ns required time. The latter endpoint maps to bit 0 of the
+The pipeline worst path is `_18488_/Q` to `_18729_/D`, with 3.676 ns
+arrival and 9.858 ns required time. The latter endpoint maps to bit 0 of the
 ID/EX rs1 operand register in this netlist.
 The launch net `_00001_[0]` is a synthesis-created registered copy of
 IF/ID instruction bit 15, the low bit of the rs1 read address. Its DFF and
 the named IF/ID bit-15 DFF share the clock and identically driven D logic.
 The path therefore crosses ID register-read selection into the ID/EX
-operand register; `_17783_` is not the named IF/ID DFF instance itself.
+operand register; `_18488_` is not the named IF/ID DFF instance itself.
 
 The mapped designs have max-slew and max-capacitance violations requiring
 electrical-load/transition repair. Per-pin values are in the linked reports.

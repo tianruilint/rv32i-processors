@@ -2,10 +2,10 @@
 
 ## Regression
 
-Latest verified default run: 2026-10-06, Verilator 5.050 and cocotb 2.0.1.
+Latest verified default run: 2026-11-07, Verilator 5.050 and cocotb 2.0.1.
 Exact source/runner hashes, commands, tool versions, UTC start/end times and
 output hashes are recorded in the
-[run manifest](../reports/verification/20261006T102942Z/manifest.json).
+[run manifest](../reports/verification/20261107T121922Z/manifest.json).
 
 ```sh
 make regression SEED=20261006
@@ -160,9 +160,12 @@ not an independent whole-core ISA interpreter.
 
 ## Reports and reproduction
 
-The [2026-10-06 published run](../reports/verification/20261006T102942Z/)
-contains the raw regression logs/XML, matched-benchmark results, the separate
-five-case WB→ID initialization repeat, synthesis logs and both STA reports.
+The [2026-11-07 published run](../reports/verification/20261107T121922Z/)
+contains the raw regression logs/XML, ISA reference results, matched-benchmark
+results, the coverage reports, the separate five-case WB→ID initialization
+repeat, synthesis logs and both STA reports. The
+[2026-10-06 run](../reports/verification/20261006T102942Z/) is kept for the
+RTL before the flush/reset change.
 It was produced by one invocation of
 
 ```sh
@@ -268,9 +271,9 @@ instruction claim. A third case, `high_address_pc`, runs code across the
 link value at 0xFFFFFFFC to zero; it was added because the generated programs
 stay below 0x800 and left the upper PC bits untoggled (see Coverage). These
 six cocotb cases (three per core) are separate from the default 74.
-The reference run on 2026-10-06 passed the four cases that existed then;
-[raw XML and per-program records](../reports/verification/20261006T102942Z/isa-reference/)
-are saved separately. `high_address_pc` passed on both cores on 2026-11-07.
+The 2026-11-07 recorded run passed all six;
+[raw XML and per-program records](../reports/verification/20261107T121922Z/isa-reference/)
+are saved separately.
 XML results and per-program JSON records are written to `build/isa-reference/`.
 
 This custom model is not an external ISS or ISA compliance suite. It assumes

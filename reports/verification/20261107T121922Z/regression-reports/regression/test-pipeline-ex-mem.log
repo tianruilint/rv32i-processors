@@ -1,0 +1,33 @@
+make[1]: Entering directory '/mnt/d/projects/_clean/rv32i-single-cycle'
+rm -f /mnt/d/projects/_clean/rv32i-single-cycle/build/reports/pipeline_ex_mem.xml
+COCOTB_TEST_MODULES=test_pipeline_ex_mem COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=pipeline_ex_mem TOPLEVEL_LANG=verilog \
+         /mnt/d/projects/_clean/rv32i-single-cycle/build/verilator-pipeline_ex_mem/Vtop     
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.12.4 interpreter at /mnt/d/projects/_clean/rv32i-single-cycle/.venv/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Verilator version 5.050 2026-07-01
+     0.00ns INFO     cocotb                             Seeding Python random module with supplied seed 20261006
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /mnt/d/projects/_clean/rv32i-single-cycle/.venv/lib/python3.12/site-packages/cocotb
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test_pipeline_ex_mem.test_reset (1/5)
+    11.00ns INFO     cocotb.regression                  test_pipeline_ex_mem.test_reset passed
+    11.00ns INFO     cocotb.regression                  running test_pipeline_ex_mem.test_capture_valid (2/5)
+    32.00ns INFO     cocotb.regression                  test_pipeline_ex_mem.test_capture_valid passed
+    32.00ns INFO     cocotb.regression                  running test_pipeline_ex_mem.test_invalid_clears_output (3/5)
+    63.00ns INFO     cocotb.regression                  test_pipeline_ex_mem.test_invalid_clears_output passed
+    63.00ns INFO     cocotb.regression                  running test_pipeline_ex_mem.test_hold_when_valid (4/5)
+    94.00ns INFO     cocotb.regression                  test_pipeline_ex_mem.test_hold_when_valid passed
+    94.00ns INFO     cocotb.regression                  running test_pipeline_ex_mem.test_reset_priority_over_valid (5/5)
+   125.00ns INFO     cocotb.regression                  test_pipeline_ex_mem.test_reset_priority_over_valid passed
+   125.00ns INFO     cocotb.regression                  *************************************************************************************************************
+                                                        ** TEST                                                 STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        *************************************************************************************************************
+                                                        ** test_pipeline_ex_mem.test_reset                       PASS          11.00           0.00      17596.24  **
+                                                        ** test_pipeline_ex_mem.test_capture_valid               PASS          21.00           0.00      51903.59  **
+                                                        ** test_pipeline_ex_mem.test_invalid_clears_output       PASS          31.00           0.00     109631.89  **
+                                                        ** test_pipeline_ex_mem.test_hold_when_valid             PASS          31.00           0.00     122087.72  **
+                                                        ** test_pipeline_ex_mem.test_reset_priority_over_valid   PASS          31.00           0.00     117138.22  **
+                                                        *************************************************************************************************************
+                                                        ** TESTS=5 PASS=5 FAIL=0 SKIP=0                                       125.00           0.02       6369.18  **
+                                                        *************************************************************************************************************
+- :0: Verilog $finish
+make[1]: Leaving directory '/mnt/d/projects/_clean/rv32i-single-cycle'

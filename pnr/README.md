@@ -23,7 +23,8 @@ output delay, 5 fF output load) with only the clock period varied.
 | `reports/pnr/{1p6ns,1p4ns,1p2ns}/6_finish.rpt` | Full final timing reports around the fastest closing clock |
 | `reports/pnr/pre_flush_fix/` | The first sweep, before the RTL fix, in the same layout |
 | `pnr/collect.sh` | Copies the files above out of an ORFS `flow/` directory |
-| `docs/pnr/*_1p6ns.webp` | Placement, all-layer, routing, clock-tree and worst-path images of the first-sweep 625 MHz run |
+| `docs/pnr/*_1p4ns.webp` | Placement, all-layer, routing, clock-tree and worst-path images of the 714 MHz run |
+| `docs/pnr/pre_flush_fix/*_1p6ns.webp` | The same images from the first-sweep 625 MHz run |
 
 ## Reproducing
 
@@ -102,15 +103,15 @@ Above 1.4 ns the differences are within run-to-run placement variation.
   (1.2 ns).** The usual EX-stage path of a five-stage pipeline; shortening it
   needs a micro-architectural change rather than a fanout fix.
 
-## Layout images (first-sweep 1.6 ns run)
+## Layout images (1.4 ns run)
 
 | Image | Shows |
 | --- | --- |
-| [final_placement](../docs/pnr/final_placement_1p6ns.webp) | Standard-cell placement and I/O pins |
-| [final_clocks](../docs/pnr/final_clocks_1p6ns.webp) | Routed clock tree and CTS buffers |
-| [final_routing](../docs/pnr/final_routing_1p6ns.webp) | Signal routing on all metal layers |
-| [final_worst_path](../docs/pnr/final_worst_path_1p6ns.webp) | Worst setup path highlighted |
-| [final_all](../docs/pnr/final_all_1p6ns.webp) | Every layer overlaid: cells, signal routing, power-grid straps (wide horizontal bars) and pins |
+| [final_placement](../docs/pnr/final_placement_1p4ns.webp) | Standard-cell placement and I/O pins |
+| [final_clocks](../docs/pnr/final_clocks_1p4ns.webp) | Routed clock tree and CTS buffers |
+| [final_routing](../docs/pnr/final_routing_1p4ns.webp) | Signal routing on all metal layers |
+| [final_worst_path](../docs/pnr/final_worst_path_1p4ns.webp) | Worst setup path highlighted; it stays inside the core (the first-sweep image in `docs/pnr/pre_flush_fix/` shows the `reset` → `data_write_data` pin-to-pin path) |
+| [final_all](../docs/pnr/final_all_1p4ns.webp) | Every layer overlaid: cells, signal routing, power-grid straps (wide horizontal bars) and pins |
 
 ## Limits
 

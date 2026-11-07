@@ -50,6 +50,7 @@ def steps(seed):
         ("regression", ["make", "regression", f"SEED={seed}"]),
         ("isa-reference", ["make", "test-isa-reference"]),
         ("benchmarks", ["make", "benchmark", f"SEED={seed}"]),
+        ("coverage", ["make", "coverage", f"SEED={seed}"]),
         ("wb-id-unique-initialization", ["make", "-B", "test-pipeline-id", f"COMPILE_ARGS={unique}",
                                          f"SIM_ARGS=+verilator+seed+{seed}"]),
         ("single-cycle-generic", ["yosys", "-Q", "-T", "-p", f"read_verilog -sv {CORE}; synth -top rv32i_core; "
@@ -73,6 +74,9 @@ def collect(name, out):
         shutil.copytree(build / "isa-reference", out / "isa-reference")
     elif name == "benchmarks":
         shutil.copytree(build / "benchmarks", out / "benchmarks")
+    elif name == "coverage":
+        for report in ("default.txt", "with_isa_reference.txt"):
+            shutil.copy2(build / "coverage" / report, out / ("coverage-" + report))
     elif name == "wb-id-unique-initialization":
         shutil.copy2(build / "reports/pipeline_id.xml", out / (name + ".xml"))
     elif name == "single-cycle-sta":

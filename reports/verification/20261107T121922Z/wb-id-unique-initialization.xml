@@ -1,0 +1,10 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1794054964" />
+    <testcase name="test_basic_alu_decode" classname="test_pipeline_id" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_id.py" lineno="52" time="0.0016293525695800781" sim_time_ns="2.0" ratio_time="1227.481416447176" />
+    <testcase name="test_load_store_decode" classname="test_pipeline_id" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_id.py" lineno="74" time="0.001085519790649414" sim_time_ns="13.0" ratio_time="11975.829562925544" />
+    <testcase name="test_branch_lui_jal_decode" classname="test_pipeline_id" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_id.py" lineno="109" time="0.0009334087371826172" sim_time_ns="13.999999999999998" ratio_time="14998.788250319283" />
+    <testcase name="test_invalid_slot_safety" classname="test_pipeline_id" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_id.py" lineno="151" time="0.0007867813110351562" sim_time_ns="12.0" ratio_time="15252.014545454545" />
+    <testcase name="test_wb_to_id_bypass" classname="test_pipeline_id" file="/mnt/d/projects/_clean/rv32i-single-cycle/tb/test_pipeline_id.py" lineno="175" time="0.001119375228881836" sim_time_ns="32.00000000000001" ratio_time="28587.3755058573" />
+  </testsuite>
+</testsuites>
