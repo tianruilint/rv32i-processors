@@ -55,3 +55,32 @@
   stop when the designated terminal instruction retires.
 - **Verification:** `test_jal_jalr_control_flow` checks the exact executed-PC
   sequence, and pipeline program tests compare retirement traces and counters.
+
+## Flush fanout limiting the clock
+
+- **Symptom:** the OpenROAD clock sweep closed at 1.6 ns but failed at 1.4 ns
+  by 6 ps; the worst endpoints were ID/EX fields such as `alu_op` and `imm`
+  that have no logical link to the branch decision driving the path.
+- **Root cause:** an EX redirect, used as `flush`, synchronously cleared every
+  ID/EX field (~200 flops), so the forwarding → branch-compare path fanned out
+  to all of them. Separately, reset-gating the store data in `pipeline_mem.sv`
+  made a combinational `reset` input → `data_write_data` output path.
+- **Fix:** flush/bubble clear only valid, `reg_write`, `mem_write`, `branch`
+  and `jump_type`; the payload is cleared only on reset. A redirect only
+  invalidates IF/ID. Reset gates `data_write_en`, not the data or strobe.
+- **Verification:** `test_pipeline_id_ex` checks all five controls on flush,
+  bubble and reset; the 74 default and 6 reference cases pass; the full sweep
+  was rerun with LEC equivalent at every clock, and 1.4 ns now closes
+  (see [pnr/README.md](../pnr/README.md#first-sweep-and-rtl-fix)).
+
+## Upper PC bits never exercised
+
+- **Symptom:** toggle coverage showed the upper ~21 bits of every PC, PC+4
+  and redirect signal never changed.
+- **Root cause:** all test programs, including the generated ones, live below
+  address 0x800, so a fault in the upper PC+4 carry chain could not be seen.
+- **Fix:** add `high_address_pc` to `tb/test_isa_reference.py`, which crosses
+  the 0x7FFFFFFC → 0x80000000 carry, branches at 0xFFFFFFF4 and wraps a JAL
+  link value at 0xFFFFFFFC to zero.
+- **Verification:** both cores match the reference model on every retirement;
+  merged toggle coverage rose from 82.4% to 97.5%.

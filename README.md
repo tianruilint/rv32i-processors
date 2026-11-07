@@ -31,6 +31,15 @@ integration cases. Tests check instruction results, x0, reset, subword
 memory, forwarding, load-use stalls, and suppression of wrong-path
 register/memory writes.
 
+`make test-isa-reference` runs both cores against an independent Python
+RV32I interpreter that decodes the raw machine code and compares PC,
+registers and byte writes after every retired instruction (64 generated
+programs covering all 37 instructions, plus FENCE-mask and high-address PC
+cases). `make coverage` collects Verilator code coverage; merged per module
+it is **94.2% line, 98.3% branch, 100% expression and 97.5% toggle**, and
+every uncovered line/branch point is an unreachable default or a documented
+unsupported misaligned access.
+
 Both cores passed Yosys structural checks. Detailed test assertions,
 vector counts, and reproduction instructions are in
 [verification](docs/verification.md); mapped results and STA are in
@@ -64,11 +73,11 @@ core-only and pre-layout at a 10 ns ideal clock (0.1 ns setup uncertainty,
 | Metric | Single-cycle | Pipeline |
 | --- | ---: | ---: |
 | Worst setup slack | +5.202 ns | +6.182 ns |
-| Critical arrival / required | 4.198 / 9.400 ns | 3.676 / 9.857 ns |
+| Critical arrival / required | 4.198 / 9.400 ns | 3.676 / 9.858 ns |
 | Mapped cells | 6,267 | 9,565 |
 | Liberty cell-area sum | 12,737.410 | 17,551.212 |
 | Max-slew violating report rows | 49 | 1,580 |
-| Max-capacitance violating report rows | 91 | 84 |
+| Max-capacitance violating report rows | 89 | 94 |
 
 Critical paths: instruction input `instr[21]` through decode, register read
 and store-data selection to `data_write_data[10]` (single-cycle); IF/ID rs1
@@ -167,6 +176,8 @@ python3 -m venv .venv
 python -m pip install -r requirements.txt
 make lint-core lint-pipeline
 make regression SEED=20261006
+make test-isa-reference
+make coverage
 make benchmark SEED=20261006
 ```
 
