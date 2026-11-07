@@ -49,7 +49,9 @@ end
 always_comb begin
     data_write_data = 32'b0;
     data_write_strb = 4'b0;
-    if (in_valid && in_mem_write && !reset) begin
+    // Reset gates only data_write_en below. Gating the data and strobe as well
+    // made a combinational reset-input to data_write_data output path.
+    if (in_valid && in_mem_write) begin
         case (in_funct3)
             3'b000: begin
                 data_write_data = {24'b0, in_store_data[7:0]} << (8 * in_alu_result[1:0]);

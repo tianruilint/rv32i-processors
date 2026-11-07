@@ -52,10 +52,10 @@ async def test_store_lanes_and_reset(dut):
         assert int(dut.data_write_strb.value) == expected_strb
         assert int(dut.data_write_en.value) == int(expected_strb != 0)
 
+    # Reset gates the enable only; data and strobe are don't-care without it.
     dut.reset.value = 1
     await Timer(1, unit="ns")
     assert int(dut.data_write_en.value) == 0
-    assert int(dut.data_write_strb.value) == 0
 
 
 @cocotb.test()

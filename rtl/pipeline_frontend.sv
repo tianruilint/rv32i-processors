@@ -32,26 +32,22 @@ module pipeline_frontend (
             if_id_instr_q <= 32'b0;
             if_id_pc_plus_4_q <= 32'b0;
         end
-        else if (redirect) begin
-            pc <= redirect_pc;
-            if_id_valid_q <= 1'b0;
-            if_id_pc_q <= 32'b0;
-            if_id_instr_q <= 32'b0;
-            if_id_pc_plus_4_q <= 32'b0;
-        end
-        else if (stall) begin
-            pc <= pc;
-            if_id_valid_q <= if_id_valid_q;
-            if_id_pc_q <= if_id_pc_q;
-            if_id_instr_q <= if_id_instr_q;
-            if_id_pc_plus_4_q <= if_id_pc_plus_4_q;
-        end
         else begin
-            if_id_valid_q <= 1'b1;
-            if_id_pc_q <= pc;
-            if_id_instr_q <= instr;
-            if_id_pc_plus_4_q <= pc + 32'd4;
-            pc <= pc + 32'd4;
+            // A redirect only invalidates the IF/ID slot; its payload is
+            // don't-care while if_id_valid is 0, so it is not cleared.
+            if (redirect) begin
+                pc <= redirect_pc;
+                if_id_valid_q <= 1'b0;
+            end
+            else if (!stall) begin
+                pc <= pc + 32'd4;
+                if_id_valid_q <= 1'b1;
+            end
+            if (!stall) begin
+                if_id_pc_q <= pc;
+                if_id_instr_q <= instr;
+                if_id_pc_plus_4_q <= pc + 32'd4;
+            end
         end
     end
 

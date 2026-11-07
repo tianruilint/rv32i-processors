@@ -49,9 +49,29 @@ module pipeline_id_ex (
     output logic        out_uses_rs2
 );
 
+    // A flushed or bubbled slot only needs valid and the fields that can cause
+    // a side effect or a redirect cleared. Clearing every field put the EX
+    // redirect on the D input of ~200 flops and limited the clock (pnr/README).
     always_ff @(posedge clk) begin
         if (reset || flush || bubble || !in_valid) begin
             out_valid       <= 1'b0;
+            out_reg_write   <= 1'b0;
+            out_mem_write   <= 1'b0;
+            out_branch      <= 1'b0;
+            out_jump_type   <= 2'b0;
+        end
+        else begin
+            out_valid       <= in_valid;
+            out_reg_write   <= in_reg_write;
+            out_mem_write   <= in_mem_write;
+            out_branch      <= in_branch;
+            out_jump_type   <= in_jump_type;
+        end
+    end
+
+    // Payload is don't-care while out_valid is 0, so only reset clears it.
+    always_ff @(posedge clk) begin
+        if (reset) begin
             out_pc          <= 32'b0;
             out_pc_plus_4   <= 32'b0;
             out_rs1_addr    <= 5'b0;
@@ -65,16 +85,11 @@ module pipeline_id_ex (
             out_alu_src     <= 1'b0;
             out_alu_a_pc    <= 1'b0;
             out_result_src  <= 2'b0;
-            out_reg_write   <= 1'b0;
-            out_mem_write   <= 1'b0;
-            out_branch      <= 1'b0;
             out_branch_type <= 3'b0;
-            out_jump_type   <= 2'b0;
             out_uses_rs1    <= 1'b0;
             out_uses_rs2    <= 1'b0;
         end
         else begin
-            out_valid       <= in_valid;
             out_pc          <= in_pc;
             out_pc_plus_4   <= in_pc_plus_4;
             out_rs1_addr    <= in_rs1_addr;
@@ -88,11 +103,7 @@ module pipeline_id_ex (
             out_alu_src     <= in_alu_src;
             out_alu_a_pc    <= in_alu_a_pc;
             out_result_src  <= in_result_src;
-            out_reg_write   <= in_reg_write;
-            out_mem_write   <= in_mem_write;
-            out_branch      <= in_branch;
             out_branch_type <= in_branch_type;
-            out_jump_type   <= in_jump_type;
             out_uses_rs1    <= in_uses_rs1;
             out_uses_rs2    <= in_uses_rs2;
         end

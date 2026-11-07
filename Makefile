@@ -6,6 +6,15 @@ PROJECT_ROOT := $(abspath .)
 RTL_DIR := $(PROJECT_ROOT)/rtl
 TB_DIR := $(PROJECT_ROOT)/tb
 BUILD_DIR := $(PROJECT_ROOT)/build
+# RTL_COVERAGE=1 builds every target with Verilator coverage in its own tree,
+# so coverage and normal builds never share an object directory.
+RTL_COVERAGE ?= 0
+COVERAGE_ROOT := $(PROJECT_ROOT)/build/coverage
+ifeq ($(RTL_COVERAGE),1)
+BUILD_DIR := $(COVERAGE_ROOT)
+COVERAGE_COMPILE_ARGS := --coverage
+COVERAGE_SIM_ARGS = +verilator+coverage+file+$(COVERAGE_ROOT)/dat/$@.dat
+endif
 REPORTS_DIR := $(BUILD_DIR)/reports
 WAVES_DIR := $(BUILD_DIR)/waves
 VENV_BIN := $(PROJECT_ROOT)/.venv/bin
@@ -55,7 +64,7 @@ define RUN_MATCHED_BENCHMARK
 	@rm -f '$(BENCHMARK_DIR)/$(1).xml'
 	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
 	BENCHMARK_RESULTS_DIR='$(BENCHMARK_DIR)/results' \
-	COMPILE_ARGS='--Wall -Wno-fatal' \
+	COMPILE_ARGS='--Wall -Wno-fatal $(COVERAGE_COMPILE_ARGS)' SIM_ARGS='$(COVERAGE_SIM_ARGS)' \
 	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
 		SIM=verilator TOPLEVEL_LANG=verilog \
 		VERILOG_SOURCES='$(3)' COCOTB_TOPLEVEL=$(2) \
@@ -119,7 +128,7 @@ prepare-generated-dirs:
 test: check-venv prepare-generated-dirs
 	@rm -f '$(REPORTS_DIR)/full_adder.xml'
 	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
-	COMPILE_ARGS='--Wall -Wno-fatal' \
+	COMPILE_ARGS='--Wall -Wno-fatal $(COVERAGE_COMPILE_ARGS)' SIM_ARGS='$(COVERAGE_SIM_ARGS)' \
 	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
 		SIM=verilator \
 		TOPLEVEL_LANG=verilog \
@@ -133,7 +142,7 @@ test: check-venv prepare-generated-dirs
 test-alu: check-venv prepare-generated-dirs
 	@rm -f '$(REPORTS_DIR)/alu.xml'
 	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
-	COMPILE_ARGS='--Wall -Wno-fatal' \
+	COMPILE_ARGS='--Wall -Wno-fatal $(COVERAGE_COMPILE_ARGS)' SIM_ARGS='$(COVERAGE_SIM_ARGS)' \
 	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
 		SIM=verilator \
 		TOPLEVEL_LANG=verilog \
@@ -147,7 +156,7 @@ test-alu: check-venv prepare-generated-dirs
 test-register-file: check-venv prepare-generated-dirs
 	@rm -f '$(REPORTS_DIR)/register_file.xml'
 	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
-	COMPILE_ARGS='--Wall -Wno-fatal' \
+	COMPILE_ARGS='--Wall -Wno-fatal $(COVERAGE_COMPILE_ARGS)' SIM_ARGS='$(COVERAGE_SIM_ARGS)' \
 	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
 		SIM=verilator \
 		TOPLEVEL_LANG=verilog \
@@ -161,7 +170,7 @@ test-register-file: check-venv prepare-generated-dirs
 test-pc: check-venv prepare-generated-dirs
 	@rm -f '$(REPORTS_DIR)/pc.xml'
 	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
-	COMPILE_ARGS='--Wall -Wno-fatal' \
+	COMPILE_ARGS='--Wall -Wno-fatal $(COVERAGE_COMPILE_ARGS)' SIM_ARGS='$(COVERAGE_SIM_ARGS)' \
 	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
 		SIM=verilator \
 		TOPLEVEL_LANG=verilog \
@@ -175,7 +184,7 @@ test-pc: check-venv prepare-generated-dirs
 test-immediate-generator: check-venv prepare-generated-dirs
 	@rm -f '$(REPORTS_DIR)/immediate_generator.xml'
 	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
-	COMPILE_ARGS='--Wall -Wno-fatal' \
+	COMPILE_ARGS='--Wall -Wno-fatal $(COVERAGE_COMPILE_ARGS)' SIM_ARGS='$(COVERAGE_SIM_ARGS)' \
 	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
 		SIM=verilator \
 		TOPLEVEL_LANG=verilog \
@@ -189,7 +198,7 @@ test-immediate-generator: check-venv prepare-generated-dirs
 test-decoder: check-venv prepare-generated-dirs
 	@rm -f '$(REPORTS_DIR)/decoder.xml'
 	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
-	COMPILE_ARGS='--Wall -Wno-fatal' \
+	COMPILE_ARGS='--Wall -Wno-fatal $(COVERAGE_COMPILE_ARGS)' SIM_ARGS='$(COVERAGE_SIM_ARGS)' \
 	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
 		SIM=verilator \
 		TOPLEVEL_LANG=verilog \
@@ -203,7 +212,7 @@ test-decoder: check-venv prepare-generated-dirs
 test-core: check-venv prepare-generated-dirs
 	@rm -f '$(REPORTS_DIR)/core.xml'
 	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
-	COMPILE_ARGS='--Wall -Wno-fatal' \
+	COMPILE_ARGS='--Wall -Wno-fatal $(COVERAGE_COMPILE_ARGS)' SIM_ARGS='$(COVERAGE_SIM_ARGS)' \
 	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
 		SIM=verilator \
 		TOPLEVEL_LANG=verilog \
@@ -217,7 +226,7 @@ test-core: check-venv prepare-generated-dirs
 test-single-cycle-benchmark: check-venv prepare-generated-dirs
 	@rm -f '$(REPORTS_DIR)/single_cycle_benchmark.xml'
 	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
-	COMPILE_ARGS='--Wall -Wno-fatal' \
+	COMPILE_ARGS='--Wall -Wno-fatal $(COVERAGE_COMPILE_ARGS)' SIM_ARGS='$(COVERAGE_SIM_ARGS)' \
 	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
 		SIM=verilator TOPLEVEL_LANG=verilog \
 		VERILOG_SOURCES='$(CORE_RTL_SOURCES)' COCOTB_TOPLEVEL=rv32i_core \
@@ -229,7 +238,7 @@ test-single-cycle-benchmark: check-venv prepare-generated-dirs
 define RUN_PIPELINE_TEST
 	@rm -f '$(REPORTS_DIR)/$(1).xml'
 	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
-	COMPILE_ARGS='--Wall -Wno-fatal' \
+	COMPILE_ARGS='--Wall -Wno-fatal $(COVERAGE_COMPILE_ARGS)' SIM_ARGS='$(COVERAGE_SIM_ARGS)' \
 	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
 		SIM=verilator TOPLEVEL_LANG=verilog \
 		VERILOG_SOURCES='$(3)' COCOTB_TOPLEVEL=$(2) \
@@ -362,6 +371,16 @@ clean:
 	@rm -f '$(PROJECT_ROOT)/dump.vcd' '$(PROJECT_ROOT)/dump.fst' \
 		'$(PROJECT_ROOT)/results.xml'
 
+# Verilator line/toggle/branch/expression coverage. The default regression and
+# the ISA reference run write separate .dat files so both totals can be shown.
+.PHONY: coverage
+coverage: check-venv
+	@rm -rf '$(COVERAGE_ROOT)'
+	@mkdir -p '$(COVERAGE_ROOT)/dat'
+	@RTL_COVERAGE=1 '$(PYTHON)' '$(PROJECT_ROOT)/scripts/run_regression.py' --seed '$(SEED)' --build-dir build/coverage
+	@RTL_COVERAGE=1 COCOTB_RANDOM_SEED='$(SEED)' $(MAKE) --no-print-directory test-isa-reference
+	@'$(PYTHON)' '$(PROJECT_ROOT)/scripts/coverage_report.py' '$(COVERAGE_ROOT)'
+
 # Optional architectural reference checks, separate from the default 74 cases.
 .PHONY: test-isa-reference test-isa-reference-single test-isa-reference-pipeline
 
@@ -371,7 +390,7 @@ define RUN_ISA_REFERENCE
 	@mkdir -p '$(BUILD_DIR)/isa-reference'
 	@rm -f '$(BUILD_DIR)/isa-reference/$(1).xml'
 	@PATH='$(VENV_BIN)':$$PATH PYTHONPATH='$(TB_DIR)' \
-	ISA_RESULTS_DIR='$(BUILD_DIR)/isa-reference' COMPILE_ARGS='--Wall -Wno-fatal' \
+	ISA_RESULTS_DIR='$(BUILD_DIR)/isa-reference' COMPILE_ARGS='--Wall -Wno-fatal $(COVERAGE_COMPILE_ARGS)' SIM_ARGS='$(COVERAGE_SIM_ARGS)' \
 	$(MAKE) --no-print-directory -f '$(COCOTB_MAKEFILES)/Makefile.sim' \
 		SIM=verilator TOPLEVEL_LANG=verilog VERILOG_SOURCES='$(3)' \
 		COCOTB_TOPLEVEL=$(2) COCOTB_TEST_MODULES=test_isa_reference \

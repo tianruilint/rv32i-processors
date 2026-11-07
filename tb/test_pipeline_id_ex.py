@@ -37,25 +37,33 @@ async def test_capture_flush_bubble_reset(dut):
     dut.in_imm.value = 0xFFFFF000
     dut.in_reg_write.value = 1
     dut.in_result_src.value = 2
+    dut.in_mem_write.value = 1
+    dut.in_branch.value = 1
+    dut.in_jump_type.value = 2
     await edge(dut)
     for name in INPUTS:
         assert int(getattr(dut, "out_" + name).value) == int(getattr(dut, "in_" + name).value)
 
+    # Flush and bubble clear valid and every side-effect/redirect control.
+    # The payload is not cleared; it is don't-care while valid is 0.
+    def assert_killed():
+        for name in ("valid", "reg_write", "mem_write", "branch", "jump_type"):
+            assert int(getattr(dut, "out_" + name).value) == 0, name
+
     dut.flush.value = 1
     await edge(dut)
-    assert int(dut.out_valid.value) == 0
-    assert int(dut.out_reg_write.value) == 0
+    assert_killed()
     dut.flush.value = 0
 
     await edge(dut)
     dut.bubble.value = 1
     await edge(dut)
-    assert int(dut.out_valid.value) == 0
-    assert int(dut.out_reg_write.value) == 0
+    assert_killed()
     dut.bubble.value = 0
 
     await edge(dut)
     dut.reset.value = 1
     await edge(dut)
-    assert int(dut.out_valid.value) == 0
-    assert int(dut.out_reg_write.value) == 0
+    assert_killed()
+    for name in INPUTS:
+        assert int(getattr(dut, "out_" + name).value) == 0, name

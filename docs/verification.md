@@ -220,6 +220,40 @@ The output layout is:
 It preserves `build/timing/` dependencies and the saved `reports/timing/`
 evidence. STA constraints and interpretation are in [synthesis.md](synthesis.md).
 
+## Coverage
+
+`make coverage` rebuilds every target with Verilator `--coverage` under
+`build/coverage/`, runs the default regression and then the ISA reference
+cases, and merges the results with `verilator_coverage`
+(`scripts/coverage_report.py`). The normal build tree is not touched.
+
+Verilator reports each instance separately, so a point missed by a unit-test
+instance counts as uncovered even when the same RTL is covered inside a core.
+The table below merges instances: a point is covered when any instance of
+that module hit it. Run on 2026-11-07, Verilator 5.050, seed 20261006; all 74
+default cases and all 6 ISA reference cases passed under coverage.
+
+| Run | Line | Branch | Expression | Toggle |
+| --- | ---: | ---: | ---: | ---: |
+| Default regression (74 cases) | 94.2% (310/329) | 98.3% (338/344) | 100% (136/136) | 77.2% (8341/10806) |
+| Default + ISA reference | 94.2% (310/329) | 98.3% (338/344) | 100% (136/136) | 97.5% (10539/10806) |
+
+Every uncovered line and branch point falls into one of two groups:
+
+- **Unreachable defaults.** `case` defaults where every value of the selector is
+  already listed (2-bit write-back and byte-lane selects), or where the decoder
+  never produces the value (ALU op, branch type, jump type, load/store and
+  OP-IMM `funct3`).
+- **Misaligned accesses**, which are documented as unsupported: single-cycle
+  SH/SW with a misaligned address and pipeline LH/LHU at an odd address.
+
+The remaining toggles are PC bits [1:0], which are always zero because targets
+are 4-byte aligned, the upper bits of the 32-bit `cycle_count` and
+`retired_count` counters, which cannot wrap within these runs, and one input
+transition of the `full_adder` bootstrap module. Before `high_address_pc` was
+added, the upper ~21 bits of every PC, PC+4 and redirect signal never toggled,
+so a fault in the upper PC+4 carry chain would not have been caught.
+
 ## Verification limits
 
 The optional `make test-isa-reference` target uses a separate Python
@@ -229,16 +263,21 @@ initialized integer registers, ordered byte-write events, and final memory.
 The 64 deterministic generated programs exercise the supported 37 instructions.
 A separate case checks all 256 FENCE predecessor/successor masks only under the
 existing strongly ordered memory model; FENCE remains outside the supported
-instruction claim. These four cocotb cases are separate from the default 74.
-The additional reference run on 2026-10-06 passed all four cases;
+instruction claim. A third case, `high_address_pc`, runs code across the
+0x7FFFFFFC to 0x80000000 PC carry, takes a branch at 0xFFFFFFF4 and wraps a JAL
+link value at 0xFFFFFFFC to zero; it was added because the generated programs
+stay below 0x800 and left the upper PC bits untoggled (see Coverage). These
+six cocotb cases (three per core) are separate from the default 74.
+The reference run on 2026-10-06 passed the four cases that existed then;
 [raw XML and per-program records](../reports/verification/20261006T102942Z/isa-reference/)
-are saved separately.
+are saved separately. `high_address_pc` passed on both cores on 2026-11-07.
 XML results and per-program JSON records are written to `build/isa-reference/`.
 
 This custom model is not an external ISS or ISA compliance suite. It assumes
 naturally aligned accesses and zero-wait memory, without traps, interrupts,
-CSRs, caches, MMIO, or external observers. There is no formal proof, gate-level
-equivalence result, or automated coverage percentage. The default program
+CSRs, caches, MMIO, or external observers. There is no formal proof or
+gate-level equivalence result, and no functional coverage model (code coverage
+only, see Coverage). The default program
 checks still use directed expected values and selected retirement traces.
 
 Unsupported/misaligned instructions, every reset interaction, variable-latency

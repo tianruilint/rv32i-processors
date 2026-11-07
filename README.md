@@ -87,19 +87,21 @@ each routed netlist is formally equivalent to synthesis.
 
 | Clock | WNS / TNS (ns) | Max-slew viol. | Std-cell area (µm²) | Power |
 | ---: | ---: | ---: | ---: | ---: |
-| 10.0 ns (100 MHz) | +8.174 / 0 | 0 | 20,304 | 2.47 mW |
-| 2.0 ns (500 MHz) | +0.348 / 0 | 0 | 20,312 | 10.85 mW |
-| **1.6 ns (625 MHz)** | **+0.080 / 0** | 0 | 20,403 | 13.43 mW |
-| 1.4 ns (714 MHz) | −0.006 / −0.020 | 0 | 20,577 | 15.26 mW |
-| 1.2 ns (833 MHz) | −0.176 / −14.647 | 0 | 22,677 | 18.38 mW |
+| 10.0 ns (100 MHz) | +8.228 / 0 | 0 | 20,339 | 2.48 mW |
+| 2.0 ns (500 MHz) | +0.367 / 0 | 0 | 20,337 | 10.84 mW |
+| 1.6 ns (625 MHz) | +0.076 / 0 | 0 | 20,425 | 13.50 mW |
+| **1.4 ns (714 MHz)** | **+0.005 / 0** | 0 | 20,543 | 15.29 mW |
+| 1.2 ns (833 MHz) | −0.015 / −0.125 | 0 | 21,496 | 17.85 mW |
 
-The fastest closing clock is 1.6 ns. Up to 1.4 ns the limiter is the
-EX-stage branch decision: MEM/WB forwarding → branch compare → pipeline flush
-clearing the ID/EX register; at 1.6 and 1.2 ns
-the worst path is a combinational `reset` → `data_write_data` feed-through
-created by reset-gating the store data in `pipeline_mem.sv`.
+The fastest closing clock is 1.4 ns. The first sweep closed only at 1.6 ns:
+the STA paths showed an EX branch redirect used as `flush` that cleared every
+ID/EX field (~200 flops) and a `reset` → `data_write_data` feed-through from
+reset-gating the store data. Flush and bubble now clear only valid and the
+write/branch/jump controls, and reset gates only `data_write_en`; at 1.4 ns WNS
+went from −0.006 to +0.005 ns and at 1.2 ns TNS from −14.647 to −0.125 ns.
+The 1.2 ns limiter is now forwarding → 32-bit ALU → EX/MEM.
 
-| Cell placement (1.6 ns) | Clock tree (1.6 ns) |
+| Cell placement (1.6 ns, first sweep) | Clock tree (1.6 ns, first sweep) |
 | :---: | :---: |
 | ![Placed standard cells and I/O pins at 1.6 ns](docs/pnr/final_placement_1p6ns.webp) | ![Routed clock tree at 1.6 ns](docs/pnr/final_clocks_1p6ns.webp) |
 

@@ -40,7 +40,7 @@ static instruction kinds.
 | --- | --- |
 | `pipeline_frontend.sv` | PC and IF/ID registers; normal fetch, hold, and redirect |
 | `pipeline_id.sv` | Combinational decode/read/bypass; contains the shared register-file instance |
-| `pipeline_id_ex.sv` | ID/EX state, cleared for reset, bubble, or flush |
+| `pipeline_id_ex.sv` | ID/EX state; reset, bubble, or flush clears valid and the write/branch/jump controls, reset alone clears the payload |
 | `pipeline_ex.sv` | Combinational forwarding, ALU, branch comparison, and redirect |
 | `pipeline_ex_mem.sv` | EX/MEM state; carries the raw forwarded store operand |
 | `pipeline_hazard.sv` | Combinational load-use detection and stall/bubble/flush controls |

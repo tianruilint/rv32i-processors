@@ -160,6 +160,29 @@ def fence_program():
     instructions += [encode_i(0x13,0,0,0,0)]
     return {i*4:v for i,v in enumerate(instructions)}, {}, (len(instructions)-1)*4
 
+def high_pc_program():
+    # Generated programs stay below 0x800, so upper PC bits never toggle. This
+    # crosses the 0x7FFFFFFC -> 0x80000000 carry, runs a taken branch at the top
+    # of the address space, and wraps the JAL link value PC+4 to zero.
+    lui = lambda rd, imm20: imm20 << 12 | rd << 7 | 0x37
+    auipc = lambda rd, imm20: imm20 << 12 | rd << 7 | 0x17
+    words = {
+        0x00000000: lui(1, 0x80000),
+        0x00000004: encode_i(0x13, 0, 1, 1, -8),
+        0x00000008: encode_i(0x67, 0, 5, 1, 0),
+        0x7ffffff8: encode_i(0x13, 0, 3, 0, 1),
+        0x7ffffffc: auipc(4, 0),
+        0x80000000: encode_i(0x13, 0, 3, 3, 1),
+        0x80000004: encode_i(0x13, 0, 6, 0, -16),
+        0x80000008: encode_i(0x67, 0, 7, 6, 0),
+        0xfffffff0: encode_i(0x13, 0, 3, 3, 1),
+        0xfffffff4: encode_branch(0, 0, 0, 8),
+        0xfffffff8: encode_i(0x13, 0, 3, 3, 100),
+        0xfffffffc: encode_jal(8, 0x14),
+        0x00000010: encode_i(0x13, 0, 9, 0, 7),
+    }
+    return words, {}, 0x10
+
 async def check(dut, case, words, initial, terminal):
     rows, wanted_stores, wanted_memory, counts = model(words,initial,terminal)
     pipeline = hasattr(dut,'retire_valid')
@@ -227,6 +250,14 @@ async def independent_machine_code_programs(dut):
     save(dut,'random',results)
     covered={name for row in results for name in row['instructions']}
     assert len(covered)==37, f'missing existing supported instructions: {sorted(covered)}'
+
+@cocotb.test()
+async def high_address_pc(dut):
+    result = await check(dut, 'high_address_pc', *high_pc_program())
+    save(dut, 'high_pc', [result])
+    rf = dut.u_id.u_register_file if hasattr(dut, 'retire_valid') else dut.u_register_file
+    regs = {i: int(rf.registers[i].value) for i in (3, 4, 5, 7, 8, 9)}
+    assert regs == {3: 3, 4: 0x7ffffffc, 5: 0x0c, 7: 0x8000000c, 8: 0, 9: 7}, regs
 
 @cocotb.test()
 async def fence_in_strongly_ordered_memory_model(dut):
